@@ -118,7 +118,7 @@ var setupGraphStructures = function () {
 					display: true,
 					//...............
 					position: "bottom",
-					gridLines: { 
+					grid: { 
 						display: true,
 						color: '#ffffff',
 						lineWidth: 1,
@@ -141,7 +141,7 @@ var setupGraphStructures = function () {
 					type: "linear",
 					position: "right",
 					display: true,
-					gridLines: { display: false },
+					grid: { display: false },
 					min: 0,
 					max: 10,
 					title: {
@@ -154,7 +154,7 @@ var setupGraphStructures = function () {
 				yAxis_temp: {
 					type: "linear",
 					position: "left",
-					gridLines: { display: false },
+					grid: { display: false },
 					min: 0,
 					max: 30,
 					stepSize: 10,
@@ -174,7 +174,7 @@ var setupGraphStructures = function () {
 				yAxis_flood: {
 					type: "linear",
 					position: "left",
-					gridLines: { display: false },
+					grid: { display: false },
 					min: 0,
 					max: 20,
 					title: {
