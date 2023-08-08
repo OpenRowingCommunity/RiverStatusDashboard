@@ -282,25 +282,25 @@ var AppViewModel = function () {
         var skill_varsity = 'Varsity: ';
 
 		if (zone == 1) {
-			skill_l2r += "approved";
-            skill_new_novice += "approved";
-            skill_novice += "approved";
-            skill_varsity += "approved";
+			skill_l2r += "Approved";
+			skill_new_novice += "Approved";
+			skill_novice += "Approved";
+			skill_varsity += "Approved";
 		} else if (zone == 2 || zone == 3) {
-			skill_l2r += "restricted";
-			skill_new_novice += "approved";
-            skill_novice += "approved";
-            skill_varsity += "approved";
+			skill_l2r += "Restricted";
+			skill_new_novice += "Approved";
+			skill_novice += "Approved";
+			skill_varsity += "Approved";
 		} else if (zone == 4) {
-			skill_l2r += "restricted";
-			skill_new_novice += "restricted";
-			skill_novice += "approved";
-			skill_varsity += "approved";
+			skill_l2r += "Restricted";
+			skill_new_novice += "Restricted";
+			skill_novice += "Approved";
+			skill_varsity += "Approved";
 		} else if (zone == 5) {
-			skill_l2r += "restricted";
-			skill_new_novice += "restricted";
-			skill_novice += "restricted";
-			skill_varsity += "approved";
+			skill_l2r += "Restricted";
+			skill_new_novice += "Restricted";
+			skill_novice += "Restricted";
+			skill_varsity += "Approved";
         } else {
             // problem?
         }
