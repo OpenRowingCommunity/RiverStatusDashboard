@@ -226,7 +226,10 @@ var renderGraph = function () {
 	Chart.defaults.elements.line.borderWidth = 3;
 	Chart.defaults.elements.line.tension = 0.8;
 	Chart.defaults.elements.line.fill = true;
-	theGraph = new Chart(graphCanvas, graphSettings);
+
+	if (theGraph == null) {
+		theGraph = new Chart(graphCanvas, graphSettings);
+	}
 };
 
 
