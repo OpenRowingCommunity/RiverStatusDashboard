@@ -13,7 +13,6 @@ var ordinates = {
 	forecast: { flow: [], flood: [], temp: [] }
 };
 var units = { flow: 'kcfs', flood: 'ft', temp: '˚C' };
-var xAxis = {};
 var yAxis_flow = {};
 var yAxis_flood = {};
 var yAxis_temp = {};
@@ -82,31 +81,6 @@ var toCelsius = function (temp) {
 //	Graph Functions
 var setupGraphStructures = function () {
 	// axes & scales
-	xAxis = {
-		id: "xAxis",
-		type: "time",		// can we pass the moment objects directly?
-		position: "bottom",
-		gridLines: { 
-			display: true,
-			color: '#ffffff',
-			lineWidth: 1,
-			borderDash: [5,2],
-			zeroLineWidth: 1,
-			zeroLineColor: '#ffffff'
-		},
-		time:  {
-			unit: 'hour',
-			displayFormats: {
-				month: 'MM',
-				day: 'DD',
-				hour: 'ddd ha',
-				minute: 'mm'
-			},
-			stepSize: 10,
-			bounds: 'data',
-			ticks: 'data'
-		}
-	};
 	yAxis_flow = {
 		id: "yAxis_flow",
 		type: "linear",
@@ -198,7 +172,32 @@ var setupGraphStructures = function () {
 		},
 		options: {
 			scales: {
-				xAxes: [xAxis],
+				x: {
+					type: "time",		// can we pass the moment objects directly?
+					display: true,
+					//...............
+					position: "bottom",
+					gridLines: { 
+						display: true,
+						color: '#ffffff',
+						lineWidth: 1,
+						borderDash: [5,2],
+						zeroLineWidth: 1,
+						zeroLineColor: '#ffffff'
+					},
+					time:  {
+						unit: 'hour',
+						displayFormats: {
+							month: 'MM',
+							day: 'DD',
+							hour: 'ddd ha',
+							minute: 'mm'
+						},
+						stepSize: 10,
+						bounds: 'data',
+						ticks: 'data'
+					}
+				},
 				yAxes: [yAxis_flow, yAxis_temp, yAxis_flood]
 			},
 			legend: {
