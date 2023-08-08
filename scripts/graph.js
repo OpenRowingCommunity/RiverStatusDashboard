@@ -106,20 +106,17 @@ var setupGraphStructures = function () {
 	};
 	yAxis_flow = {
 		id: "yAxis_flow",
-		type: "logarithmic",
+		type: "linear",
 		position: "right",
 		display: true,
 		gridLines: { display: false },
 		ticks: {
-			callback: function (label, index, labels) {
-				return label+"k";
-			},
-			min: 10,
-			max: 100
+			min: 0,
+			max: 10
 		},
 		scaleLabel: {
 			display: true,
-			labelString: "Flow Rate (cfs)",
+			labelString: "Flow Rate (kcfs)",
 			fontColor: plotColors.flow,
 			fontSize: 14
 		},
