@@ -123,8 +123,6 @@ var setupGraphStructures = function () {
 						color: '#ffffff',
 						lineWidth: 1,
 						borderDash: [5,2],
-						zeroLineWidth: 1,
-						zeroLineColor: '#ffffff'
 					},
 					time:  {
 						unit: 'hour',
