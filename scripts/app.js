@@ -274,39 +274,21 @@ var AppViewModel = function () {
     /// ## Crew Skill Level
     this.crewSkill = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
-
-		var skill_l2r = 'Learn To Rowers: ';
-        var skill_new_novice = 'New Novices: ';
-        var skill_novice = 'Novices: ';
-        var skill_varsity = 'Varsity: ';
+		let zone = this.zone();
 
 		if (zone == 1) {
-			skill_l2r += "Approved";
-			skill_new_novice += "Approved";
-			skill_novice += "Approved";
-			skill_varsity += "Approved";
+			return "<p>No restrictions<p/>";
 		} else if (zone == 2 || zone == 3) {
-			skill_l2r += "Restricted";
-			skill_new_novice += "Approved";
-			skill_novice += "Approved";
-			skill_varsity += "Approved";
+			return "<p>No Learn to Rows<p/>";
 		} else if (zone == 4) {
-			skill_l2r += "Restricted";
-			skill_new_novice += "Restricted";
-			skill_novice += "Approved";
-			skill_varsity += "Approved";
+			return "<p>No New Novices<p/>";
 		} else if (zone == 5) {
-			skill_l2r += "Restricted";
-			skill_new_novice += "Restricted";
-			skill_novice += "Restricted";
-			skill_varsity += "Approved";
+			return "<p>No Novices<p/>";
         } else {
             // problem?
         }
 
-		let fullSkillReqs = "<p>" + skill_varsity + "</p><p>" + skill_novice + "</p><p>" + skill_new_novice + "</p><p>" + skill_l2r + "</p>";
-        return fullSkillReqs
+		return "";
 	}, this);
 	
     /// ## Additional Safety Information
