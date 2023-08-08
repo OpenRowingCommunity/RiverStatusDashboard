@@ -240,11 +240,6 @@ var AppViewModel = function () {
 		return launchToShellRatio;
 	}, this);
 	
-    /// ## Coach Certification
-    this.coachCert = ko.computed(function () {
-        return "TRRA-Equivalent Certification";
-	}, this);
-	
     /// ## PFD Requirement
     this.pfdReq = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
