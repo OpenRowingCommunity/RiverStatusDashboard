@@ -350,6 +350,7 @@ var populateDataSets = function () {
 						datatype: 'json',
 						success: function (data) {
 							parseFlowData(data);
+							renderGraph();
 						}
 					});
 					// hard-chain end
