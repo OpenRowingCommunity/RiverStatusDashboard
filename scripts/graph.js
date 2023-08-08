@@ -41,13 +41,13 @@ let selectors = {
 	currentTemp: '#temp'
 };
 
-let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
-let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
-let flowAndFloodParameters = {
+let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
+let floodParameters = {
 	gage: 'blbn6',//CHANGEME
 	output: 'xml'
 };
 
+let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
 	format: 'waterml,2.0',
 	sites: '04231600',//TODO: changeme
@@ -57,6 +57,16 @@ let temperatureParameters = {
 	siteStatus: 'all'
 };
 
+
+let flowSourceURI = 'https://waterservices.usgs.gov/nwis/iv';
+let flowParameters = {
+	format: 'json',			// 'waterml,2.0' is old style
+	sites: '04231600',//'04230650',//TODO, changeme
+	parameterCd: '00060',
+	siteStatus: 'all',
+	startDT: '',			// need to restore for timeseries fetch
+	endDT: ''
+};
 
 // Formatters/Utilities
 var tickFormatter = function (value, index, values, type) {	
@@ -106,20 +116,17 @@ var setupGraphStructures = function () {
 	};
 	yAxis_flow = {
 		id: "yAxis_flow",
-		type: "logarithmic",
+		type: "linear",
 		position: "right",
 		display: true,
 		gridLines: { display: false },
 		ticks: {
-			callback: function (label, index, labels) {
-				return label+"k";
-			},
-			min: 10,
-			max: 100
+			min: 0,
+			max: 10
 		},
 		scaleLabel: {
 			display: true,
-			labelString: "Flow Rate (cfs)",
+			labelString: "Flow Rate (kcfs)",
 			fontColor: plotColors.flow,
 			fontSize: 14
 		},
@@ -226,17 +233,14 @@ var renderGraph = function () {
 
 
 // Data Parsing Functions
-var parseFlowAndFloodData = function (data) {
+var parseFloodData = function (data) {
 	// parse and extract most recent data first
 	var latestObservedDatum = $(data).find('observed > datum:first');
 	var latestObserved = {
 		floodStageMeasurement: $(latestObservedDatum).find('primary').text(),
 		floodStageUnits: $(latestObservedDatum).find('primary').attr('units'),
-		flowRateMeasurement: $(latestObservedDatum).find('secondary').text(),
-		flowRateUnits: $(latestObservedDatum).find('secondary').attr('units')
 	};
 	// update instantaneous values
-	$(selectors.currentFlow).text(latestObserved.flowRateMeasurement + " " + latestObserved.flowRateUnits);
 	$(selectors.currentFlood).text(latestObserved.floodStageMeasurement + " " + latestObserved.floodStageUnits);
 	// get time-series and forecasted data
 	var observedData = $(data).find('site > observed > datum');
@@ -248,12 +252,10 @@ var parseFlowAndFloodData = function (data) {
 		var datetime = $(datum).children('valid').text();
 		//datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
-		var flow = $(datum).children('secondary').text();
 		var aMoment = moment(datetime);
 		moments.observed[i] = aMoment;
 		abscissa.observed[i] = aMoment;
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
-		ordinates.observed.flow[i] = Number.parseFloat(flow);
 	}
 	moments.forecast = [];
 	abscissa.forecast = [];
@@ -262,20 +264,55 @@ var parseFlowAndFloodData = function (data) {
 		var datetime = $(datum).children('valid').text();
 		//datetime = datetime.substr(0,16);
 		var flood = $(datum).children('primary').text();
-		var flow = $(datum).children('secondary').text();
 		var aMoment = moment(datetime);
 		moments.forecast.push(aMoment);
 		abscissa.forecast.push(aMoment);
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
-		ordinates.forecast.flood[i] = Number.parseFloat(flow);
 	}
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
 	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
 	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	// temperatureParameters.startDT = moment().subtract(36, 'hours').format(tempReqFormat);
+	flowParameters.startDT = obsmin.format(tempReqFormat);
 	temperatureParameters.endDT = obsmax.format(tempReqFormat);
-	// temperatureParameters.endDT = moment().format(tempReqFormat);
+	flowParameters.endDT = obsmax.format(tempReqFormat);
+};
+
+
+// Data Parsing Functions
+var parseFlowData = function (data) {
+	let timeseries = data.value.timeSeries[0]
+	let timeseriesdata = timeseries.values[0].value
+	// parse and extract most recent data first
+	var latestObservedDatum = timeseriesdata[0];
+	
+	var units = timeseries.variable.unit.unitCode;
+	units = "kcfs"
+	
+	// update instantaneous values
+	// get time-series and forecasted data
+	var observedData = timeseriesdata;
+	var observedDataN = observedData.length;
+	for(var i = 0; i < observedDataN; i++) {
+		var datum = observedData[i];
+		var datetime = datum['dateTime'];
+		//datetime = datetime.substr(0,16);
+		var flow = Number.parseInt(datum['value'])/1000;
+		var aMoment = moment(datetime);
+		moments.observed[i] = aMoment;
+		abscissa.observed[i] = aMoment;
+		ordinates.observed.flow[i] = Number.parseFloat(flow);
+	}
+	var obsmin = moment.min(moments.observed);
+	var obsmax = moment.max(moments.observed);
+	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
+	temperatureParameters.startDT = obsmin.format(tempReqFormat);
+	flowParameters.startDT = obsmin.format(tempReqFormat);
+	floodParameters.startDT = obsmin.format(tempReqFormat);
+
+	temperatureParameters.endDT = obsmax.format(tempReqFormat);
+	flowParameters.endDT = obsmax.format(tempReqFormat);
+	floodParameters.endDT = obsmax.format(tempReqFormat);
 };
 
 var parseTemperatureData = function (data) {
@@ -303,11 +340,11 @@ var parseTemperatureData = function (data) {
 
 var populateDataSets = function () {
 	$.ajax({
-		url: flowAndFloodSourceURI,
-		data: flowAndFloodParameters,
+		url: floodSourceURI,
+		data: floodParameters,
 		datatype: 'xml',
 		success: function (data) {
-			parseFlowAndFloodData(data);
+			parseFloodData(data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
@@ -315,6 +352,15 @@ var populateDataSets = function () {
 				datatype: 'xml',
 				success: function (data) {
 					parseTemperatureData(data);
+				}
+			});
+
+			$.ajax({
+				url: flowSourceURI,
+				data: flowParameters,
+				datatype: 'json',
+				success: function (data) {
+					parseFlowData(data);
 				}
 			});
 			// hard-chain end
