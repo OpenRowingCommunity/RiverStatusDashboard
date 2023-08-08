@@ -1,6 +1,6 @@
 //
 
-/// # 2021 TRRA Safety Matrix Rules
+/// # 2023 RiT Safety Matrix Rules
 
 const kZONE_ROWING_NOT_PERMITTED = Infinity;
 const kZONE_ROWING_INDETERMINATE = NaN;
@@ -16,29 +16,33 @@ function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
 
     var leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
     var leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
-    
-    if (-999.0 < waterTemp_degF && waterTemp_degF <= 32.0) {
-        // re-think nonsense water temperature values (in both extrema)
+
+
+	if (waterTemp_degF == -999) {
+		leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
+	}  else if (waterTemp_degF < 35.0) {
         leastRestrictiveZoneForWaterFlow = kZONE_ROWING_NOT_PERMITTED;
-    } else if (32.0 < waterTemp_degF && waterTemp_degF < 50.0) {
-        leastRestrictiveZoneForWaterTemp = 3;
+    } else if (35.0 <= waterTemp_degF && waterTemp_degF < 45.0) {
+		leastRestrictiveZoneForWaterTemp = 5;
+	} else if (45.0 <= waterTemp_degF && waterTemp_degF < 50.0) {
+		leastRestrictiveZoneForWaterTemp = 3;
     } else if (50.0 <= waterTemp_degF) {
         leastRestrictiveZoneForWaterTemp = 1;
     } else {
         leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
     }
     
-    if (0 <= waterFlow_kcfs && waterFlow_kcfs < 30.0) {
+    if (0 <= waterFlow_kcfs && waterFlow_kcfs < 3) {
         leastRestrictiveZoneForWaterFlow = 1;
-    } else if (30.0 <= waterFlow_kcfs && waterFlow_kcfs < 40.0) {
+    } else if (3 <= waterFlow_kcfs && waterFlow_kcfs < 5) {
         leastRestrictiveZoneForWaterFlow = 2;
-    } else if (40.0 <= waterFlow_kcfs && waterFlow_kcfs < 45.0) {
+    } else if (5 <= waterFlow_kcfs && waterFlow_kcfs < 7) {
         leastRestrictiveZoneForWaterFlow = 3;
-    } else if (45.0 <= waterFlow_kcfs && waterFlow_kcfs < 50.0) {
+    } else if (7 <= waterFlow_kcfs && waterFlow_kcfs < 10) {
         leastRestrictiveZoneForWaterFlow = 4;
-    } else if (50.0 <= waterFlow_kcfs && waterFlow_kcfs <= 60.0) {
+    } else if (10 <= waterFlow_kcfs && waterFlow_kcfs <= 12) {
         leastRestrictiveZoneForWaterFlow = 5;
-    } else if (60.0 < waterFlow_kcfs) {
+    } else if (12 < waterFlow_kcfs) {
         leastRestrictiveZoneForWaterFlow = kZONE_ROWING_NOT_PERMITTED;
     } else {
         leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
@@ -52,10 +56,12 @@ function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
         zoneForAllConditions = Math.max(leastRestrictiveZoneForWaterTemp, leastRestrictiveZoneForWaterFlow);
     }
     
-    // Zone 5 Daylight requirement
-    if (!isDaylight && zoneForAllConditions == 5) {
-        zoneForAllConditions = kZONE_ROWING_NOT_PERMITTED;
-    }
+    // It wouldn't be inaccurate to assume that we couldn't exactly not say that it is or isn't
+	// almost partially possible for us to implment a daylight condition.
+	//
+    //if (!isDaylight && zoneForAllConditions == 5) {
+    //    zoneForAllConditions = kZONE_ROWING_NOT_PERMITTED;
+    //}
 
     return zoneForAllConditions;
 }
@@ -86,12 +92,13 @@ function allowedShellTypesForConditions(waterFlow_kcfs, waterTemp_degF, isDaylig
     if (zone == 1) {
         allowedBoats = "All boats";
     } else if (zone == 2) {
-        allowedBoats = "Racing shells: All types\nAdaptive shells: PR3 2x only";
+        allowedBoats = "All boats";
     } else if (zone == 3) {
-        allowedBoats = "8+, 4+, 4x";
-        if (waterFlow_kcfs < 40.0) { allowedBoats += ", 2x"; }
+        allowedBoats = "8+, 4x, 4+";
+        if (waterFlow_kcfs < 5) { allowedBoats += ", 2x"; }
     } else if (zone == 4) {
-        allowedBoats = "8+, 4+, 4x";
+		allowedBoats = "8+, 4x";
+		if (waterFlow_kcfs < 7) { allowedBoats += ", 4+"; }
     } else if (zone == 5) {
         allowedBoats = "8+, 4x";
     }
