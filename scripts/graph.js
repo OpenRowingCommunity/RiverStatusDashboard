@@ -17,13 +17,9 @@ var xAxis = {};
 var yAxis_flow = {};
 var yAxis_flood = {};
 var yAxis_temp = {};
-var graphScale = {};
 var flowDataset = {};
 var floodDataset = {};
 var tempDataset = {};
-var graphData = {};
-var graphScale = {};
-var graphOptions = {};
 var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
@@ -165,10 +161,6 @@ var setupGraphStructures = function () {
 		},
 		color: plotColors.temp
 	};
-	graphScale = {
-		xAxes: [xAxis],
-		yAxes: [yAxis_flow, yAxis_temp, yAxis_flood]
-	};
 	
 	// dataset wrapping
 	flowDataset = {
@@ -195,28 +187,29 @@ var setupGraphStructures = function () {
 		yAxisID: "yAxis_temp",
 		data: ordinates.observed.temp
 	};
-	graphData = {
-		labels: abscissa.observed,
-		datasets: [flowDataset, floodDataset, tempDataset]
-	};
 	
 	// options, canvas, & settings
-	graphOptions = {
-		scales: graphScale,
-		legend: {
-			position: "bottom",
-			labels: {
-				fontColor: 'white'
-			}
-		},
-		hidden: false,
-		maintainAspectRatio: false
-	};
 	graphCanvas = $(selectors.graphCanvas).get(0);
 	graphSettings = {
 		type: "line",
-		data: graphData,
-		options: graphOptions
+		data: {
+			labels: abscissa.observed,
+			datasets: [flowDataset, floodDataset, tempDataset]
+		},
+		options: {
+			scales: {
+				xAxes: [xAxis],
+				yAxes: [yAxis_flow, yAxis_temp, yAxis_flood]
+			},
+			legend: {
+				position: "bottom",
+				labels: {
+					fontColor: 'white'
+				}
+			},
+			hidden: false,
+			maintainAspectRatio: false
+		}
 	};
 };
 
