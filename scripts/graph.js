@@ -41,13 +41,13 @@ let selectors = {
 	currentTemp: '#temp'
 };
 
-let flowAndFloodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
-let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
-let flowAndFloodParameters = {
+let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
+let floodParameters = {
 	gage: 'blbn6',//CHANGEME
 	output: 'xml'
 };
 
+let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
 	format: 'waterml,2.0',
 	sites: '04231600',//TODO: changeme
@@ -226,7 +226,54 @@ var renderGraph = function () {
 
 
 // Data Parsing Functions
-var parseFlowAndFloodData = function (data) {
+var parseFloodData = function (data) {
+	// parse and extract most recent data first
+	var latestObservedDatum = $(data).find('observed > datum:first');
+	var latestObserved = {
+		floodStageMeasurement: $(latestObservedDatum).find('primary').text(),
+		floodStageUnits: $(latestObservedDatum).find('primary').attr('units'),
+	};
+	// update instantaneous values
+	$(selectors.currentFlood).text(latestObserved.floodStageMeasurement + " " + latestObserved.floodStageUnits);
+	// get time-series and forecasted data
+	var observedData = $(data).find('site > observed > datum');
+	var observedDataN = observedData.length;
+	var forecastData = $(data).find('site > forecast > datum');
+	var forecastDataN = forecastData.length;
+	for(var i = 0; i < observedDataN; i++) {
+		var datum = $(observedData).get(i);
+		var datetime = $(datum).children('valid').text();
+		//datetime = datetime.substr(0,16);
+		var flood = $(datum).children('primary').text();
+		var aMoment = moment(datetime);
+		moments.observed[i] = aMoment;
+		abscissa.observed[i] = aMoment;
+		ordinates.observed.flood[i] = Number.parseFloat(flood);
+	}
+	moments.forecast = [];
+	abscissa.forecast = [];
+	for(var i = 0; i < forecastDataN; i++) {
+		var datum = $(forecastData).get(i);
+		var datetime = $(datum).children('valid').text();
+		//datetime = datetime.substr(0,16);
+		var flood = $(datum).children('primary').text();
+		var aMoment = moment(datetime);
+		moments.forecast.push(aMoment);
+		abscissa.forecast.push(aMoment);
+		ordinates.forecast.flood[i] = Number.parseFloat(flood);
+	}
+	var obsmin = moment.min(moments.observed);
+	var obsmax = moment.max(moments.observed);
+	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
+	temperatureParameters.startDT = obsmin.format(tempReqFormat);
+	// temperatureParameters.startDT = moment().subtract(36, 'hours').format(tempReqFormat);
+	temperatureParameters.endDT = obsmax.format(tempReqFormat);
+	// temperatureParameters.endDT = moment().format(tempReqFormat);
+};
+
+
+// Data Parsing Functions
+var parseFlowData = function (data) {
 	// parse and extract most recent data first
 	var latestObservedDatum = $(data).find('observed > datum:first');
 	var latestObserved = {
@@ -303,11 +350,11 @@ var parseTemperatureData = function (data) {
 
 var populateDataSets = function () {
 	$.ajax({
-		url: flowAndFloodSourceURI,
-		data: flowAndFloodParameters,
+		url: floodSourceURI,
+		data: floodParameters,
 		datatype: 'xml',
 		success: function (data) {
-			parseFlowAndFloodData(data);
+			parseFloodData(data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
