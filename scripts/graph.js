@@ -191,11 +191,13 @@ var setupGraphStructures = function () {
 					}
 				}
 			},
-			legend: {
-				position: "bottom",
-				labels: {
-					fontColor: 'white'
-				}
+			plugins: {
+				legend: {
+					position: "bottom",
+					labels: {
+						fontColor: 'white'
+					}
+				},
 			},
 			hidden: false,
 			maintainAspectRatio: false
