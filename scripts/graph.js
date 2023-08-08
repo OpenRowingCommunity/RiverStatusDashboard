@@ -326,10 +326,6 @@ var parseTemperatureData = function (data) {
 		var temp = $(datum).find('wml2\\:value').text();
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
-	
-	// here: intervene to remove all data in flow and flood from before first temperature reading
-	
-	renderGraph();
 };
 
 var populateDataSets = function () {
@@ -360,4 +356,8 @@ var populateDataSets = function () {
 			// hard-chain end
 		}
 	});
+
+	// here: intervene to remove all data in flow and flood from before first temperature reading
+	
+	// await renderGraph();
 };
