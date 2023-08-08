@@ -101,7 +101,7 @@ var gov_usgs = {
 		let params = Object.assign({},asyncContext.api.params);
 
 		params.parameterCd = '00060'
-
+		params.sites = '04230650'
 		
 		$.ajax({
 			url: asyncContext.api.url, 
