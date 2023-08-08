@@ -17,7 +17,7 @@ var AppViewModel = function () {
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
 	this.waterFlowColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
+		var color = rit_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
 		return color;
 	}, this);
 	this.waterLevel = ko.observable(this._initString);
@@ -25,7 +25,7 @@ var AppViewModel = function () {
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempUnits = ko.observable("˚C");
 	this.waterTempColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
+		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
 	}, this);
 	this.waterTempF = ko.computed(function () {
@@ -117,7 +117,7 @@ var AppViewModel = function () {
 		//	don't try to calculate until necessary values fetched
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
-			zone = trra_safety.rowing.zoneForConditions(
+			zone = rit_safety.rowing.zoneForConditions(
 				this.waterFlow(), this.waterTemp(),
 				this.sunrise(), this.sunset()
 			);
@@ -127,7 +127,7 @@ var AppViewModel = function () {
 	}, this);
 	
     this.zoneColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForZone(this.zone());
+		var color = rit_safety.rowing.zoneColorForZone(this.zone());
 		return color;
 	}, this);
 	
@@ -187,7 +187,7 @@ var AppViewModel = function () {
 	}
 	
 	/// # Safety Rules
-	
+
     /// ## Allowed Shell Types (2021✓)
     this.shellTypes = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }        
@@ -195,25 +195,26 @@ var AppViewModel = function () {
         let flow = this.waterFlow();
         var shellTypes = "<p>";
 
-        if (zone == 1) {
+        if (zone == 1 || zone == 2) {
             shellTypes = "All boats";
-        } else if (zone == 2) {
-            shellTypes = "Racing shells: All types\nAdaptive shells: PR3 2x only";
         } else if (zone == 3) {
-            shellTypes = "8+, 4+, 4x";
-            if (0 <= flow && flow < 40.0) {
+			shellTypes = "8+, 4x, 4+";
+            if (0 <= flow && flow < 5.0) {
                 shellTypes += ", 2x"
             }
         } else if (zone == 4) {
-            shellTypes = "8+, 4+, 4x";
+			shellTypes = "8+, 4x";
+			if (0 <= flow && flow < 5.0) {
+				shellTypes += ", 4+"
+			}
         } else if (zone == 5) {
             shellTypes = "8+, 4x";
         }
         shellTypes += "</p>";
 
-        if (zone == 1 || zone == 2) {
+        if (zone == 1 || zone == 2 || zone == 3) {
             shellTypes += "<p>Racing allowed</p>";
-        } else if (zone == 3 || zone == 4 || zone == 5) {
+        } else if (zone == 4 || zone == 5) {
             shellTypes += "<p>No racing allowed</p>";
         }
 
@@ -227,54 +228,38 @@ var AppViewModel = function () {
 		var launchToShellRatio = '';
 
         if (zone == 1) {
-            launchToShellRatio = "Not Required except for U18/HS";
+			launchToShellRatio = "Shells must be accompanied by a launch";
         } else if (zone == 2) {
             launchToShellRatio = "1 launch per 3 shells";
         } else if (zone == 3) {
             launchToShellRatio = "1 launch per 2 shells";
-        } else if (zone == 4) {
+        } else if (zone == 4 || zone == 5) {
             launchToShellRatio = "1 launch per shell";
-        } else if (zone == 5) {
-            launchToShellRatio = "1 launch per shell and sufficient launches to:\n" + 
-                "(a) carry all rowers and coxes participating in the session\n" +
-                "(b) have at least 2 engines between all launches on the water (towing line required)";
         }
 
 		return launchToShellRatio;
-	}, this);
-	
-    /// ## Coach Certification
-    this.coachCert = ko.computed(function () {
-        return "TRRA-Equivalent Certification";
 	}, this);
 	
     /// ## PFD Requirement
     this.pfdReq = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
         let zone = this.zone();
-        let waterTempF = this.waterTempF();
 
         var rowersReq = "";
-
-        /// - TODO: Automate this date check
-        // let month = moment…
-        // let day = moment…
-        var coxesReq = "PFD Required to be worn from November 1st through April 30th";
+        var coxesReq = "";
 
         if (zone == 1) {
-            rowersReq = "PFD Not required";
+			rowersReq = "PFD Not required";
+			coxesReq = "PFD Not required";
         } else if (zone == 2) {
-            rowersReq = "PFD Recommended to be worn or in shell for 1x, 2x, 2-";
+			rowersReq = "PFD Not required";
+			coxesReq = "PFD Not required";
         } else if (zone == 3) {
-            rowersReq = "PFD Recommended to be worn or in shell for all rowers";
-        } else if (zone == 4 || zone == 5) {
-            if (32.0 < waterTempF && waterTempF < 50.0) {
-                rowersReq = "PFD Required to be worn by all rowers"
-            } else if (waterTempF > 50.0) {
-                rowersReq = "PFD Recommended to be worn or in shell at all times";
-            } else {
-                // problem?
-            }
+			rowersReq = "PFD Required unless launch to shell ratio 1:1";
+			coxesReq = "PFD Required";
+		} else if (zone == 4 || zone == 5) {
+			rowersReq = "PFD Required";
+			coxesReq = "PFD Required";
         } else {
             // problem?
         }
@@ -286,56 +271,24 @@ var AppViewModel = function () {
 		return fullReqs;
 	}, this);
 	
-    /// ## Communications Equipment
-    this.commsEquip = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
-
-        var commsReq = "";
-        if (zone == 1) {
-            commsReq = "A whistle is <i>required</i> and protected cell phone recommended in each launch or in each shell not accompanied by a launch";
-        } else if (zone == 2 || zone == 3 || zone == 4) {
-            commsReq = "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell";
-        } else if (zone == 5) {
-            commsReq = "Protected cell phone required in each launch and shell. Marine radio recommended for coaches. At least one additional person must be on shore with cell phone and car (see Appendix #8)";
-        } else {
-            // problem?
-        }
-		
-		return commsReq;
-	}, this);
-	
     /// ## Crew Skill Level
     this.crewSkill = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
+		let zone = this.zone();
 
-        var skill_u14 = '<p>U14: ';
-        var skill_novice = '<p>Novice: ';
-        var skill_experienced = '<p>Experienced: ';
-        var skill_adaptive = '<p>Adaptive: ';
-
-        if (zone == 1) {
-            skill_u14 += "approved";
-            skill_novice += "approved";
-            skill_experienced += "approved";
-            skill_adaptive += "approved";
-        } else if (zone == 2) {
-            skill_u14 += "restricted";
-            skill_novice += "approved";
-            skill_experienced += "approved";
-            skill_adaptive += "PR3 only";
-        } else if (3 <= zone && zone <= 5) {
-            skill_u14 += "restricted";
-            skill_novice += "limited*";
-            skill_experienced += "approved";
-            skill_adaptive += "restricted";
+		if (zone == 1) {
+			return "<p>No restrictions<p/>";
+		} else if (zone == 2 || zone == 3) {
+			return "<p>No Learn to Rows<p/>";
+		} else if (zone == 4) {
+			return "<p>No New Novices<p/>";
+		} else if (zone == 5) {
+			return "<p>No Novices<p/>";
         } else {
             // problem?
         }
 
-		let fullSkillReqs = skill_u14 + "</p>" + skill_novice + "</p>" + skill_experienced + "</p>" + skill_adaptive + "</p>";
-        return fullSkillReqs
+		return "";
 	}, this);
 	
     /// ## Additional Safety Information
