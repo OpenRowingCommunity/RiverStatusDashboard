@@ -175,8 +175,8 @@ var setupGraphStructures = function () {
 					type: "linear",
 					position: "left",
 					grid: { display: false },
-					min: 0,
-					max: 20,
+					min: 8,
+					max: 16,
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
