@@ -221,7 +221,7 @@ var setupGraphStructures = function () {
 };
 
 var renderGraph = function () {
-	Chart.defaults.defaultFontColor = 'white';
+	Chart.defaults.fontColor = 'white';
 	Chart.defaults.elements.point.radius = 1;
 	Chart.defaults.elements.line.borderWidth = 3;
 	Chart.defaults.elements.line.tension = 0.8;
