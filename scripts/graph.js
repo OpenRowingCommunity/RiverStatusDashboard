@@ -121,7 +121,7 @@ var setupGraphStructures = function () {
 					grid: { 
 						display: true,
 						color: '#ffffff',
-						lineWidth: 1,
+						lineWidth: 0.1,
 						// borderDash: [5,2],
 					},
 					time:  {
