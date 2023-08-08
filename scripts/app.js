@@ -276,25 +276,6 @@ var AppViewModel = function () {
 		return fullReqs;
 	}, this);
 	
-    /// ## Communications Equipment
-    this.commsEquip = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
-
-        var commsReq = "";
-        if (zone == 1) {
-            commsReq = "A whistle is <i>required</i> and protected cell phone recommended in each launch or in each shell not accompanied by a launch";
-        } else if (zone == 2 || zone == 3 || zone == 4) {
-            commsReq = "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell";
-        } else if (zone == 5) {
-            commsReq = "Protected cell phone required in each launch and shell. Marine radio recommended for coaches. At least one additional person must be on shore with cell phone and car (see Appendix #8)";
-        } else {
-            // problem?
-        }
-		
-		return commsReq;
-	}, this);
-	
     /// ## Crew Skill Level
     this.crewSkill = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
