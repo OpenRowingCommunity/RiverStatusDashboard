@@ -249,30 +249,22 @@ var AppViewModel = function () {
     this.pfdReq = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }
         let zone = this.zone();
-        let waterTempF = this.waterTempF();
 
         var rowersReq = "";
-
-        /// - TODO: Automate this date check
-        // let month = moment…
-        // let day = moment…
-        var coxesReq = "PFD Required to be worn from November 1st through April 30th";
-
+        var coxesReq = "";
 
         if (zone == 1) {
-            rowersReq = "PFD Not required";
+			rowersReq = "PFD Not required";
+			coxesReq = "PFD Not required";
         } else if (zone == 2) {
-            rowersReq = "PFD Recommended to be worn or in shell for 1x, 2x, 2-";
+			rowersReq = "PFD Not required";
+			coxesReq = "PFD Not required";
         } else if (zone == 3) {
-            rowersReq = "PFD Recommended to be worn or in shell for all rowers";
-        } else if (zone == 4 || zone == 5) {
-            if (32.0 < waterTempF && waterTempF < 50.0) {
-                rowersReq = "PFD Required to be worn by all rowers"
-            } else if (waterTempF > 50.0) {
-                rowersReq = "PFD Recommended to be worn or in shell at all times";
-            } else {
-                // problem?
-            }
+			rowersReq = "PFD Required unless launch to shell ratio 1:1";
+			coxesReq = "PFD Required";
+		} else if (zone == 4 || zone == 5) {
+			rowersReq = "PFD Required";
+			coxesReq = "PFD Required";
         } else {
             // problem?
         }
