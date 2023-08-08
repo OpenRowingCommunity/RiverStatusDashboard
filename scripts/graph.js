@@ -139,62 +139,57 @@ var setupGraphStructures = function () {
 						ticks: 'data'
 					}
 				},
-				yAxes: [
-					{
-						id: "yAxis_flow",
-						type: "linear",
-						position: "right",
-						display: true,
-						gridLines: { display: false },
-						ticks: {
-							min: 0,
-							max: 10
-						},
-						scaleLabel: {
-							display: true,
-							labelString: "Flow Rate (kcfs)",
-							fontColor: plotColors.flow,
-							fontSize: 14
-						},
+				yAxis_flow: {
+					type: "linear",
+					position: "right",
+					display: true,
+					gridLines: { display: false },
+					ticks: {
+						min: 0,
+						max: 10
 					},
-					{
-						id: "yAxis_temp",
-						type: "linear",
-						position: "left",
-						gridLines: { display: false },
-						ticks: {
-							min: 0,
-							max: 30,
-							stepSize: 10,
-							// callback: function (label, index, labels) {
-							// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
-							// }
-						},
-						scaleLabel: {
-							display: true,
-							labelString: "Water Temperature (˚C)",
-							fontColor: plotColors.temperature,
-							fontSize: 14
-						},
-						color: plotColors.temp
-					}, 
-					{
-						id: "yAxis_flood",
-						type: "linear",
-						position: "left",
-						gridLines: { display: false },
-						ticks: {
-							min: 0,
-							max: 20
-						},
-						scaleLabel: {
-							display: true,
-							labelString: "Flood Stage (ft)",
-							fontColor: plotColors.flood,
-							fontSize: 14
-						}
+					title: {
+						display: true,
+						text: "Flow Rate (kcfs)",
+						color: plotColors.flow,
+						// fontSize: 14
+					},
+				},
+				yAxis_temp: {
+					type: "linear",
+					position: "left",
+					gridLines: { display: false },
+					ticks: {
+						min: 0,
+						max: 30,
+						stepSize: 10,
+						// callback: function (label, index, labels) {
+						// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
+						// }
+					},
+					title: {
+						display: true,
+						text: "Water Temperature (˚C)",
+						color: plotColors.temperature,
+						// fontSize: 14
+					},
+					color: plotColors.temp
+				}, 
+				yAxis_flood: {
+					type: "linear",
+					position: "left",
+					gridLines: { display: false },
+					ticks: {
+						min: 0,
+						max: 20
+					},
+					title: {
+						display: true,
+						text: "Flood Stage (ft)",
+						color: plotColors.flood,
+						// fontSize: 14
 					}
-				]
+				}
 			},
 			legend: {
 				position: "bottom",
