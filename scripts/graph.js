@@ -144,10 +144,8 @@ var setupGraphStructures = function () {
 					position: "right",
 					display: true,
 					gridLines: { display: false },
-					ticks: {
-						min: 0,
-						max: 10
-					},
+					min: 0,
+					max: 10,
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
@@ -159,14 +157,14 @@ var setupGraphStructures = function () {
 					type: "linear",
 					position: "left",
 					gridLines: { display: false },
-					ticks: {
-						min: 0,
-						max: 30,
-						stepSize: 10,
+					min: 0,
+					max: 30,
+					stepSize: 10,
+					// ticks: {
 						// callback: function (label, index, labels) {
 						// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
 						// }
-					},
+					// },
 					title: {
 						display: true,
 						text: "Water Temperature (˚C)",
@@ -179,10 +177,8 @@ var setupGraphStructures = function () {
 					type: "linear",
 					position: "left",
 					gridLines: { display: false },
-					ticks: {
-						min: 0,
-						max: 20
-					},
+					min: 0,
+					max: 20,
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
