@@ -225,6 +225,7 @@ var renderGraph = function () {
 	Chart.defaults.elements.point.radius = 1;
 	Chart.defaults.elements.line.borderWidth = 3;
 	Chart.defaults.elements.line.tension = 0.8;
+	Chart.defaults.elements.line.fill = true;
 	theGraph = new Chart(graphCanvas, graphSettings);
 };
 
