@@ -35,10 +35,7 @@ let plotColors = {
 };
 
 let selectors = {
-	graphCanvas: '#graphCanvas',
-	currentFlow: '#flow',
-	currentFlood: '#flood',
-	currentTemp: '#temp'
+	graphCanvas: '#graphCanvas'
 };
 
 let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
@@ -240,8 +237,6 @@ var parseFloodData = function (data) {
 		floodStageMeasurement: $(latestObservedDatum).find('primary').text(),
 		floodStageUnits: $(latestObservedDatum).find('primary').attr('units'),
 	};
-	// update instantaneous values
-	$(selectors.currentFlood).text(latestObserved.floodStageMeasurement + " " + latestObserved.floodStageUnits);
 	// get time-series and forecasted data
 	var observedData = $(data).find('site > observed > datum');
 	var observedDataN = observedData.length;
@@ -289,7 +284,6 @@ var parseFlowData = function (data) {
 	var units = timeseries.variable.unit.unitCode;
 	units = "kcfs"
 	
-	// update instantaneous values
 	// get time-series and forecasted data
 	var observedData = timeseriesdata;
 	var observedDataN = observedData.length;
@@ -322,7 +316,7 @@ var parseTemperatureData = function (data) {
 		celsius: tempC,
 		fahrenheit: tempF
 	}
-	$(selectors.currentTemp).text(tempC + " ˚C");
+
 	// extract timeseries data
 	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
 	var observedDataN = observedData.length;
