@@ -17,7 +17,7 @@ var AppViewModel = function () {
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
 	this.waterFlowColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
+		var color = rit_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
 		return color;
 	}, this);
 	this.waterLevel = ko.observable(this._initString);
@@ -25,7 +25,7 @@ var AppViewModel = function () {
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempUnits = ko.observable("˚C");
 	this.waterTempColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
+		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
 	}, this);
 	this.waterTempF = ko.computed(function () {
@@ -117,7 +117,7 @@ var AppViewModel = function () {
 		//	don't try to calculate until necessary values fetched
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
-			zone = trra_safety.rowing.zoneForConditions(
+			zone = rit_safety.rowing.zoneForConditions(
 				this.waterFlow(), this.waterTemp(),
 				this.sunrise(), this.sunset()
 			);
@@ -127,7 +127,7 @@ var AppViewModel = function () {
 	}, this);
 	
     this.zoneColor = ko.computed(function () {
-		var color = trra_safety.rowing.zoneColorForZone(this.zone());
+		var color = rit_safety.rowing.zoneColorForZone(this.zone());
 		return color;
 	}, this);
 	
