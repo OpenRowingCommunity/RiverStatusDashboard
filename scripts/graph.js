@@ -342,15 +342,17 @@ var populateDataSets = function () {
 				datatype: 'xml',
 				success: function (data) {
 					parseTemperatureData(data);
-				}
-			});
-
-			$.ajax({
-				url: flowSourceURI,
-				data: flowParameters,
-				datatype: 'json',
-				success: function (data) {
-					parseFlowData(data);
+				
+					// hard-chain start
+					$.ajax({
+						url: flowSourceURI,
+						data: flowParameters,
+						datatype: 'json',
+						success: function (data) {
+							parseFlowData(data);
+						}
+					});
+					// hard-chain end
 				}
 			});
 			// hard-chain end
