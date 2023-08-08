@@ -34,7 +34,8 @@ let main = function () {
 	if (viewModel.graphEnabled()) {
 		setupGraphStructures();
 		populateDataSets();
-		renderGraph();
+		// await populateDataSets();
+		// renderGraph();
 	}
 };
 

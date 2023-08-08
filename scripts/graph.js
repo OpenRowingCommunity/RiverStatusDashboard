@@ -13,17 +13,6 @@ var ordinates = {
 	forecast: { flow: [], flood: [], temp: [] }
 };
 var units = { flow: 'kcfs', flood: 'ft', temp: '˚C' };
-var xAxis = {};
-var yAxis_flow = {};
-var yAxis_flood = {};
-var yAxis_temp = {};
-var graphScale = {};
-var flowDataset = {};
-var floodDataset = {};
-var tempDataset = {};
-var graphData = {};
-var graphScale = {};
-var graphOptions = {};
 var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
@@ -86,146 +75,140 @@ var toCelsius = function (temp) {
 //	Graph Functions
 var setupGraphStructures = function () {
 	// axes & scales
-	xAxis = {
-		id: "xAxis",
-		type: "time",		// can we pass the moment objects directly?
-		position: "bottom",
-		gridLines: { 
-			display: true,
-			color: '#ffffff',
-			lineWidth: 1,
-			borderDash: [5,2],
-			zeroLineWidth: 1,
-			zeroLineColor: '#ffffff'
-		},
-		time:  {
-			unit: 'hour',
-			displayFormats: {
-				month: 'MM',
-				day: 'DD',
-				hour: 'ddd ha',
-				minute: 'mm'
-			},
-			stepSize: 10,
-			bounds: 'data',
-			ticks: 'data'
-		}
-	};
-	yAxis_flow = {
-		id: "yAxis_flow",
-		type: "linear",
-		position: "right",
-		display: true,
-		gridLines: { display: false },
-		ticks: {
-			min: 0,
-			max: 10
-		},
-		scaleLabel: {
-			display: true,
-			labelString: "Flow Rate (kcfs)",
-			fontColor: plotColors.flow,
-			fontSize: 14
-		},
-	}
-	yAxis_flood = {
-		id: "yAxis_flood",
-		type: "linear",
-		position: "left",
-		gridLines: { display: false },
-		ticks: {
-			min: 0,
-			max: 20
-		},
-		scaleLabel: {
-			display: true,
-			labelString: "Flood Stage (ft)",
-			fontColor: plotColors.flood,
-			fontSize: 14
-		}
-	};
-	yAxis_temp = {
-		id: "yAxis_temp",
-		type: "linear",
-		position: "left",
-		gridLines: { display: false },
-		ticks: {
-			min: 0,
-			max: 30,
-			stepSize: 10,
-			// callback: function (label, index, labels) {
-			// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
-			// }
-		},
-		scaleLabel: {
-			display: true,
-			labelString: "Water Temperature (˚C)",
-			fontColor: plotColors.temperature,
-			fontSize: 14
-		},
-		color: plotColors.temp
-	};
-	graphScale = {
-		xAxes: [xAxis],
-		yAxes: [yAxis_flow, yAxis_temp, yAxis_flood]
-	};
 	
 	// dataset wrapping
-	flowDataset = {
-		label: "Flow (kcfs)",
-		borderColor: plotColors.flow,
-		backgroundColor: plotColors.flow,
-		fill: false,
-		yAxisID: "yAxis_flow",
-		data: ordinates.observed.flow
-	};
-	floodDataset = {
-		label: "Flood Stage (ft)",
-		borderColor: plotColors.flood,
-		backgroundColor: plotColors.flood,
-		fill: false,
-		yAxisID: "yAxis_flood",
-		data: ordinates.observed.flood
-	};
-	tempDataset = {
-		label: "Water Temperature (˚C)",
-		borderColor: plotColors.temperature,
-		backgroundColor: plotColors.temperature,
-		fill: false,
-		yAxisID: "yAxis_temp",
-		data: ordinates.observed.temp
-	};
-	graphData = {
-		labels: abscissa.observed,
-		datasets: [flowDataset, floodDataset, tempDataset]
-	};
 	
 	// options, canvas, & settings
-	graphOptions = {
-		scales: graphScale,
-		legend: {
-			position: "bottom",
-			labels: {
-				fontColor: 'white'
-			}
-		},
-		hidden: false,
-		maintainAspectRatio: false
-	};
 	graphCanvas = $(selectors.graphCanvas).get(0);
 	graphSettings = {
 		type: "line",
-		data: graphData,
-		options: graphOptions
+		data: {
+			labels: abscissa.observed,
+			datasets: [
+				{
+					label: "Flow (kcfs)",
+					borderColor: plotColors.flow,
+					backgroundColor: plotColors.flow,
+					fill: false,
+					yAxisID: "yAxis_flow",
+					data: ordinates.observed.flow
+				},
+				{
+					label: "Flood Stage (ft)",
+					borderColor: plotColors.flood,
+					backgroundColor: plotColors.flood,
+					fill: false,
+					yAxisID: "yAxis_flood",
+					data: ordinates.observed.flood
+				},
+				{
+					label: "Water Temperature (˚C)",
+					borderColor: plotColors.temperature,
+					backgroundColor: plotColors.temperature,
+					fill: false,
+					yAxisID: "yAxis_temp",
+					data: ordinates.observed.temp
+				}
+			]
+		},
+		options: {
+			scales: {
+				x: {
+					type: "time",		// can we pass the moment objects directly?
+					display: true,
+					//...............
+					position: "bottom",
+					grid: { 
+						display: true,
+						color: '#ffffff',
+						lineWidth: 0.1,
+						// borderDash: [5,2],
+					},
+					time:  {
+						unit: 'hour',
+						displayFormats: {
+							month: 'MM',
+							day: 'DD',
+							hour: 'ddd ha',
+							minute: 'mm'
+						},
+						stepSize: 10,
+						bounds: 'data',
+						ticks: 'data'
+					}
+				},
+				yAxis_flow: {
+					type: "linear",
+					position: "right",
+					display: true,
+					grid: { display: false },
+					min: 0,
+					max: 10,
+					title: {
+						display: true,
+						text: "Flow Rate (kcfs)",
+						color: plotColors.flow,
+						// fontSize: 14
+					},
+				},
+				yAxis_temp: {
+					type: "linear",
+					position: "left",
+					grid: { display: false },
+					min: 0,
+					max: 30,
+					stepSize: 10,
+					// ticks: {
+						// callback: function (label, index, labels) {
+						// 		return label + "˚C | " + toFahrenheit(Number.parseFloat(label)) + "˚F";
+						// }
+					// },
+					title: {
+						display: true,
+						text: "Water Temperature (˚C)",
+						color: plotColors.temperature,
+						// fontSize: 14
+					},
+					color: plotColors.temp
+				}, 
+				yAxis_flood: {
+					type: "linear",
+					position: "left",
+					grid: { display: false },
+					min: 0,
+					max: 20,
+					title: {
+						display: true,
+						text: "Flood Stage (ft)",
+						color: plotColors.flood,
+						// fontSize: 14
+					}
+				}
+			},
+			plugins: {
+				legend: {
+					position: "bottom",
+					labels: {
+						fontColor: 'white'
+					}
+				},
+			},
+			hidden: false,
+			maintainAspectRatio: false
+		}
 	};
 };
 
 var renderGraph = function () {
-	Chart.defaults.global.defaultFontColor = 'white';
-	Chart.defaults.global.elements.point.radius = 1;
-	Chart.defaults.global.elements.line.borderWidth = 3;
-	Chart.defaults.global.elements.line.tension = 0.8;
-	theGraph = new Chart(graphCanvas, graphSettings);
+	Chart.defaults.color = 'white';
+	Chart.defaults.elements.point.radius = 1;
+	Chart.defaults.elements.line.borderWidth = 3;
+	Chart.defaults.elements.line.tension = 0.8;
+	Chart.defaults.elements.line.fill = true;
+
+	if (theGraph == null) {
+		theGraph = new Chart(graphCanvas, graphSettings);
+	}
 };
 
 
