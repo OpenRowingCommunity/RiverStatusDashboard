@@ -187,7 +187,7 @@ var AppViewModel = function () {
 	}
 	
 	/// # Safety Rules
-	
+
     /// ## Allowed Shell Types (2021✓)
     this.shellTypes = ko.computed(function () {
         if (!this._readyToComputeZone()) { return ''; }        
@@ -195,25 +195,26 @@ var AppViewModel = function () {
         let flow = this.waterFlow();
         var shellTypes = "<p>";
 
-        if (zone == 1) {
+        if (zone == 1 || zone == 2) {
             shellTypes = "All boats";
-        } else if (zone == 2) {
-            shellTypes = "Racing shells: All types\nAdaptive shells: PR3 2x only";
         } else if (zone == 3) {
-            shellTypes = "8+, 4+, 4x";
-            if (0 <= flow && flow < 40.0) {
+			shellTypes = "8+, 4x, 4+";
+            if (0 <= flow && flow < 5.0) {
                 shellTypes += ", 2x"
             }
         } else if (zone == 4) {
-            shellTypes = "8+, 4+, 4x";
+			shellTypes = "8+, 4x";
+			if (0 <= flow && flow < 5.0) {
+				shellTypes += ", 4+"
+			}
         } else if (zone == 5) {
             shellTypes = "8+, 4x";
         }
         shellTypes += "</p>";
 
-        if (zone == 1 || zone == 2) {
+        if (zone == 1 || zone == 2 || zone == 3) {
             shellTypes += "<p>Racing allowed</p>";
-        } else if (zone == 3 || zone == 4 || zone == 5) {
+        } else if (zone == 4 || zone == 5) {
             shellTypes += "<p>No racing allowed</p>";
         }
 
@@ -227,17 +228,13 @@ var AppViewModel = function () {
 		var launchToShellRatio = '';
 
         if (zone == 1) {
-            launchToShellRatio = "Not Required except for U18/HS";
+			launchToShellRatio = "Shells must be accompanied by a launch";
         } else if (zone == 2) {
             launchToShellRatio = "1 launch per 3 shells";
         } else if (zone == 3) {
             launchToShellRatio = "1 launch per 2 shells";
-        } else if (zone == 4) {
+        } else if (zone == 4 || zone == 5) {
             launchToShellRatio = "1 launch per shell";
-        } else if (zone == 5) {
-            launchToShellRatio = "1 launch per shell and sufficient launches to:\n" + 
-                "(a) carry all rowers and coxes participating in the session\n" +
-                "(b) have at least 2 engines between all launches on the water (towing line required)";
         }
 
 		return launchToShellRatio;
@@ -260,6 +257,7 @@ var AppViewModel = function () {
         // let month = moment…
         // let day = moment…
         var coxesReq = "PFD Required to be worn from November 1st through April 30th";
+
 
         if (zone == 1) {
             rowersReq = "PFD Not required";
@@ -310,31 +308,36 @@ var AppViewModel = function () {
         if (!this._readyToComputeZone()) { return ''; }
         let zone = this.zone();
 
-        var skill_u14 = '<p>U14: ';
-        var skill_novice = '<p>Novice: ';
-        var skill_experienced = '<p>Experienced: ';
-        var skill_adaptive = '<p>Adaptive: ';
+		var skill_l2r = 'Learn To Rowers: ';
+        var skill_new_novice = 'New Novices: ';
+        var skill_novice = 'Novices: ';
+        var skill_varsity = 'Varsity: ';
 
-        if (zone == 1) {
-            skill_u14 += "approved";
+		if (zone == 1) {
+			skill_l2r += "approved";
+            skill_new_novice += "approved";
             skill_novice += "approved";
-            skill_experienced += "approved";
-            skill_adaptive += "approved";
-        } else if (zone == 2) {
-            skill_u14 += "restricted";
+            skill_varsity += "approved";
+		} else if (zone == 2 || zone == 3) {
+			skill_l2r += "restricted";
+			skill_new_novice += "approved";
             skill_novice += "approved";
-            skill_experienced += "approved";
-            skill_adaptive += "PR3 only";
-        } else if (3 <= zone && zone <= 5) {
-            skill_u14 += "restricted";
-            skill_novice += "limited*";
-            skill_experienced += "approved";
-            skill_adaptive += "restricted";
+            skill_varsity += "approved";
+		} else if (zone == 4) {
+			skill_l2r += "restricted";
+			skill_new_novice += "restricted";
+			skill_novice += "approved";
+			skill_varsity += "approved";
+		} else if (zone == 5) {
+			skill_l2r += "restricted";
+			skill_new_novice += "restricted";
+			skill_novice += "restricted";
+			skill_varsity += "approved";
         } else {
             // problem?
         }
 
-		let fullSkillReqs = skill_u14 + "</p>" + skill_novice + "</p>" + skill_experienced + "</p>" + skill_adaptive + "</p>";
+		let fullSkillReqs = "<p>" + skill_varsity + "</p><p>" + skill_novice + "</p><p>" + skill_new_novice + "</p><p>" + skill_l2r + "</p>";
         return fullSkillReqs
 	}, this);
 	
