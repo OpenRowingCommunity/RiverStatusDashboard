@@ -7,9 +7,15 @@
 var gov_usgs = {
 	
 	cache: {
-		data: null,
-		timestamp: null,
-		agelimit: null
+		data: {
+			temperature: null,
+			flow: null
+		},
+		timestamp: {
+			temperature: null,
+			flow: null
+		},
+		agelimit: 60000
 	},
 	
 	api: {
@@ -25,21 +31,29 @@ var gov_usgs = {
 	},
 	
 	//	helper functions
-	unitsFormatter: function (unit_i) {
+	tempUnitsFormatter: function (unit_i) {
 		return "˚C";
 	},
 	
-	valueFormatter: function (value_i) {
+	tempValueFormatter: function (value_i) {
 		return value_i;
+	},
+
+	flowUnitsFormatter: function (unit_i) {
+		return "kcfs";
+	},
+	
+	flowValueFormatter: function (value_i) {
+		return value_i/1000;
 	},
 	
 	//	api functions
 	getWaterTemp: function (setterFunc) {
 		//	1: check if we have data already
-		if (gov_usgs.cache.data != null) {
+		if (gov_usgs.cache.data.temperature != null) {
 			//	2: if the timestamp is acceptably recent, use it
-			if ( (now - cache.timestamp) < agelimit ){
-				let value = cache.data.THEVALUE;			//TODO: replace with real value
+			if ( (new Date().getTime() - gov_usgs.cache.timestamp.temperature) < cache.agelimit ){
+				let value = gov_usgs.cache.data.temperature;
 				setterFunc(value);
 				return;
 			}
@@ -53,19 +67,62 @@ var gov_usgs = {
 			datatype: asyncContext.api.params.format,
 			success: function (data, textStatus, jqXHR) {
 				var value = data.value.timeSeries[0].values[0].value[0].value;
-				value = asyncContext.valueFormatter(value);
+				value = asyncContext.tempValueFormatter(value);
 				
 				var units = data.value.timeSeries[0].variable.unit.unitCode;
-				units = asyncContext.unitsFormatter(units);
+				units = asyncContext.tempUnitsFormatter(units);
 				
 				let apiData = "" + value /*+ " " + units*/;
 				
-				// TODO: update the cached data
+				// update the cached data
+				gov_usgs.cache.data.temperature = apiData
+				gov_usgs.cache.timestamp.temperature = new Date().getTime()
+
 				setterFunc(apiData);
 			}//end-success
 		});//end-$.ajax
-	}//end-getWaterTemp
+	},//end-getWaterTemp
 	
+
+	//	api functions
+	getWaterFlow: function (setterFunc) {
+		//	1: check if we have data already
+		if (gov_usgs.cache.data.flow != null) {
+			//	2: if the timestamp is acceptably recent, use it
+			if ( (new Date().getTime() - gov_usgs.cache.timestamp.flow) < gov_usgs.cache.agelimit ){
+				let value = cache.data.flow;
+				setterFunc(value);
+				return;
+			}
+		}
+		
+		let asyncContext = gov_usgs;
+
+		let params = Object.assign({},asyncContext.api.params);
+
+		params.parameterCd = '00060'
+
+		
+		$.ajax({
+			url: asyncContext.api.url, 
+			data: params, 
+			datatype: params.format,
+			success: function (data, textStatus, jqXHR) {
+				var value = data.value.timeSeries[0].values[0].value[0].value;
+				value = asyncContext.flowValueFormatter(value);
+				
+				var units = data.value.timeSeries[0].variable.unit.unitCode;
+				units = asyncContext.flowUnitsFormatter(units);
+				
+				let apiData = "" + value /*+ " " + units*/;
+				
+				// update the cached data
+				gov_usgs.cache.data.flow = apiData
+				gov_usgs.cache.timestamp.flow = new Date().getTime()
+				setterFunc(apiData);
+			}//end-success
+		});//end-$.ajax
+	}//end-getWaterFlow
 };
 
 // EOF

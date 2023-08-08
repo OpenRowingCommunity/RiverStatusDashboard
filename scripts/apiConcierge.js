@@ -41,7 +41,7 @@ let apiConcierge = {
 	
 	// for a value, which API domain
 	accessorMap: {
-		'waterFlow': gov_weather_water.getWaterFlow,
+		'waterFlow': gov_usgs.getWaterFlow,
 		'waterLevel': gov_weather_water.getWaterLevel,
 		'waterTemp': gov_usgs.getWaterTemp,
 		'airTemp': gov_weather_w1.getAirTemp,
