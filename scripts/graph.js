@@ -29,14 +29,14 @@ let selectors = {
 
 let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php";
 let floodParameters = {
-	gage: config.noaaGageId,
+	gage: config.getDataSourcesByType("noaa-water")[0].id,
 	output: 'xml'
 };
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
 	format: 'waterml,2.0',
-	sites: config.usgsSiteIDs[1],
+	sites: config.filterDataSources("usgs", "watertemp")[0].id,
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
 	parameterCd: '00010',
@@ -47,7 +47,7 @@ let temperatureParameters = {
 let flowSourceURI = 'https://waterservices.usgs.gov/nwis/iv';
 let flowParameters = {
 	format: 'json',			// 'waterml,2.0' is old style
-	sites: config.usgsSiteIDs[0],
+	sites: config.filterDataSources("usgs", "waterflow")[0].id,
 	parameterCd: '00060',
 	siteStatus: 'all',
 	startDT: '',			// need to restore for timeseries fetch

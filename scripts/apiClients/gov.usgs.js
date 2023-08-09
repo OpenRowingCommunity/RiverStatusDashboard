@@ -22,7 +22,7 @@ var gov_usgs = {
 		url: 'https://waterservices.usgs.gov/nwis/iv',
 		params: {
 			format: 'json',			// 'waterml,2.0' is old style
-			sites: config.usgsSiteIDs[1],
+			sites: config.filterDataSources("usgs", "watertemp")[0].id,
 			parameterCd: '00010',
 			siteStatus: 'all'/*,
 			startDT: '',			// need to restore for timeseries fetch
@@ -102,7 +102,7 @@ var gov_usgs = {
 
 		//TODO: fix this, its a bit of a gross hack. need to OOP-ify the APIs
 		params.parameterCd = '00060'
-		params.sites = config.usgsSiteIDs[0]
+		params.sites = config.filterDataSources("usgs", "waterflow")[0].id
 		
 		$.ajax({
 			url: asyncContext.api.url, 
