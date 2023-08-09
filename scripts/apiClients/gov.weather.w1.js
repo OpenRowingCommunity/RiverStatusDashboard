@@ -14,7 +14,7 @@ var gov_weather_w1 = {
 	api: {
 		url: 'https://w1.weather.gov/xml/current_obs/display.php',
 		params: {
-			stid: 'KROC',//CHANGEME
+			stid: config.localAirportCallsign,//CHANGEME
 		}
 	},
 	

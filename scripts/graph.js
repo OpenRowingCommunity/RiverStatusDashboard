@@ -27,16 +27,16 @@ let selectors = {
 	graphCanvas: '#graphCanvas'
 };
 
-let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php?gage=blbn6&output=xml&time_zone=edt";//CHAMGEME
+let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php";
 let floodParameters = {
-	gage: 'blbn6',//CHANGEME
+	gage: config.noaaGageId,
 	output: 'xml'
 };
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
 	format: 'waterml,2.0',
-	sites: '04231600',//TODO: changeme
+	sites: config.usgsSiteIDs[1],
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
 	parameterCd: '00010',
@@ -47,7 +47,7 @@ let temperatureParameters = {
 let flowSourceURI = 'https://waterservices.usgs.gov/nwis/iv';
 let flowParameters = {
 	format: 'json',			// 'waterml,2.0' is old style
-	sites: '04230650',//'04230650',//TODO, changeme
+	sites: config.usgsSiteIDs[0],
 	parameterCd: '00060',
 	siteStatus: 'all',
 	startDT: '',			// need to restore for timeseries fetch
