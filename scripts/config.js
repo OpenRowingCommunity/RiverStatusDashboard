@@ -13,6 +13,34 @@ class RiverStatusConfig {
 		//TODO: include the safety matrix in this data
 		// this.safetyMatrix 
 	}
+
+	getDataSourcesByType(type) {
+		return this.dataSources.filter((src) => src.type === type);
+	}
+
+	//TODO: support optional purposeHints and allow for trying each data source matching the right type to see if it has the data or not
+	getDataSourcesByPurpose(purpose) {
+		return this.dataSources.filter((src) => src.purposeHints.includes(purpose));
+	}
+
+	filterDataSources(type, purpose) {
+		if (type === undefined) {
+			return this.getDataSourcesByPurpose(purpose)
+		} else if (purpose === undefined) {
+			return this.getDataSourcesByType(type)
+		} else {
+			let typematch_sources = this.getDataSourcesByType(type)
+
+			let results = typematch_sources.filter((src) => src.purposeHints.includes(purpose));
+
+			if (results.length >= 1) {
+				return results
+			} else {
+				return typematch_sources
+			}
+		}
+	}
+	
 }
 
 let ritconfig = new RiverStatusConfig({
