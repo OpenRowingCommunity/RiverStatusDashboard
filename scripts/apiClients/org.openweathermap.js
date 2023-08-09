@@ -15,7 +15,8 @@ var org_openweathermap = {
 	api: {
 		url: 'http://api.openweathermap.org/data/2.5/weather',
 		params: {
-			q: 'Pittsburgh',
+			lat: config.boathouseLat,
+			lon: config.boathouseLong,
 			APPID: 'ca57135ce92d724c88f387883163f1ad'	// My API Key
 		}
 	},
