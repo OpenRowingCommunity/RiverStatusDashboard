@@ -3,6 +3,8 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
+// the square brackets in the keys allow the keys value to be computed.
+// see https://stackoverflow.com/a/40720612/
 let mockData = {
 	[DatapointIdentifier.WATER_FLOW]: 32.9,
 	[DatapointIdentifier.WATER_TEMP]: 21.3,
