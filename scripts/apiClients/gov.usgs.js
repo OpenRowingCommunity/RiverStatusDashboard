@@ -25,7 +25,7 @@ class USGS extends APIClient {
 	}
 
 
-	async _getDatapoint(apiId, path = "", start_datestamp = undefined, end_datestamp = undefined, parameters = {}) {
+	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			format: 'json',			// 'waterml,2.0' is old style
 			sites: apiId,
