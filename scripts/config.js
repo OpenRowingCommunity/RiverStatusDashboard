@@ -19,7 +19,7 @@ class RiverStatusConfig {
 	 * @param {*} type the [APIClientIdentifier] of the data source to filter for
 	 * @returns a filtered list of data sources showing only those belonging to the specified data source
 	 */
-	getDataSourcesByType(type) {
+	getDataSourceDetailsByType(type) {
 		return this.dataSources.filter((src) => src.type === type);
 	}
 
@@ -29,7 +29,7 @@ class RiverStatusConfig {
 	 * @returns a filtered list of data sources showing only those containing the specific datapoint hint
 	 */
 	//TODO: support optional purposeHints and allow for trying each data source matching the right type to see if it has the data or not
-	getDataSourcesByPurpose(purpose) {
+	getDataSourceDetailsByPurpose(purpose) {
 		return this.dataSources.filter((src) => src.purposeHints.includes(purpose));
 	}
 
@@ -39,7 +39,7 @@ class RiverStatusConfig {
 	 * @param {*} purpose 
 	 * @returns 
 	 */
-	filterDataSources(type, purpose) {
+	getDataSourceDetails(type, purpose) {
 		if (type === undefined) {
 			return this.getDataSourcesByPurpose(purpose)
 		} else if (purpose === undefined) {
