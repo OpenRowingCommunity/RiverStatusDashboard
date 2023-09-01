@@ -13,7 +13,8 @@ class APIClient {
 		return await fetch(url);
 	}
 
-	async getDatapoint(datapointId, apiId);
+	//interface
+	// async getDatapoint(datapointId, apiId, fetchHistorical = false);
 
 	//TODO: supported datapoints list
 
