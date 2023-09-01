@@ -16,12 +16,6 @@ let mockData = {
 	[DatapointIdentifier.SUNSET]: null
 };
 
-let apiClients = {
-	'water.weather.gov': gov_weather_water,
-	'w1.weather.gov': gov_weather_w1,
-	'usgs.gov': gov_usgs,
-	'sunrise-sunset.org': org_sunrise_sunset
-};
 
 //	Object-Based Version
 
@@ -42,16 +36,6 @@ let apiConcierge = {
 	},
 	
 	// for a value, which API domain
-	accessorMap: {
-		[DatapointIdentifier.WATER_FLOW]: config.clubAcronym === "TRRA"?  gov_weather_water.getWaterFlow : gov_usgs.getWaterFlow,
-		[DatapointIdentifier.WATER_LEVEL]: gov_weather_water.getWaterLevel,
-		[DatapointIdentifier.WATER_TEMP]: gov_usgs.getWaterTemp,
-		[DatapointIdentifier.AIR_TEMP]: gov_weather_w1.getAirTemp,
-		[DatapointIdentifier.AIR_SPEED]: gov_weather_w1.getAirSpeed,
-		[DatapointIdentifier.AIR_DIRECTION]: gov_weather_w1.getAirDirxn,
-		[DatapointIdentifier.SUNRISE]: org_sunrise_sunset.getSunrise,
-		[DatapointIdentifier.SUNSET]: org_sunrise_sunset.getSunset
-	},
 	
 	/**
 	 * 
@@ -59,12 +43,15 @@ let apiConcierge = {
 	 * @param {*} setterFunc the function to be used to set the value once retrieved
 	 * @returns 
 	 */
-	getValueAsync: function (valueId, setterFunc) {
+	getValueAsync: async function (valueId, setterFunc) {
 		if (this.usingMockData) {				// if using mock data, short circuit
+			//Why does this return when the non mock case calls a callback?
 			 return mockData[valueId];
 		}
-		let getter = this.accessorMap[valueId];
-		getter(setterFunc);
+		
+		let details = config.getDataSourceDetails(undefined, valueId);
+		let client = clientMap[details.type];
+		return client.getDatapoint(valueId, details.id);
 	}
 	
 };
