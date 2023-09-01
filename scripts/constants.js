@@ -6,7 +6,9 @@ const DatapointIdentifier = Object.freeze({
 	AIR_TEMP:		Symbol("airtemp"),
 	AIR_SPEED:		Symbol("airspeed"),
 	AIR_DIRECTION:	Symbol("airdirection"),
-	AIR_QUALITY:	Symbol("airquality")
+	AIR_QUALITY:	Symbol("airquality"),
+	SUNRISE:		Symbol("sunrise"),
+	SUNSET:			Symbol("sunset")
 });
 
 const APIClientIdentifier = Object.freeze({
