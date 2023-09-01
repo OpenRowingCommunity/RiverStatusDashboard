@@ -73,4 +73,4 @@ class NOAAWeatherWater extends APIClient {
 }
 
 
-var gov_weather_water = NOAAWeatherWater();
+var gov_weather_water = new NOAAWeatherWater();
