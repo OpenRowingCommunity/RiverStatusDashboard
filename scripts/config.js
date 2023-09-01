@@ -102,19 +102,19 @@ let trraconfig = new RiverStatusConfig({
 	boathouseLong: -79.976543,
 	dataSources: [
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "03049640",
 			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Allegheny R at CW Bill Young L&D at Acmetonia, PA"
 		},
 		{
-			type: "noaa-weather",
+			type: APIClientIdentifier.NOAA_W1,
 			id: "KPIT",
 			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Pittsburgh International Airport"
 		},
 		{
-			type: "noaa-water",
+			type: APIClientIdentifier.NOAA_WATER,
 			id: "shrp1",
 			purposeHints: [DatapointIdentifier.WATER_LEVEL, DatapointIdentifier.WATER_FLOW],
 			comment: "Allegheny River at Sharpsburg Lock and Dam"
