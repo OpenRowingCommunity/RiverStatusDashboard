@@ -53,25 +53,25 @@ let ritconfig = new RiverStatusConfig({
 		{
 			type: "usgs",
 			id: "04230650",
-			purposeHints: ["waterflow"],
+			purposeHints: [DatapointIdentifier.WATER_FLOW],
 			comment: "Jefferson Bridge"
 		},
 		{
 			type: "usgs",
 			id: "04231600",
-			purposeHints: ["watertemp"],
+			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Ford St. Bridge"
 		},
 		{
 			type: "noaa-water",
 			id: "blbn6",
-			purposeHints: ["waterlevel"],
+			purposeHints: [DatapointIdentifier.WATER_LEVEL],
 			comment: "Jefferson Road Bridge"
 		},
 		{
 			type: "noaa-weather",
 			id: "KROC",
-			purposeHints: ["airtemp", "airspeed", "airdirection"],
+			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Greater Rochester International Airport"
 		},
 		
@@ -88,19 +88,19 @@ let trraconfig = new RiverStatusConfig({
 		{
 			type: "usgs",
 			id: "03049640",
-			purposeHints: ["watertemp"],
+			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Allegheny R at CW Bill Young L&D at Acmetonia, PA"
 		},
 		{
 			type: "noaa-weather",
 			id: "KPIT",
-			purposeHints: ["airtemp", "airspeed", "airdirection"],
+			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Pittsburgh International Airport"
 		},
 		{
 			type: "noaa-water",
 			id: "shrp1",
-			purposeHints: ["waterlevel", "waterflow"],
+			purposeHints: [DatapointIdentifier.WATER_LEVEL, DatapointIdentifier.WATER_FLOW],
 			comment: "Allegheny River at Sharpsburg Lock and Dam"
 		}
 	]
