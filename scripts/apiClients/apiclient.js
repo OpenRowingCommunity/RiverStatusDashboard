@@ -10,7 +10,7 @@ class APIClient {
 			fullurl.search = new URLSearchParams(urlparameters)
 		}
 
-		return await fetch(url);
+		return await fetch(fullurl);
 	}
 
 	//interface
