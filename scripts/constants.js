@@ -1,20 +1,20 @@
 
 const DatapointIdentifier = Object.freeze({
-    WATER_FLOW:		Symbol("waterflow"),
-	WATER_TEMP:		Symbol("watertemp"),
-	WATER_LEVEL:	Symbol("waterlevel"),
-	AIR_TEMP:		Symbol("airtemp"),
-	AIR_SPEED:		Symbol("airspeed"),
-	AIR_DIRECTION:	Symbol("airdirection"),
-	AIR_QUALITY:	Symbol("airquality"),
-	SUNRISE:		Symbol("sunrise"),
-	SUNSET:			Symbol("sunset")
+    WATER_FLOW:		"waterflow",
+	WATER_TEMP:		"watertemp",
+	WATER_LEVEL:	"waterlevel",
+	AIR_TEMP:		"airtemp",
+	AIR_SPEED:		"airspeed",
+	AIR_DIRECTION:	"airdirection",
+	AIR_QUALITY:	"airquality",
+	SUNRISE:		"sunrise",
+	SUNSET:			"sunset"
 });
 
 const APIClientIdentifier = Object.freeze({
-	NOAA_WATER:			Symbol("water.weather.gov"),
-	EPA_AIRNOW:			Symbol("airnow.epa.gov"),
-	NOAA_W1:			Symbol("w1.weather.gov"),
-	USGS:				Symbol("usgs.gov"),
-	SUNRISE_SUNSET_ORG:	Symbol("sunrise-sunset.org")
+	NOAA_WATER:			"water.weather.gov",
+	EPA_AIRNOW:			"airnow.epa.gov",
+	NOAA_W1:			"w1.weather.gov",
+	USGS:				"usgs.gov",
+	SUNRISE_SUNSET_ORG:	"sunrise-sunset.org"
 });
