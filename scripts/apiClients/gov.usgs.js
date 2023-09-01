@@ -53,14 +53,16 @@ class USGS extends APIClient {
 			case DatapointIdentifier.WATER_FLOW:
 				return this._getDatapoint( apiId, {
 					parameterCd: '00060'
-				}).then((data) => {
+				}).then(async (response) => {
+					var data = await response.json()
 					var value = data.value.timeSeries[0].values[0].value[0].value;
 					return this.dataTransformers[datapointId](value);
 				});
 			case DatapointIdentifier.WATER_TEMP:
 				return this._getDatapoint( apiId, {
 					parameterCd: '00010'
-				}).then((data) => {
+				}).then(async (response) => {
+					var data = await response.json()
 					var value = data.value.timeSeries[0].values[0].value[0].value;
 					return this.dataTransformers[datapointId](value);
 				});
