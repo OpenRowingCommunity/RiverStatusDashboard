@@ -41,11 +41,11 @@ class RiverStatusConfig {
 	 */
 	getDataSourceDetails(type, purpose) {
 		if (type === undefined) {
-			return this.getDataSourcesByPurpose(purpose)
+			return this.getDataSourceDetailsByPurpose(purpose)
 		} else if (purpose === undefined) {
-			return this.getDataSourcesByType(type)
+			return this.getDataSourceDetailsByType(type)
 		} else {
-			let typematch_sources = this.getDataSourcesByType(type)
+			let typematch_sources = this.getDataSourceDetailsByType(type)
 
 			let results = typematch_sources.filter((src) => src.purposeHints.includes(purpose));
 

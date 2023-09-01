@@ -29,7 +29,7 @@ let selectors = {
 
 let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php";
 let floodParameters = {
-	gage: config.getDataSourcesByType("noaa-water")[0].id,
+	gage: config.getDataSourceDetailsByType("noaa-water")[0].id,
 	output: 'xml'
 };
 

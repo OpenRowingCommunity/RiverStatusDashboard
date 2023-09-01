@@ -15,7 +15,7 @@ var gov_weather_water = {
 	api: {
 		url: 'https://water.weather.gov/ahps2/hydrograph_to_xml.php',
 		params: {
-			gage: config.getDataSourcesByType("noaa-water")[0].id,
+			gage: config.getDataSourceDetailsByType("noaa-water")[0].id,
 			output: 'xml'		// switch to JSON? -- unsupported yet
 		}
 	},
