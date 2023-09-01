@@ -51,9 +51,12 @@ let apiConcierge = {
 		'sunset': org_sunrise_sunset.getSunset
 	},
 	
-	///	getValueAsync
-	/// @param valueID: a unique identifier (string or int) of the value sought
-	/// @param setterFunc: the function to be used to set the value once retrieved
+	/**
+	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the value sought
+	 * @param {*} setterFunc the function to be used to set the value once retrieved
+	 * @returns 
+	 */
 	getValueAsync: function (valueId, setterFunc) {
 		if (this.usingMockData) {				// if using mock data, short circuit
 			 return mockData[valueId];
