@@ -302,9 +302,9 @@ var AppViewModel = function () {
 		//	Pattern: for given variable, invoke corresponding function declared in apiConceierge
 		//	  …pass in the setter method (in this case the observable itself) so it can update it
 		//	  …asynchronously when the API call returns
-		apiConcierge.getValueAsync('waterFlow', this.waterFlow);
-		apiConcierge.getValueAsync('waterLevel', this.waterLevel);
-		apiConcierge.getValueAsync('waterTemp', this.waterTemp);
+		apiConcierge.getValueAsync(DatapointIdentifier.WATER_FLOW, this.waterFlow);
+		apiConcierge.getValueAsync(DatapointIdentifier.WATER_LEVEL, this.waterLevel);
+		apiConcierge.getValueAsync(DatapointIdentifier.WATER_TEMP, this.waterTemp);
 		// intervene for unit switching
 
 		//	Air temp & wind are disabled b/c OpenWeatherMap doesn't support HTTPS and I don't know
@@ -312,11 +312,11 @@ var AppViewModel = function () {
 		// getAirTemp(this.airTemp);
 		// getAirSpeed(this.airSpeed);
 		// getAirDirxn(this.airDirxn);
-		apiConcierge.getValueAsync('airTemp', this.airTemp);
-		apiConcierge.getValueAsync('airSpeed', this.airSpeed);
-		apiConcierge.getValueAsync('airDirxn', this.airDirxn);
-		apiConcierge.getValueAsync('sunrise', this.sunrise);
-		apiConcierge.getValueAsync('sunset', this.sunset);
+		apiConcierge.getValueAsync(DatapointIdentifier.AIR_TEMP, this.airTemp);
+		apiConcierge.getValueAsync(DatapointIdentifier.AIR_SPEED, this.airSpeed);
+		apiConcierge.getValueAsync(DatapointIdentifier.AIR_DIRECTION, this.airDirxn);
+		apiConcierge.getValueAsync(DatapointIdentifier.SUNRISE, this.sunrise);
+		apiConcierge.getValueAsync(DatapointIdentifier.SUNSET, this.sunset);
 		let now = moment().format("h:mm a");
 		this.lastUpdated(now);
 		return true;

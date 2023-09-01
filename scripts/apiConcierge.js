@@ -4,14 +4,14 @@
 //		apiConcierge.js created on 2017-06-26
 
 let mockData = {
-	waterFlow: 32.9,
-	waterTemp: 21.3,
-	waterLevel: 12.9,
-	airTemp: 22.4,
-	airSpeed: 2.7,
-	airDirxn: 227,
-	sunrise: null,
-	sunset: null
+	[DatapointIdentifier.WATER_FLOW]: 32.9,
+	[DatapointIdentifier.WATER_TEMP]: 21.3,
+	[DatapointIdentifier.WATER_LEVEL]: 12.9,
+	[DatapointIdentifier.AIR_TEMP]: 22.4,
+	[DatapointIdentifier.AIR_SPEED]: 2.7,
+	[DatapointIdentifier.AIR_DIRECTION]: 227,
+	[DatapointIdentifier.SUNRISE]: null,
+	[DatapointIdentifier.SUNSET]: null
 };
 
 let apiClients = {
@@ -41,14 +41,14 @@ let apiConcierge = {
 	
 	// for a value, which API domain
 	accessorMap: {
-		'waterFlow': config.clubAcronym === "TRRA"?  gov_weather_water.getWaterFlow : gov_usgs.getWaterFlow,
-		'waterLevel': gov_weather_water.getWaterLevel,
-		'waterTemp': gov_usgs.getWaterTemp,
-		'airTemp': gov_weather_w1.getAirTemp,
-		'airSpeed': gov_weather_w1.getAirSpeed,
-		'airDirxn': gov_weather_w1.getAirDirxn,
-		'sunrise': org_sunrise_sunset.getSunrise,
-		'sunset': org_sunrise_sunset.getSunset
+		[DatapointIdentifier.WATER_FLOW]: config.clubAcronym === "TRRA"?  gov_weather_water.getWaterFlow : gov_usgs.getWaterFlow,
+		[DatapointIdentifier.WATER_LEVEL]: gov_weather_water.getWaterLevel,
+		[DatapointIdentifier.WATER_TEMP]: gov_usgs.getWaterTemp,
+		[DatapointIdentifier.AIR_TEMP]: gov_weather_w1.getAirTemp,
+		[DatapointIdentifier.AIR_SPEED]: gov_weather_w1.getAirSpeed,
+		[DatapointIdentifier.AIR_DIRECTION]: gov_weather_w1.getAirDirxn,
+		[DatapointIdentifier.SUNRISE]: org_sunrise_sunset.getSunrise,
+		[DatapointIdentifier.SUNSET]: org_sunrise_sunset.getSunset
 	},
 	
 	/**
