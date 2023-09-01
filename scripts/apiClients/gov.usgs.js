@@ -9,7 +9,7 @@
 class USGS extends APIClient {
 
 	constructor() {
-		this.baseurl = 'https://waterservices.usgs.gov/nwis/iv';
+		super('https://waterservices.usgs.gov/nwis/iv')
 		this.id = APIClientIdentifier.USGS
 	}
 
