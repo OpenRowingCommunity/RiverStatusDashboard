@@ -56,7 +56,7 @@ let apiConcierge = {
 			details = details[0]
 		}
 		let client = this.clientMap[details.type];
-		return client.getDatapoint(valueId, details.id);
+		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
 	}
 	
 };
