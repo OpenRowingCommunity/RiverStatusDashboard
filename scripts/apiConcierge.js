@@ -35,10 +35,10 @@ let apiConcierge = {
 	
 	// for an API domain, which apiClient
 	clientMap: {
-		'water.weather.gov': gov_weather_water,
-		'w1.weather.gov': gov_weather_w1,
-		'usgs.gov': gov_usgs,
-		'sunrise-sunset.org': org_sunrise_sunset
+		[APIClientIdentifier.NOAA_WATER]: gov_weather_water,
+		[APIClientIdentifier.NOAA_W1]: gov_weather_w1,
+		[APIClientIdentifier.USGS]: gov_usgs,
+		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset
 	},
 	
 	// for a value, which API domain
