@@ -50,7 +50,12 @@ let apiConcierge = {
 		}
 		
 		let details = config.getDataSourceDetails(undefined, valueId);
-		let client = clientMap[details.type];
+		if (details.length == 0 ){
+			console.log("no config found - searching for " + valueId)
+		} else {
+			details = details[0]
+		}
+		let client = this.clientMap[details.type];
 		return client.getDatapoint(valueId, details.id);
 	}
 	
