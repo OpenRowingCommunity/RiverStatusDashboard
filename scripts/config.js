@@ -51,25 +51,25 @@ let ritconfig = new RiverStatusConfig({
 	boathouseLong: -77.699065,
 	dataSources: [
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "04230650",
 			purposeHints: [DatapointIdentifier.WATER_FLOW],
 			comment: "Jefferson Bridge"
 		},
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "04231600",
 			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Ford St. Bridge"
 		},
 		{
-			type: "noaa-water",
+			type: APIClientIdentifier.NOAA_WATER,
 			id: "blbn6",
 			purposeHints: [DatapointIdentifier.WATER_LEVEL],
 			comment: "Jefferson Road Bridge"
 		},
 		{
-			type: "noaa-weather",
+			type: APIClientIdentifier.NOAA_W1,
 			id: "KROC",
 			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Greater Rochester International Airport"
