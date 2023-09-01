@@ -14,15 +14,31 @@ class RiverStatusConfig {
 		// this.safetyMatrix 
 	}
 
+	/**
+	 * return the list of data sources for this configuration showing only those of a specific type
+	 * @param {*} type the [APIClientIdentifier] of the data source to filter for
+	 * @returns a filtered list of data sources showing only those belonging to the specified data source
+	 */
 	getDataSourcesByType(type) {
 		return this.dataSources.filter((src) => src.type === type);
 	}
 
+	/**
+	 * return the list of data sources for this configuration showing only those containing a particular purpose hint
+	 * @param {*} purpose the [DatatypeIdentifer] indicating the data points to filter for
+	 * @returns a filtered list of data sources showing only those containing the specific datapoint hint
+	 */
 	//TODO: support optional purposeHints and allow for trying each data source matching the right type to see if it has the data or not
 	getDataSourcesByPurpose(purpose) {
 		return this.dataSources.filter((src) => src.purposeHints.includes(purpose));
 	}
 
+	/**
+	 * filter data sources by both type and purpose
+	 * @param {*} type 
+	 * @param {*} purpose 
+	 * @returns 
+	 */
 	filterDataSources(type, purpose) {
 		if (type === undefined) {
 			return this.getDataSourcesByPurpose(purpose)
