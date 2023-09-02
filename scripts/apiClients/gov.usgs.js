@@ -2,9 +2,7 @@
 //		Allegheny River information for Three Rivers Rowing Association (TRRA)
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		gov.usgs.js created on 2017-06-26
-
-
-
+//		refactored 2023-09-01 by Adrian Edwards
 
 class USGS extends APIClient {
 

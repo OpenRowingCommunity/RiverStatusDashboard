@@ -2,7 +2,7 @@
 //		Allegheny River information for Three Rivers Rowing Association (TRRA)
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		org.openweathermap.js created on 2018-11-01
-
+//		refactored 2023-09-01 by Adrian Edwards
 
 //	helper functions
 function airTempFormatter(temp_i) {
