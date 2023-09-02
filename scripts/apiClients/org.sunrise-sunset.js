@@ -5,87 +5,78 @@
 
 //	requirejs(['moment']); ?		//	<- expects moment to be available in the global ns
 
-var org_sunrise_sunset = {
-	
-	cache: {
-		data: null,
-		timestamp: null,
-		agelimit: null
-	},
-	
-	api: {
-		url: 'https://api.sunrise-sunset.org/json',
-		params: {
+
+
+//	helper functions
+function timeFormatter(time_i) {
+	var time_f = time_i;
+	if (moment != null) {
+		time_f = moment(time_i);
+		// time_f = time_f.format("h:mm a");
+	}
+	return time_f;
+}
+
+
+class SunriseSunsetOrg extends APIClient {
+
+	constructor() {
+		super('https://api.sunrise-sunset.org/json')
+		this.id = APIClientIdentifier.USGS
+	}
+	dataTransformers = {
+		[DatapointIdentifier.SUNRISE]: timeFormatter,
+		[DatapointIdentifier.SUNSET]: timeFormatter,
+	}
+
+	dataUnits = {
+		[DatapointIdentifier.SUNRISE]: '',//time
+		[DatapointIdentifier.SUNSET]: "",//time
+	}
+
+
+	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+		let params = {
 			lat: config.boathouseLat,
 			lng: config.boathouseLong,
 			date: moment().format('YYYY-MM-DD'),
 			formatted: 0
 		}
-	},
-	
-	//	helper functions
-	timeFormatter: function (time_i) {
-		var time_f = time_i;
-		if (moment != null) {
-			time_f = moment(time_i);
-			// time_f = time_f.format("h:mm a");
-		}
-		return time_f;
-	},
-	
-	//	api functions
-	getSunrise: function (setterFunc) {
-		//	1: check if we have data already
-		if (org_sunrise_sunset.cache.data != null) {
-			//	2: if the timestamp is acceptably recent, use it
-			if ( (now - cache.timestamp) < agelimit ){
-				let value = cache.data.THEVALUE;			//TODO: replace with real value
-				setterFunc(value);
-				return;
-			}
-		}
-		
-		let asyncContext = org_sunrise_sunset;
-		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: asyncContext.api.params, 
-			datatype: 'json',
-			success: function (data, textStatus, jqXHR) {
-				var apiData = data.results.sunrise;
-				apiData = asyncContext.timeFormatter(apiData);
-				// TODO: update cache
-				setterFunc(apiData);
-			}
-		});
-	},
-	
-	getSunset: function (setterFunc) {
-		//	1: check if we have data already
-		if (org_sunrise_sunset.cache.data != null) {
-			//	2: if the timestamp is acceptably recent, use it
-			if ( (now - cache.timestamp) < agelimit ){
-				let value = cache.data.THEVALUE;			//TODO: replace with real value
-				setterFunc(value);
-				return;
-			}
-		}
-		
-		let asyncContext = org_sunrise_sunset;
-		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: asyncContext.api.params, 
-			datatype: 'json',
-			success: function (data, textStatus, jqXHR) {
-				var apiData = data.results.sunset;
-				apiData = asyncContext.timeFormatter(apiData);
-				// TODO: update cache
-				setterFunc(apiData);
-			}
-		});
-	}
-	
-};
 
-// EOF
+		//combine input parameters with defaults
+		params = Object.assign({}, params, parameters);
+
+		return super.request(path, params)
+	}
+
+	async getDatapoint(datapointId, apiId) {
+		//TODO: check cache
+		switch (datapointId) {
+			case DatapointIdentifier.SUNRISE:
+				return this._getDatapoint(apiId)
+					.then(async (response) => {
+						var data = await response.json()
+						return this.dataTransformers[datapointId](data.results.sunrise);
+					});
+			case DatapointIdentifier.SUNSET:
+				return this._getDatapoint(apiId)
+					.then(async (response) => {
+						var data = await response.json()
+						return this.dataTransformers[datapointId](data.results.sunset);
+					});
+			default:
+				console.log("datapoint " + datapointId + " not supported by client " + this.id);
+		}
+	}
+
+	getUnits(datapointId) {
+		return dataUnits[datapointId]
+	}
+
+	supportedDatapoints() {
+		return this.dataTransformers.keys()
+	}
+}
+
+
+var org_sunrise_sunset = new SunriseSunsetOrg();
