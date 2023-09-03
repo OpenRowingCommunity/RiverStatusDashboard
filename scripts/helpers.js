@@ -19,14 +19,20 @@ function airSpeedFormatter(speed_i) {
 	return ("" + speed_f /*+ " mph"*/);
 }
 
-//	 E = [0,22]U[338,360]
-//	NE = [23,67]
-//	 N = [68,112]
-//	NW = [113,157]
-//	 W = [158,202]
-//	SW = [203,247]
-//	 S = [248,292]
-//	SE = [293,337]
+/**
+ * Converts a number of degrees into a string representing the cardinal direction of the wind
+ *
+ *  E = [0,22]U[338,360]
+ * NE = [23,67]
+ *  N = [68,112]
+ * NW = [113,157]
+ *  W = [158,202]
+ * SW = [203,247]
+ *  S = [248,292]
+ * 
+ * @param {*} dirxn_i the direction in degrees
+ * @returns a string representing the cardinal direction
+ */
 function airDirxnFormatter(dirxn_i) {
 	var theta = Number.parseInt(dirxn_i);
 	var dir;
