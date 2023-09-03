@@ -1,7 +1,8 @@
 class APIClient {
 
-	constructor(baseurl) {
+	constructor(baseurl, id) {
 		this.baseurl = baseurl
+		this.id = id
 	}
 
 	async request(path, urlparameters) {

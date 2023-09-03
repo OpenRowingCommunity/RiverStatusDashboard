@@ -11,8 +11,7 @@
 class SunriseSunsetOrg extends APIClient {
 
 	constructor() {
-		super('https://api.sunrise-sunset.org/json')
-		this.id = APIClientIdentifier.USGS
+		super('https://api.sunrise-sunset.org/json', APIClientIdentifier.SUNRISE_SUNSET_ORG)
 	}
 	dataTransformers = {
 		[DatapointIdentifier.SUNRISE]: timeFormatter,

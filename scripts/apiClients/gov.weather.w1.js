@@ -7,8 +7,7 @@
 class NOAAWeather extends APIClient {
 
 	constructor() {
-		super('https://w1.weather.gov/xml/current_obs/display.php')
-		this.id = APIClientIdentifier.NOAA_WATER
+		super('https://w1.weather.gov/xml/current_obs/display.php', APIClientIdentifier.NOAA_W1)
 	}
 	dataTransformers = {
 		[DatapointIdentifier.AIR_DIRECTION]: airDirxnFormatter,

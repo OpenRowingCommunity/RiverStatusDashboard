@@ -8,8 +8,7 @@
 class NOAAWeatherWater extends APIClient {
 
 	constructor() {
-		super('https://water.weather.gov/ahps2/hydrograph_to_xml.php')
-		this.id = APIClientIdentifier.NOAA_WATER
+		super('https://water.weather.gov/ahps2/hydrograph_to_xml.php',APIClientIdentifier.NOAA_WATER)
 	}
 	dataTransformers = {
 		[DatapointIdentifier.WATER_FLOW]: (v) => v,

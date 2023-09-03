@@ -7,8 +7,7 @@
 class USGS extends APIClient {
 
 	constructor() {
-		super('https://waterservices.usgs.gov/nwis/iv')
-		this.id = APIClientIdentifier.USGS
+		super('https://waterservices.usgs.gov/nwis/iv', APIClientIdentifier.USGS)
 	}
 
 	dataTransformers = {
