@@ -63,6 +63,17 @@ let apiConcierge = {
 		let client = this._getClient(valueId)
 		
 		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
+	},
+
+	/**
+	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the value sought
+	 * @param {*} setterFunc the function to be used to set the value once retrieved
+	 * @returns 
+	 */
+	getValuesAsync: async function (valueId) {
+		let client = this._getClient(valueId)
+		return client.getDatapoints(valueId, details.id);
 	}
 	
 };
