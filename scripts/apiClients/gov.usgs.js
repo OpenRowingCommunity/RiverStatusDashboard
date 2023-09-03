@@ -21,7 +21,15 @@ class USGS extends APIClient {
 
 	}
 
-
+	/** A very low level internal helper that assembles parameters and makes a query to the API
+	 * 
+	 * @param {*} apiId 
+	 * @param {*} parameters 
+	 * @param {*} path 
+	 * @param {*} start_datestamp 
+	 * @param {*} end_datestamp 
+	 * @returns 
+	 */
 	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			format: 'json',			// 'waterml,2.0' is old style
@@ -44,9 +52,13 @@ class USGS extends APIClient {
 		return super.request(path, params)
 	}
 
-	async getDatapoint(datapointId, apiId) {
-		//TODO: check cache
-
+	/** An internal helper that sets up and performs queries for particular data and does some extraction of that data from the result 
+	 * 
+	 * @param {*} datapointId 
+	 * @param {*} apiId 
+	 * @returns 
+	 */
+	async _fetchData(datapointId, apiId) {
 		let query;
 
 		switch (datapointId) {
@@ -68,8 +80,22 @@ class USGS extends APIClient {
 		// parse JSON
 		//parse data out for this particular method call
 		return query.then(async (response) => {
-			var data = await response.json()
-			var value = data.value.timeSeries[0].values[0].value[0].value;
+			let data = await response.json();
+			return data.value.timeSeries[0].values[0].value
+		});
+	}
+	
+	/**
+	 * Fetch a single datapoint, potentially from cached data
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @param {boolean} [useCache=true] whether or not the cache should be used
+	 * @returns 
+	 */
+	async getDatapoint(datapointId, apiId) {
+		return _fetchData(datapointId, apiId).then((data) => {
+			var value = data[0].value;
 			return this.dataTransformers[datapointId](value);
 		});
 	}
