@@ -31,25 +31,26 @@ function airSpeedFormatter(speed_i) {
  *  S = [248,292]
  * 
  * @param {*} dirxn_i the direction in degrees
+ * @param {boolean} [force_shorthand=false] force the use of shortened directions (i.e. N instead of North) in all results.
  * @returns a string representing the cardinal direction
  */
-function airDirxnFormatter(dirxn_i) {
+function airDirxnFormatter(dirxn_i, force_shorthand=false) {
 	var theta = Number.parseInt(dirxn_i);
 	var dir;
 	if ((0 <= theta && theta <= 22) || (338 <= theta && theta <= 360)) {
-		dir = "East";
+		dir = force_shorthand? "E" : "East";
 	} else if (23 <= theta && theta <= 67) {
 		dir = "NE";
 	} else if (68 <= theta && theta <= 112) {
-		dir = "North";
+		dir = force_shorthand? "N" : "North";
 	} else if (113 <= theta && theta <= 157) {
 		dir = "NW";
 	} else if (158 <= theta && theta <= 202) {
-		dir = "West";
+		dir = force_shorthand? "W" : "West";
 	} else if (203 <= theta && theta <= 247) {
 		dir = "SW";
 	} else if (248 <= theta && theta <= 292) {
-		dir = "South";
+		dir = force_shorthand? "S" : "South";
 	} else if (293 <= theta && theta <= 337) {
 		dir = "SE";
 	} else {
