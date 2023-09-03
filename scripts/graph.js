@@ -296,7 +296,7 @@ var parseTemperatureData = function (data) {
 	}
 };
 
-var populateDataSets = function () {
+var populateDataSets = async function () {
 	$.ajax({
 		url: floodSourceURI,
 		data: floodParameters,

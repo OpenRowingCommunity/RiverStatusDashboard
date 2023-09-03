@@ -10,7 +10,7 @@
 let devMode = true;
 
 //	main block - declare before executing
-let main = function () {
+let main = async function () {
 	$('#attributionRow').slideUp();
 	
 	var viewModel = new AppViewModel();
@@ -33,15 +33,15 @@ let main = function () {
 	
 	if (viewModel.graphEnabled()) {
 		setupGraphStructures();
-		populateDataSets();
+		await populateDataSets();
 		// await populateDataSets();
 		// renderGraph();
 	}
 };
 
 //	call main once page has loaded
-window.onload = function () {
-	main();
+window.onload = async function () {
+	await main();
 	window.vm.update();
 	window.vm.toggleAttribution();
 }
