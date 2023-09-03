@@ -34,6 +34,18 @@ let apiConcierge = {
 		[APIClientIdentifier.USGS]: gov_usgs,
 		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset
 	},
+
+	_getClient: function (datapointId) {
+		let details = config.getDataSourceDetails(undefined, datapointId);
+		if (details.length == 0 ){
+			console.log("no config found - searching for " + datapointId)
+		} else {
+			//TODO: handle multiple data source matches by trying them one by one (because they are assumed to be in preference order) until one succeeds
+			details = details[0]
+		}
+		let client = this.clientMap[details.type];
+		return client
+	},
 	
 	// for a value, which API domain
 	
@@ -48,14 +60,8 @@ let apiConcierge = {
 			//Why does this return when the non mock case calls a callback?
 			 return mockData[valueId];
 		}
+		let client = this._getClient(valueId)
 		
-		let details = config.getDataSourceDetails(undefined, valueId);
-		if (details.length == 0 ){
-			console.log("no config found - searching for " + valueId)
-		} else {
-			details = details[0]
-		}
-		let client = this.clientMap[details.type];
 		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
 	}
 	
