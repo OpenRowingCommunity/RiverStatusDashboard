@@ -62,13 +62,6 @@ var tickFormatter = function (value, index, values, type) {
 	}	
 }
 
-var toFahrenheit = function (temp) {
-	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
-};
-var toCelsius = function (temp) {
-	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
-};
-
 //	Graph Functions
 var setupGraphStructures = function () {
 	// axes & scales
