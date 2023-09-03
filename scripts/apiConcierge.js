@@ -57,7 +57,6 @@ let apiConcierge = {
 	 */
 	getValueAsync: async function (valueId, setterFunc) {
 		if (this.usingMockData) {				// if using mock data, short circuit
-			//Why does this return when the non mock case calls a callback?
 			 return mockData[valueId];
 		}
 		let client = this._getClient(valueId)
