@@ -89,13 +89,7 @@ let ritconfig = new RiverStatusConfig({
 			id: "KROC",
 			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Greater Rochester International Airport"
-		},
-		{
-			type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
-			purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
-			comment: ""
-		},
-		
+		}
 	]
 });
 
@@ -123,16 +117,20 @@ let trraconfig = new RiverStatusConfig({
 			id: "shrp1",
 			purposeHints: [DatapointIdentifier.WATER_LEVEL, DatapointIdentifier.WATER_FLOW],
 			comment: "Allegheny River at Sharpsburg Lock and Dam"
-		},
-		{
-			type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
-			purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
-			comment: ""
 		}
 	]
 });
 
 let config = ritconfig;
+
+//Add "shared"/common data sources that do not require site identification strings
+config.dataSources.push([
+	{
+		type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
+		purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
+		comment: ""
+	}
+])
 
 // (async () => {
 //     config = await fetch("./config.json").then(response => response.json());
