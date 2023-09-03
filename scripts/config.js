@@ -124,7 +124,7 @@ let trraconfig = new RiverStatusConfig({
 let config = ritconfig;
 
 //Add "shared"/common data sources that do not require site identification strings
-config.dataSources.push([
+config.dataSources.push(...[
 	{
 		type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
 		purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
