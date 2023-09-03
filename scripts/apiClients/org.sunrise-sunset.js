@@ -8,17 +8,6 @@
 
 
 
-//	helper functions
-function timeFormatter(time_i) {
-	var time_f = time_i;
-	if (moment != null) {
-		time_f = moment(time_i);
-		// time_f = time_f.format("h:mm a");
-	}
-	return time_f;
-}
-
-
 class SunriseSunsetOrg extends APIClient {
 
 	constructor() {
