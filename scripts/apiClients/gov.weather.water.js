@@ -22,7 +22,7 @@ class NOAAWeatherWater extends APIClient {
 	}
 
 
-	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			output: 'xml',		// switch to JSON? -- unsupported yet
 			gage: apiId
@@ -38,7 +38,7 @@ class NOAAWeatherWater extends APIClient {
 		//TODO: check cache
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.text()
 						// get from data -- XPaths?
@@ -49,7 +49,7 @@ class NOAAWeatherWater extends APIClient {
 						return this.dataTransformers[datapointId](flowValue);
 					});
 			case DatapointIdentifier.WATER_LEVEL:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.text()
 						// get from data

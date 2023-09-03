@@ -23,7 +23,7 @@ class USGS extends APIClient {
 	}
 
 
-	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			format: 'json',			// 'waterml,2.0' is old style
 			sites: apiId,
@@ -52,12 +52,12 @@ class USGS extends APIClient {
 
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
-				query = this._getDatapoint( apiId, {
+				query = this._queryData( apiId, {
 					parameterCd: '00060'
 				});
 				break;
 			case DatapointIdentifier.WATER_TEMP:
-				query = this._getDatapoint( apiId, {
+				query = this._queryData( apiId, {
 					parameterCd: '00010'
 				});
 				break;

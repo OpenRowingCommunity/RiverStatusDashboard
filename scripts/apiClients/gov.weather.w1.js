@@ -24,7 +24,7 @@ class NOAAWeather extends APIClient {
 	}
 
 
-	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			stid: apiId
 		}
@@ -39,14 +39,14 @@ class NOAAWeather extends APIClient {
 		//TODO: check cache
 		switch (datapointId) {
 			case DatapointIdentifier.AIR_TEMP:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.text()
 						var apiData = $(data).find('temp_c').text();
 						return this.dataTransformers[datapointId](apiData);
 					});
 			case DatapointIdentifier.AIR_SPEED:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.text()
 						var apiData = $(data).find('wind_mph').text();
@@ -54,7 +54,7 @@ class NOAAWeather extends APIClient {
 						return this.dataTransformers[datapointId](apiData);
 					});
 			case DatapointIdentifier.AIR_DIRECTION:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.text()
 						var apiData = $(data).find('wind_degrees').text()

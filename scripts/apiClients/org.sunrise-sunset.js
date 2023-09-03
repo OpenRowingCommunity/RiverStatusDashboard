@@ -25,7 +25,7 @@ class SunriseSunsetOrg extends APIClient {
 	}
 
 
-	async _getDatapoint(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			lat: config.boathouseLat,
 			lng: config.boathouseLong,
@@ -43,13 +43,13 @@ class SunriseSunsetOrg extends APIClient {
 		//TODO: check cache
 		switch (datapointId) {
 			case DatapointIdentifier.SUNRISE:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.json()
 						return this.dataTransformers[datapointId](data.results.sunrise);
 					});
 			case DatapointIdentifier.SUNSET:
-				return this._getDatapoint(apiId)
+				return this._queryData(apiId)
 					.then(async (response) => {
 						var data = await response.json()
 						return this.dataTransformers[datapointId](data.results.sunset);
