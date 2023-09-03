@@ -312,15 +312,12 @@ var populateDataSets = async function () {
 					parseTemperatureData(data);
 				
 					// hard-chain start
-					$.ajax({
-						url: flowSourceURI,
-						data: flowParameters,
-						datatype: 'json',
-						success: function (data) {
+					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW).then(
+						(data) => {
 							parseFlowData(data);
 							renderGraph();
 						}
-					});
+					)
 					// hard-chain end
 				}
 			});
