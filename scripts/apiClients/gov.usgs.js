@@ -94,7 +94,7 @@ class USGS extends APIClient {
 	 * @returns 
 	 */
 	async getDatapoint(datapointId, apiId) {
-		return _fetchData(datapointId, apiId).then((data) => {
+		return this._fetchData(datapointId, apiId).then((data) => {
 			var value = data[0].value;
 			return this.dataTransformers[datapointId](value);
 		});
