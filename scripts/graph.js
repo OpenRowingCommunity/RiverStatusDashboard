@@ -244,12 +244,11 @@ var parseFloodData = function (data) {
 
 // Data Parsing Functions
 var parseFlowData = function (data) {
-	let timeseries = data.value.timeSeries[0]
-	let timeseriesdata = timeseries.values[0].value
+	let timeseriesdata = data;//timeseries.values[0].value
 	// parse and extract most recent data first
 	var latestObservedDatum = timeseriesdata[0];
 	
-	var units = timeseries.variable.unit.unitCode;
+	// var units = timeseries.variable.unit.unitCode;
 	units = "kcfs"
 	
 	// get time-series and forecasted data
