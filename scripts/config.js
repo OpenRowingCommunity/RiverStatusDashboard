@@ -132,6 +132,14 @@ config.dataSources.push(...[
 	}
 ])
 
+if (!config.plotColors) {
+	config.plotColors = {
+		flow: '#0088ff',
+		flood: '#00ff00',
+		temperature: '#ff0000'
+	}
+}
+
 // (async () => {
 //     config = await fetch("./config.json").then(response => response.json());
 // })();

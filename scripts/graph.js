@@ -17,11 +17,6 @@ var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
 
-let plotColors = {
-	flow: '#0088ff',
-	flood: '#00ff00',
-	temperature: '#ff0000'
-};
 
 let selectors = {
 	graphCanvas: '#graphCanvas'
@@ -77,24 +72,24 @@ var setupGraphStructures = function () {
 			datasets: [
 				{
 					label: "Flow (kcfs)",
-					borderColor: plotColors.flow,
-					backgroundColor: plotColors.flow,
+					borderColor: config.plotColors.flow,
+					backgroundColor: config.plotColors.flow,
 					fill: false,
 					yAxisID: "yAxis_flow",
 					data: ordinates.observed.flow
 				},
 				{
 					label: "Flood Stage (ft)",
-					borderColor: plotColors.flood,
-					backgroundColor: plotColors.flood,
+					borderColor: config.plotColors.flood,
+					backgroundColor: config.plotColors.flood,
 					fill: false,
 					yAxisID: "yAxis_flood",
 					data: ordinates.observed.flood
 				},
 				{
 					label: "Water Temperature (˚C)",
-					borderColor: plotColors.temperature,
-					backgroundColor: plotColors.temperature,
+					borderColor: config.plotColors.temperature,
+					backgroundColor: config.plotColors.temperature,
 					fill: false,
 					yAxisID: "yAxis_temp",
 					data: ordinates.observed.temp
@@ -137,7 +132,7 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
-						color: plotColors.flow,
+						color: config.plotColors.flow,
 						// fontSize: 14
 					},
 				},
@@ -156,10 +151,10 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Water Temperature (˚C)",
-						color: plotColors.temperature,
+						color: config.plotColors.temperature,
 						// fontSize: 14
 					},
-					color: plotColors.temp
+					color: config.plotColors.temp
 				}, 
 				yAxis_flood: {
 					type: "linear",
@@ -170,7 +165,7 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
-						color: plotColors.flood,
+						color: config.plotColors.flood,
 						// fontSize: 14
 					}
 				}
