@@ -100,6 +100,23 @@ class USGS extends APIClient {
 		});
 	}
 
+	/**
+	 * Fetch many (historical) values for a particular datapoint, potentially from cached data
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @param {boolean} [useCache=true] whether or not the cache should be used
+	 * @returns 
+	 */
+	async getDatapoints(datapointId, apiId, useCache = true) {
+		this._fetchData(datapointId, apiId, useCache).then((data) => {
+			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
+			return data.map((dataitem) => {
+				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
+			});
+		});
+	}
+
 	getUnits(datapointId) {
 		return dataUnits[datapointId]
 	}
