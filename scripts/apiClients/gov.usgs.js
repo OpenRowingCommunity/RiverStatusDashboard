@@ -47,26 +47,32 @@ class USGS extends APIClient {
 
 	async getDatapoint(datapointId, apiId) {
 		//TODO: check cache
+
+		let query;
+
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
-				return this._getDatapoint( apiId, {
+				query = this._getDatapoint( apiId, {
 					parameterCd: '00060'
-				}).then(async (response) => {
-					var data = await response.json()
-					var value = data.value.timeSeries[0].values[0].value[0].value;
-					return this.dataTransformers[datapointId](value);
 				});
+				break;
 			case DatapointIdentifier.WATER_TEMP:
-				return this._getDatapoint( apiId, {
+				query = this._getDatapoint( apiId, {
 					parameterCd: '00010'
-				}).then(async (response) => {
-					var data = await response.json()
-					var value = data.value.timeSeries[0].values[0].value[0].value;
-					return this.dataTransformers[datapointId](value);
 				});
+				break;
 			default:
-				console.log("datapoint " + datapointId + " not supported by client " + this.id);
+				console.error("datapoint " + datapointId + " not supported by client " + this.id);
+				return Promise.reject("datapoint " + datapointId + " not supported by client " + this.id)
 		}
+		// Process the data received
+		// parse JSON
+		//parse data out for this particular method call
+		return query.then(async (response) => {
+			var data = await response.json()
+			var value = data.value.timeSeries[0].values[0].value[0].value;
+			return this.dataTransformers[datapointId](value);
+		});
 	}
 
 	getUnits(datapointId) {
