@@ -6,6 +6,8 @@
 
 class NOAAWeather extends APIClient {
 
+	NO_DATA_VALUE = 999;
+
 	constructor() {
 		super('https://w1.weather.gov/xml/current_obs/display.php', APIClientIdentifier.NOAA_W1)
 	}
@@ -57,6 +59,11 @@ class NOAAWeather extends APIClient {
 					.then(async (response) => {
 						var data = await response.text()
 						var apiData = $(data).find('wind_degrees').text()
+						var fallback_dir = $(data).find('wind_dir').text()
+
+						if (apiData == this.NO_DATA_VALUE) {
+							return fallback_dir
+						}
 
 						return this.dataTransformers[datapointId](apiData);
 					});
