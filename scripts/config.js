@@ -14,22 +14,38 @@ class RiverStatusConfig {
 		// this.safetyMatrix 
 	}
 
-	getDataSourcesByType(type) {
+	/**
+	 * return the list of data sources for this configuration showing only those of a specific type
+	 * @param {*} type the [APIClientIdentifier] of the data source to filter for
+	 * @returns a filtered list of data sources showing only those belonging to the specified data source
+	 */
+	getDataSourceDetailsByType(type) {
 		return this.dataSources.filter((src) => src.type === type);
 	}
 
+	/**
+	 * return the list of data sources for this configuration showing only those containing a particular purpose hint
+	 * @param {*} purpose the [DatatypeIdentifer] indicating the data points to filter for
+	 * @returns a filtered list of data sources showing only those containing the specific datapoint hint
+	 */
 	//TODO: support optional purposeHints and allow for trying each data source matching the right type to see if it has the data or not
-	getDataSourcesByPurpose(purpose) {
+	getDataSourceDetailsByPurpose(purpose) {
 		return this.dataSources.filter((src) => src.purposeHints.includes(purpose));
 	}
 
-	filterDataSources(type, purpose) {
+	/**
+	 * filter data sources by both type and purpose
+	 * @param {*} type 
+	 * @param {*} purpose 
+	 * @returns 
+	 */
+	getDataSourceDetails(type, purpose) {
 		if (type === undefined) {
-			return this.getDataSourcesByPurpose(purpose)
+			return this.getDataSourceDetailsByPurpose(purpose)
 		} else if (purpose === undefined) {
-			return this.getDataSourcesByType(type)
+			return this.getDataSourceDetailsByType(type)
 		} else {
-			let typematch_sources = this.getDataSourcesByType(type)
+			let typematch_sources = this.getDataSourceDetailsByType(type)
 
 			let results = typematch_sources.filter((src) => src.purposeHints.includes(purpose));
 
@@ -51,30 +67,29 @@ let ritconfig = new RiverStatusConfig({
 	boathouseLong: -77.699065,
 	dataSources: [
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "04230650",
-			purposeHints: ["waterflow"],
+			purposeHints: [DatapointIdentifier.WATER_FLOW],
 			comment: "Jefferson Bridge"
 		},
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "04231600",
-			purposeHints: ["watertemp"],
+			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Ford St. Bridge"
 		},
 		{
-			type: "noaa-water",
+			type: APIClientIdentifier.NOAA_WATER,
 			id: "blbn6",
-			purposeHints: ["waterlevel"],
+			purposeHints: [DatapointIdentifier.WATER_LEVEL],
 			comment: "Jefferson Road Bridge"
 		},
 		{
-			type: "noaa-weather",
+			type: APIClientIdentifier.NOAA_W1,
 			id: "KROC",
-			purposeHints: ["airtemp", "airspeed", "airdirection"],
+			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Greater Rochester International Airport"
-		},
-		
+		}
 	]
 });
 
@@ -86,27 +101,36 @@ let trraconfig = new RiverStatusConfig({
 	boathouseLong: -79.976543,
 	dataSources: [
 		{
-			type: "usgs",
+			type: APIClientIdentifier.USGS,
 			id: "03049640",
-			purposeHints: ["watertemp"],
+			purposeHints: [DatapointIdentifier.WATER_TEMP],
 			comment: "Allegheny R at CW Bill Young L&D at Acmetonia, PA"
 		},
 		{
-			type: "noaa-weather",
+			type: APIClientIdentifier.NOAA_W1,
 			id: "KPIT",
-			purposeHints: ["airtemp", "airspeed", "airdirection"],
+			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Pittsburgh International Airport"
 		},
 		{
-			type: "noaa-water",
+			type: APIClientIdentifier.NOAA_WATER,
 			id: "shrp1",
-			purposeHints: ["waterlevel", "waterflow"],
+			purposeHints: [DatapointIdentifier.WATER_LEVEL, DatapointIdentifier.WATER_FLOW],
 			comment: "Allegheny River at Sharpsburg Lock and Dam"
 		}
 	]
 });
 
 let config = ritconfig;
+
+//Add "shared"/common data sources that do not require site identification strings
+config.dataSources.push(...[
+	{
+		type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
+		purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
+		comment: ""
+	}
+])
 
 // (async () => {
 //     config = await fetch("./config.json").then(response => response.json());

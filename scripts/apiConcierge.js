@@ -3,23 +3,19 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
+// the square brackets in the keys allow the keys value to be computed.
+// see https://stackoverflow.com/a/40720612/
 let mockData = {
-	waterFlow: 32.9,
-	waterTemp: 21.3,
-	waterLevel: 12.9,
-	airTemp: 22.4,
-	airSpeed: 2.7,
-	airDirxn: 227,
-	sunrise: null,
-	sunset: null
+	[DatapointIdentifier.WATER_FLOW]: 32.9,
+	[DatapointIdentifier.WATER_TEMP]: 21.3,
+	[DatapointIdentifier.WATER_LEVEL]: 12.9,
+	[DatapointIdentifier.AIR_TEMP]: 22.4,
+	[DatapointIdentifier.AIR_SPEED]: 2.7,
+	[DatapointIdentifier.AIR_DIRECTION]: 227,
+	[DatapointIdentifier.SUNRISE]: null,
+	[DatapointIdentifier.SUNSET]: null
 };
 
-let apiClients = {
-	'water.weather.gov': gov_weather_water,
-	'w1.weather.gov': gov_weather_w1,
-	'usgs.gov': gov_usgs,
-	'sunrise-sunset.org': org_sunrise_sunset
-};
 
 //	Object-Based Version
 
@@ -33,33 +29,34 @@ let apiConcierge = {
 	
 	// for an API domain, which apiClient
 	clientMap: {
-		'water.weather.gov': gov_weather_water,
-		'w1.weather.gov': gov_weather_w1,
-		'usgs.gov': gov_usgs,
-		'sunrise-sunset.org': org_sunrise_sunset
+		[APIClientIdentifier.NOAA_WATER]: gov_weather_water,
+		[APIClientIdentifier.NOAA_W1]: gov_weather_w1,
+		[APIClientIdentifier.USGS]: gov_usgs,
+		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset
 	},
 	
 	// for a value, which API domain
-	accessorMap: {
-		'waterFlow': config.clubAcronym === "TRRA"?  gov_weather_water.getWaterFlow : gov_usgs.getWaterFlow,
-		'waterLevel': gov_weather_water.getWaterLevel,
-		'waterTemp': gov_usgs.getWaterTemp,
-		'airTemp': gov_weather_w1.getAirTemp,
-		'airSpeed': gov_weather_w1.getAirSpeed,
-		'airDirxn': gov_weather_w1.getAirDirxn,
-		'sunrise': org_sunrise_sunset.getSunrise,
-		'sunset': org_sunrise_sunset.getSunset
-	},
 	
-	///	getValueAsync
-	/// @param valueID: a unique identifier (string or int) of the value sought
-	/// @param setterFunc: the function to be used to set the value once retrieved
-	getValueAsync: function (valueId, setterFunc) {
+	/**
+	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the value sought
+	 * @param {*} setterFunc the function to be used to set the value once retrieved
+	 * @returns 
+	 */
+	getValueAsync: async function (valueId, setterFunc) {
 		if (this.usingMockData) {				// if using mock data, short circuit
+			//Why does this return when the non mock case calls a callback?
 			 return mockData[valueId];
 		}
-		let getter = this.accessorMap[valueId];
-		getter(setterFunc);
+		
+		let details = config.getDataSourceDetails(undefined, valueId);
+		if (details.length == 0 ){
+			console.log("no config found - searching for " + valueId)
+		} else {
+			details = details[0]
+		}
+		let client = this.clientMap[details.type];
+		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
 	}
 	
 };

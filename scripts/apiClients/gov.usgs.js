@@ -2,128 +2,85 @@
 //		Allegheny River information for Three Rivers Rowing Association (TRRA)
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		gov.usgs.js created on 2017-06-26
+//		refactored 2023-09-01 by Adrian Edwards
+
+class USGS extends APIClient {
+
+	constructor() {
+		super('https://waterservices.usgs.gov/nwis/iv', APIClientIdentifier.USGS)
+	}
+
+	dataTransformers = {
+		[DatapointIdentifier.WATER_FLOW]: (v) => v/1000, //convert from cfs to kcfs
+		[DatapointIdentifier.WATER_TEMP]: (v) => v,
+	}
+
+	dataUnits = {
+		[DatapointIdentifier.WATER_FLOW]: 'kcfs',
+		[DatapointIdentifier.WATER_TEMP]: "˚C",
+
+	}
 
 
-var gov_usgs = {
-	
-	cache: {
-		data: {
-			temperature: null,
-			flow: null
-		},
-		timestamp: {
-			temperature: null,
-			flow: null
-		},
-		agelimit: 60000
-	},
-	
-	api: {
-		url: 'https://waterservices.usgs.gov/nwis/iv',
-		params: {
+	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
+		let params = {
 			format: 'json',			// 'waterml,2.0' is old style
-			sites: config.filterDataSources("usgs", "watertemp")[0].id,
-			parameterCd: '00010',
-			siteStatus: 'all'/*,
-			startDT: '',			// need to restore for timeseries fetch
-			endDT: '' */
+			sites: apiId,
+			
+			siteStatus: 'all'
 		}
-	},
-	
-	//	helper functions
-	tempUnitsFormatter: function (unit_i) {
-		return "˚C";
-	},
-	
-	tempValueFormatter: function (value_i) {
-		return value_i;
-	},
 
-	flowUnitsFormatter: function (unit_i) {
-		return "kcfs";
-	},
-	
-	flowValueFormatter: function (value_i) {
-		return value_i/1000;
-	},
-	
-	//	api functions
-	getWaterTemp: function (setterFunc) {
-		//	1: check if we have data already
-		if (gov_usgs.cache.data.temperature != null) {
-			//	2: if the timestamp is acceptably recent, use it
-			if ( (new Date().getTime() - gov_usgs.cache.timestamp.temperature) < cache.agelimit ){
-				let value = gov_usgs.cache.data.temperature;
-				setterFunc(value);
-				return;
-			}
+		if (start_datestamp != undefined && end_datestamp != undefined) {
+			// if datestamps are present, this is a time series lookup
+			// need restore the time period  for timeseries fetch
+			params = Object.assign({}, params, {
+				startDT: start_datestamp,
+				endDT:end_datestamp
+			});
 		}
-		
-		let asyncContext = gov_usgs;
-		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: asyncContext.api.params, 
-			datatype: asyncContext.api.params.format,
-			success: function (data, textStatus, jqXHR) {
-				var value = data.value.timeSeries[0].values[0].value[0].value;
-				value = asyncContext.tempValueFormatter(value);
-				
-				var units = data.value.timeSeries[0].variable.unit.unitCode;
-				units = asyncContext.tempUnitsFormatter(units);
-				
-				let apiData = "" + value /*+ " " + units*/;
-				
-				// update the cached data
-				gov_usgs.cache.data.temperature = apiData
-				gov_usgs.cache.timestamp.temperature = new Date().getTime()
+		//combine input parameters with defaults
+		params = Object.assign({}, params, parameters);
 
-				setterFunc(apiData);
-			}//end-success
-		});//end-$.ajax
-	},//end-getWaterTemp
-	
+		return super.request(path, params)
+	}
 
-	//	api functions
-	getWaterFlow: function (setterFunc) {
-		//	1: check if we have data already
-		if (gov_usgs.cache.data.flow != null) {
-			//	2: if the timestamp is acceptably recent, use it
-			if ( (new Date().getTime() - gov_usgs.cache.timestamp.flow) < gov_usgs.cache.agelimit ){
-				let value = cache.data.flow;
-				setterFunc(value);
-				return;
-			}
+	async getDatapoint(datapointId, apiId) {
+		//TODO: check cache
+
+		let query;
+
+		switch (datapointId) {
+			case DatapointIdentifier.WATER_FLOW:
+				query = this._queryData( apiId, {
+					parameterCd: '00060'
+				});
+				break;
+			case DatapointIdentifier.WATER_TEMP:
+				query = this._queryData( apiId, {
+					parameterCd: '00010'
+				});
+				break;
+			default:
+				console.error("datapoint " + datapointId + " not supported by client " + this.id);
+				return Promise.reject("datapoint " + datapointId + " not supported by client " + this.id)
 		}
-		
-		let asyncContext = gov_usgs;
+		// Process the data received
+		// parse JSON
+		//parse data out for this particular method call
+		return query.then(async (response) => {
+			var data = await response.json()
+			var value = data.value.timeSeries[0].values[0].value[0].value;
+			return this.dataTransformers[datapointId](value);
+		});
+	}
 
-		let params = Object.assign({},asyncContext.api.params);
+	getUnits(datapointId) {
+		return dataUnits[datapointId]
+	}
 
-		//TODO: fix this, its a bit of a gross hack. need to OOP-ify the APIs
-		params.parameterCd = '00060'
-		params.sites = config.filterDataSources("usgs", "waterflow")[0].id
-		
-		$.ajax({
-			url: asyncContext.api.url, 
-			data: params, 
-			datatype: params.format,
-			success: function (data, textStatus, jqXHR) {
-				var value = data.value.timeSeries[0].values[0].value[0].value;
-				value = asyncContext.flowValueFormatter(value);
-				
-				var units = data.value.timeSeries[0].variable.unit.unitCode;
-				units = asyncContext.flowUnitsFormatter(units);
-				
-				let apiData = "" + value /*+ " " + units*/;
-				
-				// update the cached data
-				gov_usgs.cache.data.flow = apiData
-				gov_usgs.cache.timestamp.flow = new Date().getTime()
-				setterFunc(apiData);
-			}//end-success
-		});//end-$.ajax
-	}//end-getWaterFlow
-};
+	supportedDatapoints() {
+		return this.dataTransformers.keys()
+	}
+}
 
-// EOF
+var gov_usgs = new USGS();
