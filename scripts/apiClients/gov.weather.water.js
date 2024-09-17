@@ -8,7 +8,7 @@
 class NOAAWeatherWater extends APIClient {
 
 	constructor() {
-		super('https://water.weather.gov/ahps2/hydrograph_to_xml.php',APIClientIdentifier.NOAA_WATER)
+		super('https://api.water.noaa.gov/nwps/v1', APIClientIdentifier.NOAA_WATER)
 	}
 	dataTransformers = {
 		[DatapointIdentifier.WATER_FLOW]: (v) => v,
@@ -22,15 +22,10 @@ class NOAAWeatherWater extends APIClient {
 
 
 	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
-		let params = {
-			output: 'xml',		// switch to JSON? -- unsupported yet
-			gage: apiId
+		if (path == "")	{
+			path = '/gauges/' + apiId;
 		}
-
-		//combine input parameters with defaults
-		params = Object.assign({}, params, parameters);
-
-		return super.request(path, params)
+		return super.request(path, parameters).then(async (response) => response.json());
 	}
 
 	async getDatapoint(datapointId, apiId) {
@@ -38,24 +33,15 @@ class NOAAWeatherWater extends APIClient {
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
 				return this._queryData(apiId)
-					.then(async (response) => {
-						var data = await response.text()
-						// get from data -- XPaths?
-						var datum = $(data).find('observed > datum:first');
-						// var flowUnits = $(datum).find('secondary').attr('units');
-						var flowValue = $(datum).find('secondary').text();
-
-						return this.dataTransformers[datapointId](flowValue);
+					.then(async (data) => {
+						// ....observed.secondaryUnit
+						return this.dataTransformers[datapointId](data.status.observed.secondary);
 					});
 			case DatapointIdentifier.WATER_LEVEL:
 				return this._queryData(apiId)
-					.then(async (response) => {
-						var data = await response.text()
-						// get from data
-						var datum = $(data).find('observed > datum:first');
-						// var floodUnits = $(datum).find('primary').attr('units');
-						var floodValue = $(datum).find('primary').text();
-						return this.dataTransformers[datapointId](floodValue);
+					.then(async (data) => {
+						// ....observed.primaryUnit	
+						return this.dataTransformers[datapointId](data.status.observed.primary);
 					});
 			default:
 				console.log("datapoint " + datapointId + " not supported by client " + this.id);
