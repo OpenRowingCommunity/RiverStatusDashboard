@@ -27,11 +27,8 @@ let selectors = {
 	graphCanvas: '#graphCanvas'
 };
 
-let floodSourceURI = "https://water.weather.gov/ahps2/hydrograph_to_xml.php";
-let floodParameters = {
-	gage: config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id,
-	output: 'xml'
-};
+let floodSourceURI = "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id;
+let floodParameters = {};
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
