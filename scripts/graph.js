@@ -288,20 +288,20 @@ var populateDataSets = async function () {
 	}
 	$.ajax({
 		url: floodSourceURI,
-		data: floodParameters,
+		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: function (data) {
 			parseFloodData(data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
-				data: temperatureParameters,
+				data: Object.assign({}, temperatureParameters, timeWindowParameters),
 				datatype: 'xml',
 				success: function (data) {
 					parseTemperatureData(data);
 				
 					// hard-chain start
-					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW).then(
+					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW, timeWindowParameters).then(
 						(data) => {
 							parseFlowData(data);
 							renderGraph();
