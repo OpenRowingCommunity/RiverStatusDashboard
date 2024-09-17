@@ -109,10 +109,11 @@ class USGS extends APIClient {
 	 * @returns 
 	 */
 	async getDatapoints(datapointId, apiId, useCache = true) {
-		this._fetchData(datapointId, apiId, useCache).then((data) => {
+		return this._fetchData(datapointId, apiId, useCache).then((data) => {
 			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
 			return data.map((dataitem) => {
 				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
+				return dataitem
 			});
 		});
 	}
