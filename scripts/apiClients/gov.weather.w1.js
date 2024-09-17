@@ -9,7 +9,9 @@ class NOAAWeather extends APIClient {
 	NO_DATA_VALUE = 999;
 
 	constructor() {
-		super('https://w1.weather.gov/xml/current_obs/display.php', APIClientIdentifier.NOAA_W1)
+		// You can continue to use the existing legacy services on forecast.weather.gov, but we encourage you to move to the API when you can. We have more resources dedicated to supporting the API and much of our future development will be focused here.
+		// https://weather-gov.github.io/api/general-faqs
+		super('https://forecast.weather.gov/xml/current_obs/display.php', APIClientIdentifier.NOAA_W1)
 	}
 	dataTransformers = {
 		[DatapointIdentifier.AIR_DIRECTION]: airDirxnFormatter,
