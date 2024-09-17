@@ -45,7 +45,6 @@ let apiConcierge = {
 	 */
 	getValueAsync: async function (valueId, setterFunc) {
 		if (this.usingMockData) {				// if using mock data, short circuit
-			//Why does this return when the non mock case calls a callback?
 			 return mockData[valueId];
 		}
 		
@@ -57,6 +56,23 @@ let apiConcierge = {
 		}
 		let client = this.clientMap[details.type];
 		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
+	},
+
+	/**
+	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the value sought
+	 * @param {*} setterFunc the function to be used to set the value once retrieved
+	 * @returns 
+	 */
+	getValuesAsync: async function (valueId, parameters = {}) {
+		let details = config.getDataSourceDetails(undefined, valueId);
+		if (details.length == 0 ){
+			console.log("no config found - searching for " + valueId)
+		} else {
+			details = details[0]
+		}
+		let client = this.clientMap[details.type];
+		return client.getDatapoints(valueId, details.id, parameters);
 	}
 	
 };

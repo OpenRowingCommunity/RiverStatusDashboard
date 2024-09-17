@@ -17,22 +17,21 @@ var graphCanvas = null;
 var graphSettings = {};
 var theGraph;
 
-let plotColors = {
-	flow: '#0088ff',
-	flood: '#00ff00',
-	temperature: '#ff0000'
-};
 
 let selectors = {
 	graphCanvas: '#graphCanvas'
 };
+
+var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
+
+
 
 let floodSourceURI = "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id;
 let floodParameters = {};
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
-	format: 'waterml,2.0',
+	format: 'json',
 	sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id,
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
@@ -41,12 +40,7 @@ let temperatureParameters = {
 };
 
 
-let flowSourceURI = 'https://waterservices.usgs.gov/nwis/iv';
 let flowParameters = {
-	format: 'json',			// 'waterml,2.0' is old style
-	sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_FLOW)[0].id,
-	parameterCd: '00060',
-	siteStatus: 'all',
 	startDT: '',			// need to restore for timeseries fetch
 	endDT: ''
 };
@@ -61,13 +55,6 @@ var tickFormatter = function (value, index, values, type) {
 		return value.toString();
 	}	
 }
-
-var toFahrenheit = function (temp) {
-	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
-};
-var toCelsius = function (temp) {
-	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
-};
 
 //	Graph Functions
 var setupGraphStructures = function () {
@@ -84,24 +71,24 @@ var setupGraphStructures = function () {
 			datasets: [
 				{
 					label: "Flow (kcfs)",
-					borderColor: plotColors.flow,
-					backgroundColor: plotColors.flow,
+					borderColor: config.plotColors.flow,
+					backgroundColor: config.plotColors.flow,
 					fill: false,
 					yAxisID: "yAxis_flow",
 					data: ordinates.observed.flow
 				},
 				{
 					label: "Flood Stage (ft)",
-					borderColor: plotColors.flood,
-					backgroundColor: plotColors.flood,
+					borderColor: config.plotColors.flood,
+					backgroundColor: config.plotColors.flood,
 					fill: false,
 					yAxisID: "yAxis_flood",
 					data: ordinates.observed.flood
 				},
 				{
 					label: "Water Temperature (˚C)",
-					borderColor: plotColors.temperature,
-					backgroundColor: plotColors.temperature,
+					borderColor: config.plotColors.temperature,
+					backgroundColor: config.plotColors.temperature,
 					fill: false,
 					yAxisID: "yAxis_temp",
 					data: ordinates.observed.temp
@@ -144,7 +131,7 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
-						color: plotColors.flow,
+						color: config.plotColors.flow,
 						// fontSize: 14
 					},
 				},
@@ -163,10 +150,10 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Water Temperature (˚C)",
-						color: plotColors.temperature,
+						color: config.plotColors.temperature,
 						// fontSize: 14
 					},
-					color: plotColors.temp
+					color: config.plotColors.temp
 				}, 
 				yAxis_flood: {
 					type: "linear",
@@ -177,7 +164,7 @@ var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
-						color: plotColors.flood,
+						color: config.plotColors.flood,
 						// fontSize: 14
 					}
 				}
@@ -244,24 +231,16 @@ var parseFloodData = function (data) {
 		abscissa.forecast.push(aMoment);
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
 	}
-	var obsmin = moment.min(moments.observed);
-	var obsmax = moment.max(moments.observed);
-	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
-	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	flowParameters.startDT = obsmin.format(tempReqFormat);
-	temperatureParameters.endDT = obsmax.format(tempReqFormat);
-	flowParameters.endDT = obsmax.format(tempReqFormat);
 };
 
 
 // Data Parsing Functions
 var parseFlowData = function (data) {
-	let timeseries = data.value.timeSeries[0]
-	let timeseriesdata = timeseries.values[0].value
+	let timeseriesdata = data;//timeseries.values[0].value
 	// parse and extract most recent data first
 	var latestObservedDatum = timeseriesdata[0];
 	
-	var units = timeseries.variable.unit.unitCode;
+	// var units = timeseries.variable.unit.unitCode;
 	units = "kcfs"
 	
 	// get time-series and forecasted data
@@ -279,14 +258,6 @@ var parseFlowData = function (data) {
 	}
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
-	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
-	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	flowParameters.startDT = obsmin.format(tempReqFormat);
-	floodParameters.startDT = obsmin.format(tempReqFormat);
-
-	temperatureParameters.endDT = obsmax.format(tempReqFormat);
-	flowParameters.endDT = obsmax.format(tempReqFormat);
-	floodParameters.endDT = obsmax.format(tempReqFormat);
 };
 
 var parseTemperatureData = function (data) {
@@ -308,31 +279,34 @@ var parseTemperatureData = function (data) {
 	}
 };
 
-var populateDataSets = function () {
+var populateDataSets = async function () {
+
+	// get a date range for the last 7 days
+	let timeWindowParameters = {
+		startDT: moment().subtract(7, 'days').format(tempReqFormat),
+		endDT: moment().format(tempReqFormat)
+	}
 	$.ajax({
 		url: floodSourceURI,
-		data: floodParameters,
+		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: function (data) {
 			parseFloodData(data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
-				data: temperatureParameters,
+				data: Object.assign({}, temperatureParameters, timeWindowParameters),
 				datatype: 'xml',
 				success: function (data) {
 					parseTemperatureData(data);
 				
 					// hard-chain start
-					$.ajax({
-						url: flowSourceURI,
-						data: flowParameters,
-						datatype: 'json',
-						success: function (data) {
+					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW, timeWindowParameters).then(
+						(data) => {
 							parseFlowData(data);
 							renderGraph();
 						}
-					});
+					)
 					// hard-chain end
 				}
 			});

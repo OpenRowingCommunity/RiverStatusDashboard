@@ -21,7 +21,15 @@ class USGS extends APIClient {
 
 	}
 
-
+	/** A very low level internal helper that assembles parameters and makes a query to the API
+	 * 
+	 * @param {*} apiId 
+	 * @param {*} parameters 
+	 * @param {*} path 
+	 * @param {*} start_datestamp 
+	 * @param {*} end_datestamp 
+	 * @returns 
+	 */
 	async _queryData(apiId, parameters = {}, path = "", start_datestamp = undefined, end_datestamp = undefined) {
 		let params = {
 			format: 'json',			// 'waterml,2.0' is old style
@@ -39,24 +47,31 @@ class USGS extends APIClient {
 			});
 		}
 		//combine input parameters with defaults
-		params = Object.assign({}, params, parameters);
+		params = Object.assign({}, parameters, params);
 
 		return super.request(path, params)
 	}
 
-	async getDatapoint(datapointId, apiId) {
-		//TODO: check cache
-
+	/** An internal helper that sets up and performs queries for particular data and does some extraction of that data from the result 
+	 * 
+	 * @param {*} datapointId 
+	 * @param {*} apiId 
+	 * @returns 
+	 */
+	async _fetchData(datapointId, apiId, parameters = {}) {
 		let query;
 
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
-				query = this._queryData( apiId, {
-					parameterCd: '00060'
-				});
+				// merge the parameters with the default parameters
+				parameters = Object.assign({}, parameters,
+					{
+						parameterCd: '00060'
+					}
+				);
 				break;
 			case DatapointIdentifier.WATER_TEMP:
-				query = this._queryData( apiId, {
+				parameters = Object.assign({}, parameters, {
 					parameterCd: '00010'
 				});
 				break;
@@ -64,13 +79,47 @@ class USGS extends APIClient {
 				console.error("datapoint " + datapointId + " not supported by client " + this.id);
 				return Promise.reject("datapoint " + datapointId + " not supported by client " + this.id)
 		}
+
+		query = this._queryData( apiId, parameters);
 		// Process the data received
 		// parse JSON
 		//parse data out for this particular method call
 		return query.then(async (response) => {
-			var data = await response.json()
-			var value = data.value.timeSeries[0].values[0].value[0].value;
+			let data = await response.json();
+			return data.value.timeSeries[0].values[0].value
+		});
+	}
+	
+	/**
+	 * Fetch a single datapoint, potentially from cached data
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @param {boolean} [useCache=true] whether or not the cache should be used
+	 * @returns 
+	 */
+	async getDatapoint(datapointId, apiId) {
+		return this._fetchData(datapointId, apiId).then((data) => {
+			var value = data[0].value;
 			return this.dataTransformers[datapointId](value);
+		});
+	}
+
+	/**
+	 * Fetch many (historical) values for a particular datapoint, potentially from cached data
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @param {boolean} [useCache=true] whether or not the cache should be used
+	 * @returns 
+	 */
+	async getDatapoints(datapointId, apiId, parameters = {}, useCache = true, ) {
+		return this._fetchData(datapointId, apiId, parameters).then((data) => {
+			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
+			return data.map((dataitem) => {
+				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
+				return dataitem
+			});
 		});
 	}
 
