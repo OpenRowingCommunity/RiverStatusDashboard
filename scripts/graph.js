@@ -40,12 +40,7 @@ let temperatureParameters = {
 };
 
 
-let flowSourceURI = 'https://waterservices.usgs.gov/nwis/iv';
 let flowParameters = {
-	format: 'json',			// 'waterml,2.0' is old style
-	sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_FLOW)[0].id,
-	parameterCd: '00060',
-	siteStatus: 'all',
 	startDT: '',			// need to restore for timeseries fetch
 	endDT: ''
 };
