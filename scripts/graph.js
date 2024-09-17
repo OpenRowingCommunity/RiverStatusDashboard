@@ -31,7 +31,7 @@ let floodParameters = {};
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
-	format: 'waterml,2.0',
+	format: 'json',
 	sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id,
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
