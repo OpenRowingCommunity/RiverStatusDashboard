@@ -34,23 +34,14 @@ class NOAAWeatherWater extends APIClient {
 			case DatapointIdentifier.WATER_FLOW:
 				return this._queryData(apiId)
 					.then(async (data) => {
-						console.log(data)
-						console.log(data.status.observed.primary)
-						// get from data -- XPaths?
-						var datum = $(data).find('observed > datum:first');
-						// var flowUnits = $(datum).find('secondary').attr('units');
-						var flowValue = $(datum).find('secondary').text();
-
-						return this.dataTransformers[datapointId](flowValue);
+						// ....observed.secondaryUnit
+						return this.dataTransformers[datapointId](data.status.observed.secondary);
 					});
 			case DatapointIdentifier.WATER_LEVEL:
 				return this._queryData(apiId)
 					.then(async (data) => {
-						// get from data
-						var datum = $(data).find('observed > datum:first');
-						// var floodUnits = $(datum).find('primary').attr('units');
-						var floodValue = $(datum).find('primary').text();
-						return this.dataTransformers[datapointId](floodValue);
+						// ....observed.primaryUnit	
+						return this.dataTransformers[datapointId](data.status.observed.primary);
 					});
 			default:
 				console.log("datapoint " + datapointId + " not supported by client " + this.id);
