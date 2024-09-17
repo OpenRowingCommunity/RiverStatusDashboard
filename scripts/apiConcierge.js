@@ -64,7 +64,7 @@ let apiConcierge = {
 	 * @param {*} setterFunc the function to be used to set the value once retrieved
 	 * @returns 
 	 */
-	getValuesAsync: async function (valueId) {
+	getValuesAsync: async function (valueId, parameters = {}) {
 		let details = config.getDataSourceDetails(undefined, valueId);
 		if (details.length == 0 ){
 			console.log("no config found - searching for " + valueId)
@@ -72,7 +72,7 @@ let apiConcierge = {
 			details = details[0]
 		}
 		let client = this.clientMap[details.type];
-		return client.getDatapoints(valueId, details.id);
+		return client.getDatapoints(valueId, details.id, parameters);
 	}
 	
 };

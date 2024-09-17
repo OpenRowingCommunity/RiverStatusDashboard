@@ -47,7 +47,7 @@ class USGS extends APIClient {
 			});
 		}
 		//combine input parameters with defaults
-		params = Object.assign({}, params, parameters);
+		params = Object.assign({}, parameters, params);
 
 		return super.request(path, params)
 	}
@@ -58,17 +58,20 @@ class USGS extends APIClient {
 	 * @param {*} apiId 
 	 * @returns 
 	 */
-	async _fetchData(datapointId, apiId) {
+	async _fetchData(datapointId, apiId, parameters = {}) {
 		let query;
 
 		switch (datapointId) {
 			case DatapointIdentifier.WATER_FLOW:
-				query = this._queryData( apiId, {
-					parameterCd: '00060'
-				});
+				// merge the parameters with the default parameters
+				parameters = Object.assign({}, parameters,
+					{
+						parameterCd: '00060'
+					}
+				);
 				break;
 			case DatapointIdentifier.WATER_TEMP:
-				query = this._queryData( apiId, {
+				parameters = Object.assign({}, parameters, {
 					parameterCd: '00010'
 				});
 				break;
@@ -76,6 +79,8 @@ class USGS extends APIClient {
 				console.error("datapoint " + datapointId + " not supported by client " + this.id);
 				return Promise.reject("datapoint " + datapointId + " not supported by client " + this.id)
 		}
+
+		query = this._queryData( apiId, parameters);
 		// Process the data received
 		// parse JSON
 		//parse data out for this particular method call
@@ -108,8 +113,8 @@ class USGS extends APIClient {
 	 * @param {boolean} [useCache=true] whether or not the cache should be used
 	 * @returns 
 	 */
-	async getDatapoints(datapointId, apiId, useCache = true) {
-		return this._fetchData(datapointId, apiId, useCache).then((data) => {
+	async getDatapoints(datapointId, apiId, parameters = {}, useCache = true, ) {
+		return this._fetchData(datapointId, apiId, parameters).then((data) => {
 			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
 			return data.map((dataitem) => {
 				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
