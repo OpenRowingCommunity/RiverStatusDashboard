@@ -22,6 +22,10 @@ let selectors = {
 	graphCanvas: '#graphCanvas'
 };
 
+var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
+
+
+
 let floodSourceURI = "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id;
 let floodParameters = {};
 
@@ -232,13 +236,6 @@ var parseFloodData = function (data) {
 		abscissa.forecast.push(aMoment);
 		ordinates.forecast.flood[i] = Number.parseFloat(flood);
 	}
-	var obsmin = moment.min(moments.observed);
-	var obsmax = moment.max(moments.observed);
-	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
-	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	flowParameters.startDT = obsmin.format(tempReqFormat);
-	temperatureParameters.endDT = obsmax.format(tempReqFormat);
-	flowParameters.endDT = obsmax.format(tempReqFormat);
 };
 
 
@@ -266,14 +263,6 @@ var parseFlowData = function (data) {
 	}
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
-	var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
-	temperatureParameters.startDT = obsmin.format(tempReqFormat);
-	flowParameters.startDT = obsmin.format(tempReqFormat);
-	floodParameters.startDT = obsmin.format(tempReqFormat);
-
-	temperatureParameters.endDT = obsmax.format(tempReqFormat);
-	flowParameters.endDT = obsmax.format(tempReqFormat);
-	floodParameters.endDT = obsmax.format(tempReqFormat);
 };
 
 var parseTemperatureData = function (data) {
@@ -296,6 +285,12 @@ var parseTemperatureData = function (data) {
 };
 
 var populateDataSets = async function () {
+
+	// get a date range for the last 7 days
+	let timeWindowParameters = {
+		startDT: moment().subtract(7, 'days').format(tempReqFormat),
+		endDT: moment().format(tempReqFormat)
+	}
 	$.ajax({
 		url: floodSourceURI,
 		data: floodParameters,
