@@ -12,6 +12,7 @@ var AppViewModel = function () {
     this.graphEnabled = ko.observable(true);
 	this.lastUpdatedVisible = ko.observable(true);
 	this.lastUpdated = ko.observable('');
+	this.tempUnit = ko.observable('˚F'); //ko.observable("˚C");
 	
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
@@ -23,7 +24,7 @@ var AppViewModel = function () {
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
-	this.waterTempUnits = ko.observable("˚C");
+	this.waterTempUnits = this.tempUnit; 
 	this.waterTempColor = ko.computed(function () {
 		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
@@ -41,7 +42,6 @@ var AppViewModel = function () {
 	/// # Air
 	this.airPropertiesEnabled = ko.observable(true);
 	this.airTemp = ko.observable(this._initString);
-	this.airTempUnits = ko.observable("˚C");
 	this.airTempF = ko.computed(function() {
 		let tempC = this.airTemp();
 		var tempF = '';
