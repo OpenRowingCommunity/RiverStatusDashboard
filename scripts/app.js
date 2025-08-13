@@ -7,13 +7,15 @@ var AppViewModel = function () {
 	this._initString = ' ';
 	this.referenceToAppViewModel = this;
 	this.devMode = true;
+
+	this.__persist = ['tempUnit'];
 	
 	/// # UI Toggles
     this.graphEnabled = ko.observable(true);
 	this.lastUpdatedVisible = ko.observable(true);
 	this.lastUpdated = ko.observable('');
 	this.tempUnit = ko.observable('˚F'); //ko.observable("˚C");
-	
+
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
