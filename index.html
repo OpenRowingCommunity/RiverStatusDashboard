@@ -80,6 +80,7 @@
 					</div>
 					<!-- END Title Row -->
 					
+					<button data-bind="click: toggleUnit" class="btn btn-info floating-action-button" id="tempToggle"><span data-bind="text: oppositeTempUnit"></span></button>
 					<!--  BEGIN Current Conditions, Zone, & Rules Row -->
 					<div class="row" id="conditionsRow">
 						
@@ -106,14 +107,8 @@
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
 										<div class="waterTempAndUnitsDiv">
 											<span class="label label-default" id="dataField-temp"
-												data-bind="{ text: waterTemp, style: { 'background-color': waterTempColor }}"></span>
-											<span class="now-value-units" data-bind="text: waterTempUnits"></span>
-										</div>
-										<!-- now show it in fahrenheit for the rubes --><br />
-										<div class="waterTempAndUnitsDiv">
-											<span class="label label-default" id="dataField-tempF"
-												data-bind="{ text: waterTempF, style: { 'background-color': waterTempColor } }"></span>
-											<span class="now-value-units">˚F</span>
+												data-bind="{ text: waterTempDisplay, style: { 'background-color': waterTempColor }}"></span>
+											<span class="now-value-units" data-bind="text: tempUnit"></span>
 										</div>
 										<div class="waterTempAndUnitsDiv" id="dataField-note" data-bind="visible: waterTempNoteVisible">
 											<span class="glyphicon glyphicon-alert" style="color: yellow;"></span>
@@ -137,11 +132,8 @@
 										<span>Air</span>
 									</div>
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
-										<span class="label label-default" id="dataField-air" data-bind="text: airTemp"></span>
-										<span class="now-value-units" data-bind="text: airTempUnits"></span>
-										<!-- Fahrenheit for the rubbes --><br />
-										<span class="label label-default" id="dataField-airF" data-bind="text: airTempF"></span>
-										<span class="now-value-units" data-bind="text: airTempUnitsF"></span>
+										<span class="label label-default" id="dataField-air" data-bind="text: airTempDisplay"></span>
+										<span class="now-value-units" data-bind="text: tempUnit"></span>
 									</div>
 								</div>
 								<!-- wind -->

@@ -290,14 +290,14 @@ var populateDataSets = async function () {
 		url: floodSourceURI,
 		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
-		success: function (data) {
+		success: async function (data) {
 			parseFloodData(data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
 				data: Object.assign({}, temperatureParameters, timeWindowParameters),
 				datatype: 'xml',
-				success: function (data) {
+				success: async function (data) {
 					parseTemperatureData(data);
 				
 					// hard-chain start

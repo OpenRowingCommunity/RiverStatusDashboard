@@ -7,12 +7,18 @@ var AppViewModel = function () {
 	this._initString = ' ';
 	this.referenceToAppViewModel = this;
 	this.devMode = true;
+
+	this.__persist = ['tempUnit'];
 	
 	/// # UI Toggles
     this.graphEnabled = ko.observable(true);
 	this.lastUpdatedVisible = ko.observable(true);
 	this.lastUpdated = ko.observable('');
-	
+	this.tempUnit = ko.observable('˚F');
+	this.oppositeTempUnit = ko.computed(function (){
+		return swapTempUnit(this.tempUnit());
+	}, this);
+
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
@@ -23,35 +29,40 @@ var AppViewModel = function () {
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
-	this.waterTempUnits = ko.observable("˚C");
 	this.waterTempColor = ko.computed(function () {
 		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
 	}, this);
-	this.waterTempF = ko.computed(function () {
+	this.waterTempDisplay = ko.computed(function () {
 		let tempC = this.waterTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
-			tempF = (tempC * (9/5)) + 32;
-			tempF = tempF.toFixed(1);
+			tempF = toFahrenheit(tempC).toFixed(1);
 		}
+
+		if (this.tempUnit().includes("C")) {
+			return tempC;
+		}
+
 		return tempF;
 	}, this);
 	
 	/// # Air
 	this.airPropertiesEnabled = ko.observable(true);
 	this.airTemp = ko.observable(this._initString);
-	this.airTempUnits = ko.observable("˚C");
-	this.airTempF = ko.computed(function() {
+	this.airTempDisplay = ko.computed(function() {
 		let tempC = this.airTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
-			tempF = (tempC * (9/5)) + 32;
-			tempF = tempF.toFixed(1);
+			tempF = toFahrenheit(tempC).toFixed(1);
 		}
+
+		if (this.tempUnit().includes("C")) {
+			return tempC;
+		}
+
 		return tempF;
 	}, this);
-	this.airTempUnitsF = ko.observable("˚F");
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");
 	this.airDirxn = ko.observable(this._initString);
@@ -84,6 +95,11 @@ var AppViewModel = function () {
 			return this._initString;
 		}
 	}, this);
+
+
+	this.toggleUnit = function () {
+		this.tempUnit(swapTempUnit(this.tempUnit()))
+	}
 	
 	/// # Internal-Private
 	this._updated = ko.computed(function () {
@@ -156,7 +172,7 @@ var AppViewModel = function () {
 	
 	/// # Experimental	
 	this.waterTempNote = ko.computed(function () {
-		if (this.waterTempF() < -10) {
+		if (toFahrenheit(this.waterTemp()) < -10) {
 			document.querySelector('#dataField-temp').parentElement.hidden = true;
 			document.querySelector('#dataField-tempF').parentElement.hidden = true;
 			return '<a href="https://www.usgs.gov/news/usgs-working-restore-streamgages">USGS equipment malfunction</a>';

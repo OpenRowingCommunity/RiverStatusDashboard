@@ -19,6 +19,14 @@ function toCelsius(temp) {
 	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
 };
 
+function swapTempUnit(temp) {
+	if (temp.includes("C")) {
+		return temp.replace("C", "F")
+	} else {
+		return temp.replace("F", "C")
+	}
+}
+
 //	1 mile = 1609.34 m; 1 h = 360 s
 function airSpeedFormatter(speed_i) {
 	var mps = Number.parseFloat(speed_i);
