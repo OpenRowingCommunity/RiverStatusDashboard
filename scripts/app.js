@@ -33,8 +33,7 @@ var AppViewModel = function () {
 		let tempC = this.waterTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
-			tempF = (tempC * (9/5)) + 32;
-			tempF = tempF.toFixed(1);
+			tempF = toFahrenheit(tempC).toFixed(1);
 		}
 
 		if (this.tempUnit().includes("C")) {
@@ -51,8 +50,7 @@ var AppViewModel = function () {
 		let tempC = this.airTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
-			tempF = (tempC * (9/5)) + 32;
-			tempF = tempF.toFixed(1);
+			tempF = toFahrenheit(tempC).toFixed(1);
 		}
 
 		if (this.tempUnit().includes("C")) {
@@ -166,7 +164,7 @@ var AppViewModel = function () {
 	
 	/// # Experimental	
 	this.waterTempNote = ko.computed(function () {
-		if (this.waterTempF() < -10) {
+		if (toFahrenheit(this.waterTemp()) < -10) {
 			document.querySelector('#dataField-temp').parentElement.hidden = true;
 			document.querySelector('#dataField-tempF').parentElement.hidden = true;
 			return '<a href="https://www.usgs.gov/news/usgs-working-restore-streamgages">USGS equipment malfunction</a>';
