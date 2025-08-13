@@ -47,22 +47,30 @@ let ko_addons = function() {
 			const observable = model[key]
 
 			if (!persist.has(key)) {
-				console.log("Skipping", key, "because it is not on the __persist list.")
+				if (devMode) {
+					console.log("Skipping", key, "because it is not on the __persist list.")
+				}
 				continue
 			}
 
 			if (ko.isComputed(observable)) {
-				console.log("Skipping", n, "because it is computed.")
+				if (devMode) {
+					console.log("Skipping", n, "because it is computed.")
+				}
 				continue
 			}
 
 			if (!ko.isObservable(observable)) {
-				console.log("Skipping", key, "because it is not observable.")
+				if (devMode) {
+					console.log("Skipping", key, "because it is not observable.")
+				}
 				continue
 			}
 
 			ko.trackChange(storageWrapper, observable, key, false)
-			console.log("Tracking change for", key)
+			if (devMode) {
+				console.log("Tracking change for", key)
+			}
 
 		}
 	}
