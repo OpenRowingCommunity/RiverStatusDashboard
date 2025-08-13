@@ -95,11 +95,7 @@ var AppViewModel = function () {
 
 
 	this.toggleUnit = function () {
-		if (this.tempUnit().includes("C")) {
-			this.tempUnit(this.tempUnit().replace("C", "F"))
-		} else {
-			this.tempUnit(this.tempUnit().replace("F", "C"))
-		}
+		this.tempUnit(swapTempUnit(this.tempUnit()))
 	}
 	
 	/// # Internal-Private
