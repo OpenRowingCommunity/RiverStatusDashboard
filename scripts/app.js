@@ -24,7 +24,6 @@ var AppViewModel = function () {
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
-	this.waterTempUnits = this.tempUnit; 
 	this.waterTempColor = ko.computed(function () {
 		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
@@ -59,7 +58,6 @@ var AppViewModel = function () {
 
 		return tempF;
 	}, this);
-	this.airTempUnitsF = ko.observable("˚F");
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");
 	this.airDirxn = ko.observable(this._initString);
