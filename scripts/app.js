@@ -14,7 +14,10 @@ var AppViewModel = function () {
     this.graphEnabled = ko.observable(true);
 	this.lastUpdatedVisible = ko.observable(true);
 	this.lastUpdated = ko.observable('');
-	this.tempUnit = ko.observable('˚F'); //ko.observable("˚C");
+	this.tempUnit = ko.observable('˚F');
+	this.oppositeTempUnit = ko.computed(function (){
+		return swapTempUnit(this.tempUnit());
+	}, this);
 
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
