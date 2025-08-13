@@ -29,26 +29,36 @@ var AppViewModel = function () {
 		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
 		return color;
 	}, this);
-	this.waterTempF = ko.computed(function () {
+	this.waterTempDisplay = ko.computed(function () {
 		let tempC = this.waterTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
 			tempF = (tempC * (9/5)) + 32;
 			tempF = tempF.toFixed(1);
 		}
+
+		if (this.tempUnit().includes("C")) {
+			return tempC;
+		}
+
 		return tempF;
 	}, this);
 	
 	/// # Air
 	this.airPropertiesEnabled = ko.observable(true);
 	this.airTemp = ko.observable(this._initString);
-	this.airTempF = ko.computed(function() {
+	this.airTempDisplay = ko.computed(function() {
 		let tempC = this.airTemp();
 		var tempF = '';
 		if (tempC != null && tempC != this._initString) {
 			tempF = (tempC * (9/5)) + 32;
 			tempF = tempF.toFixed(1);
 		}
+
+		if (this.tempUnit().includes("C")) {
+			return tempC;
+		}
+
 		return tempF;
 	}, this);
 	this.airTempUnitsF = ko.observable("˚F");
