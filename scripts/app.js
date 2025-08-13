@@ -90,6 +90,16 @@ var AppViewModel = function () {
 			return this._initString;
 		}
 	}, this);
+
+
+	this.toggleUnit = function () {
+		console.log("toggle")
+		if (this.tempUnit().includes("C")) {
+			this.tempUnit(this.tempUnit().replace("C", "F"))
+		} else {
+			this.tempUnit(this.tempUnit().replace("F", "C"))
+		}
+	}
 	
 	/// # Internal-Private
 	this._updated = ko.computed(function () {
