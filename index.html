@@ -44,6 +44,8 @@
 		<script src="./scripts/apiClients/gov.usgs.js"></script>
 		<script src="./scripts/apiClients/org.sunrise-sunset.js"></script>
 		<script src="./scripts/apiClients/gov.weather.w1.js"></script>
+		<script src="./scripts/apiClients/gov.airnow.js"></script>
+
 		<script src="./scripts/apiConcierge.js"></script>
 		
 		<!-- TRRA dashbaord functions -->
@@ -134,6 +136,16 @@
 									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
 										<span class="label label-default" id="dataField-air" data-bind="text: airTempDisplay"></span>
 										<span class="now-value-units" data-bind="text: tempUnit"></span>
+									</div>
+								</div>
+								<!-- air quality -->
+								<div class="row now-value-row" data-bind="visible: airPropertiesEnabled">
+									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-4 text-right now-value-name">
+										<span>Air Quality</span>
+									</div>
+									<div class="col-lg-8 col-md-8 col-sm-6 col-xs-8 text-left now-value-value">
+										<span class="label label-default" id="dataField-air" data-bind="text: airQual"></span>
+										<span class="now-value-units" data-bind="text: airQualUnit"></span>
 									</div>
 								</div>
 								<!-- wind -->

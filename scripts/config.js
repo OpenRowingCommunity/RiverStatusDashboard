@@ -89,7 +89,13 @@ let ritconfig = new RiverStatusConfig({
 			id: "KROC",
 			purposeHints: [DatapointIdentifier.AIR_TEMP, DatapointIdentifier.AIR_SPEED, DatapointIdentifier.AIR_DIRECTION],
 			comment: "Greater Rochester International Airport"
-		}
+		},
+		{
+			type: APIClientIdentifier.AIRNOW,
+			id: "Eastern Lake Ontario Region, NY",
+			purposeHints: [DatapointIdentifier.AIR_QUALITY],
+			comment: "Eastern Lake Ontario Region air quality data"
+		},
 	]
 });
 

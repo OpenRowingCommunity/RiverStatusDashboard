@@ -63,6 +63,10 @@ var AppViewModel = function () {
 
 		return tempF;
 	}, this);
+
+	this.airQual = ko.observable(this._initString);
+	this.airQualUnit = ko.observable("AQI");
+
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");
 	this.airDirxn = ko.observable(this._initString);
@@ -331,8 +335,12 @@ var AppViewModel = function () {
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_TEMP, this.airTemp);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_SPEED, this.airSpeed);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_DIRECTION, this.airDirxn);
+		apiConcierge.getValueAsync(DatapointIdentifier.AIR_QUALITY, this.airQual);
+
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNRISE, this.sunrise);
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNSET, this.sunset);
+
+		
 		let now = moment().format("h:mm a");
 		this.lastUpdated(now);
 		return true;

@@ -32,7 +32,8 @@ let apiConcierge = {
 		[APIClientIdentifier.NOAA_WATER]: gov_weather_water,
 		[APIClientIdentifier.NOAA_W1]: gov_weather_w1,
 		[APIClientIdentifier.USGS]: gov_usgs,
-		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset
+		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset,
+		[APIClientIdentifier.AIRNOW]: gov_airnow
 	},
 	
 	// for a value, which API domain
