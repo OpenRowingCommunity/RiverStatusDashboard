@@ -97,7 +97,7 @@ var AppViewModel = function () {
 	}, this);
 
 
-	this.toggleUnit = function () {
+	this.toggleUnit = () => {
 		this.tempUnit(swapTempUnit(this.tempUnit()))
 	}
 	
