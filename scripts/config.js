@@ -56,6 +56,23 @@ class RiverStatusConfig {
 			}
 		}
 	}
+}
+
+// A safety zone has a value (intended to be displayed as a single character)
+// and a color, and also probably some notion of being ordered
+
+class SafetyMatrix {
+
+	// TODO: field value for allowing safety zone info to be accessed (or maybe this should stay internal so they can remain arbitrarily defined)
+
+	// TODO: core data structure is a list of zones which itself contains a mapping of datapoint identifiers to threshold values (probably start with just the minimum for now so they can autoStack)
+
+	// TODO: place to store optional link to view the clubs underlying safety matrix document
+
+	// This class should be able to represent all or most safety matrices from any club that wants to use it
+
+	// it should allow values for different data fields (identified by [DatapointIdentifier] enum values) to be mapped to any number of safety zones identified by arbitrary symbols and colors
+
 	
 }
 
@@ -65,6 +82,7 @@ let ritconfig = new RiverStatusConfig({
 	clubAcronym: "RIT",
 	boathouseLat: 43.064251,
 	boathouseLong: -77.699065,
+	safetyMatrix: SafetyMatrix(),
 	dataSources: [
 		{
 			type: APIClientIdentifier.USGS,
