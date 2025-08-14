@@ -189,7 +189,7 @@ var rit_safety = {
 		},
 	
 		//	primary duty function
-		zoneForConditions: function (waterFlow, waterTemp, sunrise, sunset) {
+		zoneForConditions: function (waterFlow, waterTempC, sunrise, sunset) {
             var isDaylight = false;
 			if (moment != null) {
 				var now = moment();
@@ -197,7 +197,7 @@ var rit_safety = {
 				var beforeDusk = now.isBefore(sunset);
                 isDaylight = (afterDawn && beforeDusk);
 			}
-            let tempF = 32.0 + ((9/5) * Number(waterTemp));
+            let tempF = toFahrenheit(Number(waterTempC));
             var zoneFor2021Matrix = getZoneForConditions(Number(waterFlow), tempF, isDaylight);
 			return zoneFor2021Matrix;
 		},
@@ -208,8 +208,8 @@ var rit_safety = {
 			return color;
 		},
 		
-		zoneColorForWaterTemp: function (waterTemp) {
-			let tempF = 32.0 + ((9 / 5) * Number(waterTemp));
+		zoneColorForWaterTemp: function (waterTempC) {
+			let tempF = toFahrenheit(Number(waterTempC));
 			let zone = rank(tempF, this.scales.waterTemp);
 			let color = semanticColors[zone];
 			return color;
