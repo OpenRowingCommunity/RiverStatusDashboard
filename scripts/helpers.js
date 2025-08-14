@@ -128,12 +128,12 @@ function colorForAirQual(aqi) {
 	let failureColor = '#000000';
 	
 	// ensure aqi is a valid number
-	if(isNaN(value)){
+	if(isNaN(aqi)){
 		console.log("provided AQI value is not a number :" + aqi);
 		return failureColor;
 	}
 
-	if (value < 0) {
+	if (aqi < 0) {
 		console.log("provided AQI value is less than 0 :" + aqi);
 		return failureColor;
 	}
