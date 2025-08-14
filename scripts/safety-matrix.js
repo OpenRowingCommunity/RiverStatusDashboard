@@ -160,7 +160,7 @@ let rank = function (value, scale) {
 	return r;
 };
 
-let semanticColors = {
+let zoneColors = {
 	1: '#00c020',		//	green
 	2: '#40fe00',		//	bright green
 	3: '#c8ff00',		//	yellow
@@ -221,20 +221,20 @@ var rit_safety = {
 		
 		zoneColorForWaterFlow: function (waterFlow) {
 			let zone = rank(waterFlow, this.scales.waterFlow);
-			let color = semanticColors[zone];
+			let color = zoneColors[zone];
 			return color;
 		},
 		
 		zoneColorForWaterTemp: function (waterTempC) {
 			let tempF = toFahrenheit(Number(waterTempC));
 			let zone = rank(tempF, this.scales.waterTemp);
-			let color = semanticColors[zone];
+			let color = zoneColors[zone];
 			return color;
 		},
 		
 		zoneColorForZone: function(zone) {
 			if (zone > 0 && zone <= 6) {
-				return semanticColors[zone];
+				return zoneColors[zone];
 			} else if (zone > 6) {
 				return '#000000';
 			} else {
