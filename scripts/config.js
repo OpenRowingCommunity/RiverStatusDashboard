@@ -94,7 +94,7 @@ let ritconfig = new RiverStatusConfig({
 			type: APIClientIdentifier.AIRNOW,
 			id: "Eastern Lake Ontario Region, NY",
 			purposeHints: [DatapointIdentifier.AIR_QUALITY],
-			comment: "Eastern Lake Ontario Region air quality data"
+			comment: "Eastern Lake Ontario Region"
 		},
 	]
 });
