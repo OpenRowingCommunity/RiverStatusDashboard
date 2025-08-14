@@ -66,6 +66,7 @@ var AppViewModel = function () {
 
 	this.airQual = ko.observable(this._initString);
 	this.airQualUnit = ko.observable("AQI");
+	this.airQualColor = ko.computed(() => colorForAirQual(this.airQual()));
 
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");

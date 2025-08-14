@@ -83,3 +83,68 @@ function timeFormatter(time_i) {
 	}
 	return time_f;
 }
+
+let airqualThresholds = [
+	{
+		min: 0,
+		max: 50,
+		name: "Good",
+		color: '#00E400'
+	},
+	{
+		min: 51,
+		max: 100,
+		name: "Moderate",
+		color: '#ffff00'
+	},
+	{
+		min: 101,
+		max: 150,
+		name: "Unhealthy for Sensitive Groups (USG)",
+		color: '#ff7e00'
+	},
+	{
+		min: 151,
+		max: 200,
+		name: "Unhealthy",
+		color: '#ff0000'
+	},
+	{
+		min: 201,
+		max: 300,
+		name: "Very Unhealthy",
+		color: '#8F3F97'
+	},
+	{
+		min: 301,
+		max: undefined,
+		name: "Hazardous",
+		color: '#7E0023'
+	}
+];
+
+function colorForAirQual(aqi) {
+
+	let failureColor = '#000000';
+	
+	// ensure aqi is a valid number
+	if(isNaN(value)){
+		console.log("provided AQI value is not a number :" + aqi);
+		return failureColor;
+	}
+
+	if (value < 0) {
+		console.log("provided AQI value is less than 0 :" + aqi);
+		return failureColor;
+	}
+
+	for (const aqiZone of airqualThresholds) {
+		if (aqiZone.max != undefined && aqi > aqiZone.max) {
+			//we are above this zone. next one
+			continue
+		}
+		return aqiZone.color;
+	}
+
+	
+}
