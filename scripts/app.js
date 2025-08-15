@@ -337,6 +337,7 @@ var AppViewModel = function () {
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_SPEED, this.airSpeed);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_DIRECTION, this.airDirxn);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_QUALITY, this.airQual);
+		this.airQualUnit(apiConcierge.getUnit(DatapointIdentifier.AIR_QUALITY));
 
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNRISE, this.sunrise);
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNSET, this.sunset);

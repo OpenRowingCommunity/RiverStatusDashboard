@@ -56,6 +56,17 @@ let apiConcierge = {
 
 	/**
 	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the datapoint for which the unit is sought
+	 * @returns 
+	 */
+	getUnit: function (valueId) {
+		let details = this._getConfigDetails(valueId);
+		let client = this.clientMap[details.type];
+		return client.getUnits(valueId);
+	},
+
+	/**
+	 * 
 	 * @param {*} valueId a unique identifier (string or int) of the value sought
 	 * @param {*} setterFunc the function to be used to set the value once retrieved
 	 * @returns 
