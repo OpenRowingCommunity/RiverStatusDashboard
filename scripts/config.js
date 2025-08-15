@@ -56,6 +56,16 @@ class RiverStatusConfig {
 	}
 }
 
+/**
+ * Represents a textual summary of what limitations are in place when in this safety zone
+ */
+class SafetyZoneRestriction {
+
+	constructor(title, description) {
+		this.title = title;
+		this.description = description;
+	}
+}
 
 /**
  * A safety zone has a value (intended to be displayed as a single character)
