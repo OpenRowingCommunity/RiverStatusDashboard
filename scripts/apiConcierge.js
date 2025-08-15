@@ -49,12 +49,7 @@ let apiConcierge = {
 			 return mockData[valueId];
 		}
 		
-		let details = config.getDataSourceDetails(undefined, valueId);
-		if (details.length == 0 ){
-			console.log("no config found - searching for " + valueId)
-		} else {
-			details = details[0]
-		}
+		let details = this._getConfigDetails(valueId);
 		let client = this.clientMap[details.type];
 		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
 	},
@@ -66,14 +61,19 @@ let apiConcierge = {
 	 * @returns 
 	 */
 	getValuesAsync: async function (valueId, parameters = {}) {
+		let details = this._getConfigDetails(valueId);
+		let client = this.clientMap[details.type];
+		return client.getDatapoints(valueId, details.id, parameters);
+	},
+
+	_getConfigDetails: function (valueId) {
 		let details = config.getDataSourceDetails(undefined, valueId);
 		if (details.length == 0 ){
 			console.log("no config found - searching for " + valueId)
 		} else {
 			details = details[0]
 		}
-		let client = this.clientMap[details.type];
-		return client.getDatapoints(valueId, details.id, parameters);
+		return details
 	}
 	
 };
