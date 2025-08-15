@@ -13,7 +13,7 @@ const DatapointIdentifier = Object.freeze({
 
 const APIClientIdentifier = Object.freeze({
 	NOAA_WATER:			"water.weather.gov",
-	EPA_AIRNOW:			"airnow.epa.gov",
+	AIRNOW:				"airnow.gov",
 	NOAA_W1:			"w1.weather.gov",
 	USGS:				"usgs.gov",
 	SUNRISE_SUNSET_ORG:	"sunrise-sunset.org"

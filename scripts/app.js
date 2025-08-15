@@ -63,6 +63,11 @@ var AppViewModel = function () {
 
 		return tempF;
 	}, this);
+
+	this.airQual = ko.observable(this._initString);
+	this.airQualUnit = ko.observable("AQI");
+	this.airQualColor = ko.computed(() => colorForAirQual(this.airQual()));
+
 	this.airSpeed = ko.observable(this._initString);
 	this.airSpeedUnits = ko.observable("mph");
 	this.airDirxn = ko.observable(this._initString);
@@ -134,7 +139,7 @@ var AppViewModel = function () {
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
 			zone = rit_safety.rowing.zoneForConditions(
-				this.waterFlow(), this.waterTemp(),
+				this.waterFlow(), this.waterTemp(), this.airQual(),
 				this.sunrise(), this.sunset()
 			);
 		}
@@ -331,8 +336,13 @@ var AppViewModel = function () {
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_TEMP, this.airTemp);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_SPEED, this.airSpeed);
 		apiConcierge.getValueAsync(DatapointIdentifier.AIR_DIRECTION, this.airDirxn);
+		apiConcierge.getValueAsync(DatapointIdentifier.AIR_QUALITY, this.airQual);
+		this.airQualUnit(apiConcierge.getUnit(DatapointIdentifier.AIR_QUALITY));
+
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNRISE, this.sunrise);
 		apiConcierge.getValueAsync(DatapointIdentifier.SUNSET, this.sunset);
+
+		
 		let now = moment().format("h:mm a");
 		this.lastUpdated(now);
 		return true;

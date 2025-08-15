@@ -32,7 +32,8 @@ let apiConcierge = {
 		[APIClientIdentifier.NOAA_WATER]: gov_weather_water,
 		[APIClientIdentifier.NOAA_W1]: gov_weather_w1,
 		[APIClientIdentifier.USGS]: gov_usgs,
-		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset
+		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset,
+		[APIClientIdentifier.AIRNOW]: gov_airnow
 	},
 	
 	// for a value, which API domain
@@ -48,14 +49,20 @@ let apiConcierge = {
 			 return mockData[valueId];
 		}
 		
-		let details = config.getDataSourceDetails(undefined, valueId);
-		if (details.length == 0 ){
-			console.log("no config found - searching for " + valueId)
-		} else {
-			details = details[0]
-		}
+		let details = this._getConfigDetails(valueId);
 		let client = this.clientMap[details.type];
 		return client.getDatapoint(valueId, details.id).then((v) => setterFunc(v));
+	},
+
+	/**
+	 * 
+	 * @param {*} valueId a unique identifier (string or int) of the datapoint for which the unit is sought
+	 * @returns 
+	 */
+	getUnit: function (valueId) {
+		let details = this._getConfigDetails(valueId);
+		let client = this.clientMap[details.type];
+		return client.getUnits(valueId);
 	},
 
 	/**
@@ -65,14 +72,19 @@ let apiConcierge = {
 	 * @returns 
 	 */
 	getValuesAsync: async function (valueId, parameters = {}) {
+		let details = this._getConfigDetails(valueId);
+		let client = this.clientMap[details.type];
+		return client.getDatapoints(valueId, details.id, parameters);
+	},
+
+	_getConfigDetails: function (valueId) {
 		let details = config.getDataSourceDetails(undefined, valueId);
 		if (details.length == 0 ){
 			console.log("no config found - searching for " + valueId)
 		} else {
 			details = details[0]
 		}
-		let client = this.clientMap[details.type];
-		return client.getDatapoints(valueId, details.id, parameters);
+		return details
 	}
 	
 };
