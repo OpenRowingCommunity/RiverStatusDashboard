@@ -94,6 +94,20 @@ class SafetyZone {
 		/** list of objects representing textual descriptions of limitations on rowing when in this zone applies */
 		this.restrictions = restrictions
 	}
+
+	/**
+	 * determines whether this safety zones criteria are met by the given input data
+	 * 
+	 * a zones criteria are met if any current value is above the threshold defined in the zone
+	 * 
+	 * @param {*} values an object containing every possible datapoint identifier
+	 * (as keys of an object) and their current values
+	 * 
+	 * @returns boolean indicating whether or not this zones criteria are met 
+	 */
+	isTriggeredBy(values){
+
+	}
 }
 
 
