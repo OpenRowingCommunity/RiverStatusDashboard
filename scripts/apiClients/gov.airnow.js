@@ -98,6 +98,10 @@ class AirNow extends APIClient {
 	}
 
 	getUnits(datapointId) {
+		if (! this.supportedDatapoints().includes(datapointId)){
+			console.error(`${datapointId} is not supported for data source ${this.id}`)
+			return "Unsupported"
+		}
 		return this.dataUnits[datapointId]
 	}
 
