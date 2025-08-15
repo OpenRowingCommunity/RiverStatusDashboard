@@ -105,7 +105,7 @@ class SafetyZone {
  */
 class SafetyMatrix {
 
-	constructor(safetyZones, unsafeZone) {
+	constructor(safetyZones, unsafeZone = SafetyZone('☠️')) {
 		/**
 		 * ordered list of SafetyZones, safest to least safe
 		 */
