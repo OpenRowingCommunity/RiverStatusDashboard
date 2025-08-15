@@ -98,11 +98,11 @@ class AirNow extends APIClient {
 	}
 
 	getUnits(datapointId) {
-		return dataUnits[datapointId]
+		return this.dataUnits[datapointId]
 	}
 
 	supportedDatapoints() {
-		return this.dataTransformers.keys()
+		return Object.keys(this.dataUnits)
 	}
 }
 
