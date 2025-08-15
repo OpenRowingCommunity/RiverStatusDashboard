@@ -92,14 +92,6 @@ let main = async function () {
 		window.vm.update();
 	}, 1000*60*15);
 	
-	//	set last-updated stuff
-	$('#refresh-button').mouseover(function () {
-		window.vm.lastUpdatedVisible(true);
-	});
-	$('#refresh-button').mouseout(function () {
-		window.vm.lastUpdatedVisible(false);
-	});
-	
 	if (viewModel.graphEnabled()) {
 		setupGraphStructures();
 		await populateDataSets();

@@ -12,7 +12,6 @@ var AppViewModel = function () {
 	
 	/// # UI Toggles
     this.graphEnabled = ko.observable(true);
-	this.lastUpdatedVisible = ko.observable(true);
 	this.lastUpdated = ko.observable('');
 	this.tempUnit = ko.observable('˚F');
 	this.oppositeTempUnit = ko.computed(function (){
