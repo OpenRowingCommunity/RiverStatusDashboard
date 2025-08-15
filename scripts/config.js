@@ -76,13 +76,13 @@ class SafetyZoneRestriction {
  */
 class SafetyZone {
 
-	UNKNOWN = SafetyZone({ value: "?", color: 'gray'})
+	UNKNOWN = SafetyZone("?", 'gray')
 
-	constructor({value, color}) {
+	constructor(text, color="gray") {
 		/**
 		  * the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc)
 		 */
-		this.value = value;
+		this.text = text;
 		this.color = color;
 
 		/**
