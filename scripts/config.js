@@ -2,16 +2,14 @@
 	
 class RiverStatusConfig {
 	
-	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, dataSources }) {
+	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, safetyMatrix, dataSources }) {
 		this.riverName = riverName;
 		this.clubFullName = clubFullName;
 		this.clubAcronym = clubAcronym;
 		this.boathouseLat = boathouseLat;
 		this.boathouseLong = boathouseLong;
 		this.dataSources = dataSources;
-
-		//TODO: include the safety matrix in this data
-		// this.safetyMatrix 
+		this.safetyMatrix = safetyMatrix; //TODO: make optional
 	}
 
 	/**
