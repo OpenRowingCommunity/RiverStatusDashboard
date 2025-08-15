@@ -9,7 +9,7 @@ class AirNow extends APIClient {
 	}
 
 	dataUnits = {
-		[DatapointIdentifier.AIR_QUALITY]: 'AQI'
+		[DatapointIdentifier.AIR_QUALITY]: 'AQI NowCast'
 	}
 
 	/** A very low level internal helper that assembles parameters and makes a query to the API
@@ -97,6 +97,7 @@ class AirNow extends APIClient {
 		return this._fetchData(datapointId, apiId, parameters)
 	}
 
+	// TODO: maybe move these to the superclass?
 	getUnits(datapointId) {
 		if (! this.supportedDatapoints().includes(datapointId)){
 			console.error(`${datapointId} is not supported for data source ${this.id}`)
