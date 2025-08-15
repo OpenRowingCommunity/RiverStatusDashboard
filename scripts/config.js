@@ -92,7 +92,7 @@ let ritconfig = new RiverStatusConfig({
 		},
 		{
 			type: APIClientIdentifier.AIRNOW,
-			id: "Eastern Lake Ontario Region, NY",
+			id: "Eastern_Lake_Ontario_Region_NY",
 			purposeHints: [DatapointIdentifier.AIR_QUALITY],
 			friendlyPage: "https://www.airnow.gov/?city=Rochester&state=NY&country=USA",
 			comment: "Eastern Lake Ontario Region"

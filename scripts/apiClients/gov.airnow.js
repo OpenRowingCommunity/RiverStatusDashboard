@@ -5,7 +5,7 @@
 class AirNow extends APIClient {
 
 	constructor() {
-		super('https://files.airnowtech.org/airnow/today/airnow_today.kml', APIClientIdentifier.AIRNOW)
+		super('https://airnowgovapi.com/andata/ReportingAreas', APIClientIdentifier.AIRNOW)
 	}
 
 	dataUnits = {
@@ -25,10 +25,11 @@ class AirNow extends APIClient {
 	/** An internal helper that sets up and performs queries for particular data and does some extraction of that data from the result 
 	 * 
 	 * @param {*} datapointId 
+	 * @param {*} apiId
 	 * @param {*} parameters 
 	 * @returns 
 	 */
-	async _fetchData(datapointId, parameters = {}) {
+	async _fetchData(datapointId, apiId, parameters = {}) {
 		let query;
 
 		switch (datapointId) {
@@ -41,9 +42,14 @@ class AirNow extends APIClient {
 		}
 
 		// Process the KML data received
-		return this._queryData().then(async (response) => {
-			let data = await response.text();
-			return this._parseKmlToJson(data);
+		return this._queryData(`/${apiId}.json`).then(async (response) => {
+			let data = await response.json();
+			data['hourlyReadings'] = this._zipHourlyData(data);
+			delete data['aqi'];
+			delete data['param'];
+			delete data['utcDateTimes'];
+			
+			return data;
 		});
 	}
 	
@@ -51,48 +57,32 @@ class AirNow extends APIClient {
 	 * Fetch a single datapoint, potentially from cached data
 	 * 
 	 * @param {*} datapointId the identifier of the datapoint to fetch
-	 * @param {*} regionName the name of the region to use
+	 * @param {*} apiId the name of the region to use
 	 * @returns 
 	 */
-	async getDatapoint(datapointId, regionName) {
-		return this._fetchData(datapointId).then((data) => {
-			var value = data.filter((value) => value.region == regionName)[0];
-			console.log(value);
-			return value.overallAqi;
-		});
+	async getDatapoint(datapointId, apiId) {
+		return this._fetchData(datapointId, apiId).then((data) => data.hourlyReadings[data.hourlyReadings.length-1].aqi);
 	}
 
-	_parseKmlToJson(kmlString){
-		const parser = new DOMParser();
-        const kmlDoc = parser.parseFromString(kmlString, "application/xml");
-
-        const placemarks = kmlDoc.querySelectorAll("Placemark");
-
-		let parsedData = [];
-
-        const outputDiv = document.getElementById("output");
-		placemarks.forEach(placemark => {
-			const aqiElement = placemark.querySelector("aqi");
-			const snippetElement = placemark.querySelector("Snippet");
-			const descriptionElement = placemark.querySelector("description");
-			const coordinatesElement = placemark.querySelector("coordinates");
-			const styleUrlElement = placemark.querySelector("styleUrl");
-
-			const aqi = aqiElement ? parseInt(aqiElement.textContent, 10) : null;
-			const region = snippetElement ? snippetElement.textContent.trim() : "N/A";
-			const coordinates = coordinatesElement ? coordinatesElement.textContent.trim().split(',').map(Number) : null;
-			const styleUrl = styleUrlElement ? styleUrlElement.textContent.trim().replace('#', '') : null;
-
-
-			parsedData.push({
-				region: region,
-				overallAqi: aqi,
-				overallAqiCategory: styleUrl, // From styleUrl, e.g., "Moderate"
-				coordinates: coordinates, // [longitude, latitude, altitude]
+	_zipHourlyData(data) {
+		
+		// Determine the length of the shortest array to prevent errors
+		const minLength = Math.min(
+			data.aqi.length,
+			data.param.length,
+			data.utcDateTimes.length
+		);
+		
+		let hourlyReadings = [];
+		for (let i = 0; i < minLength; i++) {
+			hourlyReadings.push({
+				aqi: data.aqi[i],
+				param: data.param[i],
+				dateTimeUTC: data.utcDateTimes[i],
 			});
-		});
+		}
 
-		return parsedData;
+		return hourlyReadings;
 	}
 
 	/**
@@ -104,13 +94,7 @@ class AirNow extends APIClient {
 	 * @returns 
 	 */
 	async getDatapoints(datapointId, apiId, parameters = {}, useCache = true, ) {
-		return this._fetchData(datapointId, apiId, parameters).then((data) => {
-			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
-			return data.map((dataitem) => {
-				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
-				return dataitem
-			});
-		});
+		return this._fetchData(datapointId, apiId, parameters)
 	}
 
 	getUnits(datapointId) {
