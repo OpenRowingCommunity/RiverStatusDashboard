@@ -108,8 +108,16 @@ class SafetyMatrix {
 
 	}
 
+	/**
+	 * provides the safety zone that applies according to the given input data
+	 * @param {*} data an object containing every possible datapoint identifier
+	 * as its keys and containing their current values
+	 * 
+	 * @returns the current DataPoint that applies to the safety zone
+	 */
+	getZoneForData(data) {
 
-	getZoneForValue(datapointId, value){
+		return this.unsafeZone;
 
 	}
 	
