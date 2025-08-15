@@ -88,6 +88,13 @@ class SafetyZone {
 	}
 }
 
+
+
+
+/**
+ * This is a configuration object that should be able to represent many variations of the safety matrix concept
+ * it allows values for different data fields (identified by [DatapointIdentifier] enum values) to be mapped to any number of safety zones (identified by arbitrary symbols and colors that are shown to users)
+ */
 class SafetyMatrix {
 
 	constructor({safetyZones, unsafeZone}) {
