@@ -138,9 +138,20 @@ class SafetyMatrix {
 	 * @returns the current DataPoint that applies to the safety zone
 	 */
 	getZoneForData(data) {
+		// add the unsafezone to the end of the list when evaluating
+		let zones = Array.from(this.safetyZones);
+		zones.push(this.unsafeZone);
 
-		return this.unsafeZone;
+		var selectedZone = SafetyZone.UNKNOWN;
 
+		for (const zone of zones) {
+			if (zone.isTriggeredBy(data)) {
+				selectedZone = zone;
+			} else {
+				break
+			}
+		}
+		return selectedZone;
 	}
 	
 }
