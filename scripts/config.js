@@ -78,7 +78,7 @@ class SafetyZone {
 
 	UNKNOWN = SafetyZone("?", 'gray')
 
-	constructor(text, color="gray") {
+	constructor(text, color="gray", conditions={}, restrictions=[]) {
 		/**
 		  * the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc)
 		 */
@@ -89,12 +89,10 @@ class SafetyZone {
 		 * The conditions under which this safety zone is active
 		 * This is a map from datapoint identifiers to the minimum values
 		 */
-		this.conditions = [
+		this.conditions = conditions
 
-		]
-
-		//textual summary of limitations on rowing in this zone
-		this.restrictions = []
+		/** list of objects representing textual descriptions of limitations on rowing when in this zone applies */
+		this.restrictions = restrictions
 	}
 }
 
