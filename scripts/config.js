@@ -56,8 +56,37 @@ class RiverStatusConfig {
 	}
 }
 
-// A safety zone has a value (intended to be displayed as a single character)
-// and a color, and also probably some notion of being ordered
+
+/**
+ * A safety zone has a value (intended to be displayed as a single character)
+ * and a color, and also probably some notion of being ordered
+ * 
+ * its core data structure is a list of zones which itself contains a mapping
+ * of datapoint identifiers to threshold values 
+ */
+class SafetyZone {
+
+	UNKNOWN = SafetyZone({ value: "?", color: 'gray'})
+
+	constructor({value, color}) {
+		/**
+		  * the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc)
+		 */
+		this.value = value;
+		this.color = color;
+
+		/**
+		 * The conditions under which this safety zone is active
+		 * This is a map from datapoint identifiers to the minimum values
+		 */
+		this.conditions = [
+
+		]
+
+		//textual summary of limitations on rowing in this zone
+		this.restrictions = []
+	}
+}
 
 class SafetyMatrix {
 
