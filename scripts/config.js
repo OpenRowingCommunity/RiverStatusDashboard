@@ -90,16 +90,21 @@ class SafetyZone {
 
 class SafetyMatrix {
 
-	// TODO: field value for allowing safety zone info to be accessed (or maybe this should stay internal so they can remain arbitrarily defined)
+	constructor({safetyZones, unsafeZone}) {
+		/**
+		 * ordered list of SafetyZones, safest to least safe
+		 */
+		this.safetyZones = safetyZones
+		this.unsafeZone = unsafeZone
 
-	// TODO: core data structure is a list of zones which itself contains a mapping of datapoint identifiers to threshold values (probably start with just the minimum for now so they can autoStack)
+		// TODO: place to store optional link to view the clubs underlying safety matrix document
 
-	// TODO: place to store optional link to view the clubs underlying safety matrix document
+	}
 
-	// This class should be able to represent all or most safety matrices from any club that wants to use it
 
-	// it should allow values for different data fields (identified by [DatapointIdentifier] enum values) to be mapped to any number of safety zones identified by arbitrary symbols and colors
+	getZoneForValue(datapointId, value){
 
+	}
 	
 }
 
