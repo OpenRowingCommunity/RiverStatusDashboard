@@ -5,10 +5,11 @@
 const kZONE_ROWING_NOT_PERMITTED = Infinity;
 const kZONE_ROWING_INDETERMINATE = NaN;
 
-function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, aqi, isDaylight) {
     if (
         !isFinite(waterTemp_degF) ||
         !isFinite(waterFlow_kcfs) ||
+		!isFinite(aqi) ||
         isDaylight == undefined
     ) { 
         return kZONE_ROWING_INDETERMINATE
@@ -16,8 +17,10 @@ function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
 
     var leastRestrictiveZoneForWaterTemp = kZONE_ROWING_INDETERMINATE;
     var leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
+	var leastRestrictiveZoneForAirQual = kZONE_ROWING_INDETERMINATE;
 
 
+	// TODO: this encodes RIT's safety matrix values - it should be using the configuration params
 	if (waterTemp_degF == -999) {
 		leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
 	}  else if (waterTemp_degF < 35.0) {
@@ -47,13 +50,27 @@ function _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
     } else {
         leastRestrictiveZoneForWaterFlow = kZONE_ROWING_INDETERMINATE;
     }
+
+	if (0 <= aqi && aqi < 150) {
+        leastRestrictiveZoneForAirQual = 1;
+    } else if (150 <= aqi && aqi < 200) {
+        leastRestrictiveZoneForAirQual = 5;
+    } else if (aqi >= 200) {
+        leastRestrictiveZoneForAirQual = kZONE_ROWING_NOT_PERMITTED;
+    } else {
+        leastRestrictiveZoneForAirQual = kZONE_ROWING_INDETERMINATE;
+    }
+	console.log(aqi)
+	console.log(leastRestrictiveZoneForAirQual)
+	console.log(kZONE_ROWING_NOT_PERMITTED)
+	console.log(kZONE_ROWING_INDETERMINATE)
     
     var zoneForAllConditions = kZONE_ROWING_INDETERMINATE;
-    if (leastRestrictiveZoneForWaterFlow == kZONE_ROWING_NOT_PERMITTED || leastRestrictiveZoneForWaterTemp == kZONE_ROWING_NOT_PERMITTED) {
+    if (leastRestrictiveZoneForWaterFlow == kZONE_ROWING_NOT_PERMITTED || leastRestrictiveZoneForWaterTemp == kZONE_ROWING_NOT_PERMITTED || leastRestrictiveZoneForAirQual == kZONE_ROWING_NOT_PERMITTED) {
         zoneForAllConditions = kZONE_ROWING_NOT_PERMITTED;
     } else {
         // NB: if either condition is indeterminate (NaN), then Math.max() returns NaN (indeterminate)
-        zoneForAllConditions = Math.max(leastRestrictiveZoneForWaterTemp, leastRestrictiveZoneForWaterFlow);
+        zoneForAllConditions = Math.max(leastRestrictiveZoneForWaterTemp, leastRestrictiveZoneForWaterFlow, leastRestrictiveZoneForAirQual);
     }
     
     // It wouldn't be inaccurate to assume that we couldn't exactly not say that it is or isn't
@@ -71,14 +88,14 @@ var zoneCache_lastUsedWaterFlow;
 var zoneCache_lastUsedWaterTemp;
 var zoneCache_lastUsedIsDaylight;
 var zoneCache_cachedZoneValue;
-function getZoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight) {
+function getZoneForConditions(waterFlow_kcfs, waterTemp_degF, aqi, isDaylight) {
     // Do we need to re-calculate it?
     if (zoneCache_cachedZoneValue == undefined ||
         waterFlow_kcfs != zoneCache_lastUsedWaterFlow ||
         waterTemp_degF != zoneCache_lastUsedWaterTemp ||
         isDaylight != zoneCache_lastUsedIsDaylight
     ) {
-        zoneCache_cachedZoneValue = _zoneForConditions(waterFlow_kcfs, waterTemp_degF, isDaylight);
+        zoneCache_cachedZoneValue = _zoneForConditions(waterFlow_kcfs, waterTemp_degF, aqi, isDaylight);
         zoneCache_lastUsedWaterFlow = waterFlow_kcfs;
         zoneCache_lastUsedWaterTemp = waterTemp_degF;
         zoneCache_lastUsedIsDaylight = isDaylight;
@@ -189,7 +206,7 @@ var rit_safety = {
 		},
 	
 		//	primary duty function
-		zoneForConditions: function (waterFlow, waterTempC, sunrise, sunset) {
+		zoneForConditions: function (waterFlow, waterTempC, aqi, sunrise, sunset) {
             var isDaylight = false;
 			if (moment != null) {
 				var now = moment();
@@ -198,7 +215,7 @@ var rit_safety = {
                 isDaylight = (afterDawn && beforeDusk);
 			}
             let tempF = toFahrenheit(Number(waterTempC));
-            var zoneFor2021Matrix = getZoneForConditions(Number(waterFlow), tempF, isDaylight);
+            var zoneFor2021Matrix = getZoneForConditions(Number(waterFlow), tempF, aqi, isDaylight);
 			return zoneFor2021Matrix;
 		},
 		

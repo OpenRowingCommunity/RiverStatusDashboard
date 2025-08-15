@@ -139,7 +139,7 @@ var AppViewModel = function () {
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
 			zone = rit_safety.rowing.zoneForConditions(
-				this.waterFlow(), this.waterTemp(),
+				this.waterFlow(), this.waterTemp(), this.airQual(),
 				this.sunrise(), this.sunset()
 			);
 		}
