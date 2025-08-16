@@ -6,9 +6,13 @@
 
 //	requirejs(['moment']); ?		//	<- expects moment to be available in the global ns
 
+import { config } from "../config.js"
+import { APIClient } from "./apiclient.js"
+import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
+import { timeFormatter } from "../helpers.js";
 
 
-class SunriseSunsetOrg extends APIClient {
+export class SunriseSunsetOrg extends APIClient {
 
 	constructor() {
 		super('https://api.sunrise-sunset.org/json', APIClientIdentifier.SUNRISE_SUNSET_ORG)
@@ -66,6 +70,3 @@ class SunriseSunsetOrg extends APIClient {
 		return this.dataTransformers.keys()
 	}
 }
-
-
-var org_sunrise_sunset = new SunriseSunsetOrg();

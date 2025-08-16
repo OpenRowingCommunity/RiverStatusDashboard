@@ -1,5 +1,5 @@
 
-const DatapointIdentifier = Object.freeze({
+export const DatapointIdentifier = Object.freeze({
     WATER_FLOW:		"waterflow",
 	WATER_TEMP:		"watertemp",
 	WATER_LEVEL:	"waterlevel",
@@ -11,7 +11,7 @@ const DatapointIdentifier = Object.freeze({
 	SUNSET:			"sunset"
 });
 
-const APIClientIdentifier = Object.freeze({
+export const APIClientIdentifier = Object.freeze({
 	NOAA_WATER:			"water.weather.gov",
 	AIRNOW:				"airnow.gov",
 	NOAA_W1:			"w1.weather.gov",

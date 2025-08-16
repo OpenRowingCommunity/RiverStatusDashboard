@@ -4,6 +4,10 @@
 //		graph.js
 //
 
+import { config } from './config.js';
+import { apiConcierge } from './apiConcierge.js';
+import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
+import { toFahrenheit } from './helpers.js';
 
 //	Global Variables
 var abscissa = { observed: [], forecast: [] };
@@ -57,7 +61,7 @@ var tickFormatter = function (value, index, values, type) {
 }
 
 //	Graph Functions
-var setupGraphStructures = function () {
+export var setupGraphStructures = function () {
 	// axes & scales
 	
 	// dataset wrapping
@@ -279,7 +283,7 @@ var parseTemperatureData = function (data) {
 	}
 };
 
-var populateDataSets = async function () {
+export var populateDataSets = async function () {
 
 	// get a date range for the last 7 days
 	let timeWindowParameters = {

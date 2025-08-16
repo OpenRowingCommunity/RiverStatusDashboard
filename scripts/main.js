@@ -5,6 +5,8 @@
 
 //	make requirejs calls here
 
+import { setupGraphStructures, populateDataSets } from "./graph.js";
+import { AppViewModel } from "./app.js";
 
 //	dev/debug stuff here
 let devMode = true;

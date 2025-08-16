@@ -1,6 +1,6 @@
-//
-
 /// # 2023 RiT Safety Matrix Rules
+
+import { toFahrenheit } from "./helpers.js";
 
 const kZONE_ROWING_NOT_PERMITTED = Infinity;
 const kZONE_ROWING_INDETERMINATE = NaN;
@@ -147,7 +147,7 @@ function commsRequirementForConditions(waterFlow_kcfs, waterTemp_degF, isDayligh
 
 let rank = function (value, scale) {
 	var r = 0;	// initialize at invalid/below all zones
-	for (z = 1; z <= scale.zoneCount; z++) {
+	for (let z = 1; z <= scale.zoneCount; z++) {
 		if ( value >= scale[z].min && value <= scale[z].max ) {
 			r = z;
 			break;
@@ -170,7 +170,7 @@ let zoneColors = {
 	7: '#000000'		//	black 
 };
 
-var rit_safety = {
+export var rit_safety = {
 	rowing: {
 		//	scales define zone ranges for condition parameters in ascending order
 		scales: {

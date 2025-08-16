@@ -1,8 +1,10 @@
 //		RiverStatusBoard: Information for Rowers and Paddlers
 //		by Adrian Edwards <adrian@adriancedwards.com>
 //		gov.airnow.js created on 2025-08-12
+import { APIClient } from "./apiclient.js"
+import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
 
-class AirNow extends APIClient {
+export class AirNow extends APIClient {
 
 	constructor() {
 		super('https://airnowgovapi.com/andata/ReportingAreas', APIClientIdentifier.AIRNOW)
@@ -110,5 +112,3 @@ class AirNow extends APIClient {
 		return Object.keys(this.dataUnits)
 	}
 }
-
-var gov_airnow = new AirNow();
