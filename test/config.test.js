@@ -40,7 +40,7 @@ describe('SafetyZone', () => {
 });
 
 describe('SafetyMatrix', () => {
-  it('getZoneForData', () => {
+  it('getZoneForData happy paths', () => {
 
 	var sz = new SafetyZone({
 		text: "a",
@@ -74,6 +74,26 @@ describe('SafetyMatrix', () => {
 	expect(sut.getZoneForData(dataAt)).toBe(sz);
 	expect(sut.getZoneForData(dataOver)).toBe(sz);
   });
+
+  it('getZoneForData oddball paths', () => {
+	var sutEmpty = new SafetyMatrix({
+		safetyZones: [],
+		unsafeZone: undefined
+	})
+
+	var sutUndef = new SafetyMatrix({
+		safetyZones: undefined,
+		unsafeZone: undefined
+	})
+
+	let dataAt = {
+		[DatapointIdentifier.AIR_QUALITY]: 50
+	}
+
+    expect(sutEmpty.getZoneForData(dataAt)).toBe(SafetyZone.UNKNOWN);
+    expect(sutUndef.getZoneForData(dataAt)).toBe(SafetyZone.UNKNOWN);
+  });
+
 
 });
 
