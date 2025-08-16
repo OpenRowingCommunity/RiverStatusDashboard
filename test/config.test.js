@@ -32,5 +32,9 @@ describe('SafetyZone', () => {
 	expect(sut.isTriggeredBy(dataAt)).toBe(true);
 	expect(sut.isTriggeredBy(dataOver)).toBe(true);
   });
+
+  it('equals', () => {
+    expect(SafetyZone.UNKNOWN).toEqual(SafetyZone.UNKNOWN);
+  });
   
 });
