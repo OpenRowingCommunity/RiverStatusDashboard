@@ -73,12 +73,11 @@ export class SafetyZoneRestriction {
  */
 export class Condition {
 
-	constructor(datapointId, {min, max, unit, higherIsWorse = true}) {
+	constructor(datapointId, {min, max, unit}) {
 		this.datapointId = datapointId;
 		// regardless of the order they are entered, ensure the largest number is the upperBound
 		this.lowerBound = max ? Math.min(min, max) : min ;
 		this.upperBound = max ? Math.max(min, max): undefined;
-		this.higherIsWorse = higherIsWorse;
 	}
 
 	evaluate(value) {
