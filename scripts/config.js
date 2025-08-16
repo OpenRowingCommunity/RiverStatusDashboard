@@ -104,18 +104,18 @@ export class Condition {
 }
 
 export class LessThan extends Condition {
-	constructor(datapointId, max, unit) {
+	constructor(datapointId, max, unit = undefined) {
 		super(datapointId, {max, unit})
 	}
 }
 
 export class AtLeast extends Condition {
-	constructor(datapointId, min, unit) {
+	constructor(datapointId, min, unit = undefined) {
 		super(datapointId, {min, unit})
 	}
 }
 export class Between extends Condition {
-	constructor(datapointId, min, max, unit) {
+	constructor(datapointId, min, max, unit = undefined) {
 		super(datapointId, {min, max, unit})
 	}
 }
