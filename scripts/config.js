@@ -96,7 +96,7 @@ export class Condition {
 	}
 
 	evaluate(value) {
-		const atLeast = value >= this.lowerBound;
+		const atLeast = this.lowerBound ? value >= this.lowerBound: true;
 		const notBeyond = this.upperBound ? value < this.upperBound : true;
 
 		return atLeast && notBeyond;
