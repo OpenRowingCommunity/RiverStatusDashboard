@@ -76,7 +76,9 @@ class SafetyZoneRestriction {
  */
 class SafetyZone {
 
-	UNKNOWN = new SafetyZone({text: "?", color: 'gray'})
+	get UNKNOWN() {
+		return new SafetyZone({text: "?", color: 'gray'})
+	}
 
 	/**
 	 * 
