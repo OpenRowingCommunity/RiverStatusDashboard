@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "vite": "^7.1.2",
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "type": "module"
+}
