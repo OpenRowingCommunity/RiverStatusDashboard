@@ -114,14 +114,13 @@ export class SafetyZone {
 	 */
 	isTriggeredBy(values){
 
-		const conditionEval = conditions.map(([datapointId, minValue]) => {
+		const conditionEval = Object.entries(this.conditions).map(([datapointId, minValue]) => {
 			if (!values.hasOwnProperty(datapointId)) {
-				return undefined;
+				return false;
 			}
 			return values[datapointId] >= minValue;
 		});
-
-		return conditionEval.some()
+		return conditionEval.some((v) => v)
 	}
 }
 
