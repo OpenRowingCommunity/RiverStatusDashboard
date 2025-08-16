@@ -233,27 +233,53 @@ let ritconfig = new RiverStatusConfig({
 			new SafetyZone({
 				label: '1',
 				color: '#00c020',
+				conditions: [
+					LessThan(DatapointIdentifier.WATER_FLOW, 3, "kcfs"),
+					AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+				]
 			}),
 			new SafetyZone({
 				label: '2',
 				color: '#40fe00',
+				conditions: [
+					Between(DatapointIdentifier.WATER_FLOW, 3, 5, "kcfs"),
+					AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+				]
 			}),
 			new SafetyZone({
 				label: '3',
 				color: '#ffff00',
+				conditions: [
+					Between(DatapointIdentifier.WATER_FLOW, 5, 7, "kcfs"),
+					Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+				]
 			}),
 			new SafetyZone({
 				label: '4',
 				color: '#ffa800',
+				conditions: [
+					Between(DatapointIdentifier.WATER_FLOW, 7, 10, "kcfs"),
+					Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+				]
 			}),
 			new SafetyZone({
 				label: '5',
 				color: '#ff0000',
+				conditions: [
+					Between(DatapointIdentifier.WATER_FLOW, 10, 12, "kcfs"),
+					Between(DatapointIdentifier.WATER_TEMP, 35, 45, "F"),
+					Between(DatapointIdentifier.AIR_QUALITY, 150, 200, "AQI")
+				]
 			})
 		],
 		unsafeZone: new SafetyZone({
 			label: '☠️',
 			color: '#000000',
+			conditions: [
+				AtLeast(DatapointIdentifier.WATER_FLOW, 12, "kcfs"),
+				LessThan(DatapointIdentifier.WATER_TEMP, 35, "F"),
+				AtLeast(DatapointIdentifier.AIR_QUALITY, 200, "AQI")
+			]
 		})
 	}),
 	dataSources: [
