@@ -71,8 +71,8 @@ describe('SafetyMatrix', () => {
 	}
 
     expect(sut.getZoneForData(dataUnder)).toBe(SafetyZone.UNKNOWN);
-	expect(sut.getZoneForData(dataAt)).toBe(sz);
-	expect(sut.getZoneForData(dataOver)).toBe(sz);
+	expect(sut.getZoneForData(dataAt)).toEqual(sz);
+	expect(sut.getZoneForData(dataOver)).toEqual(sz);
   });
 
   it('getZoneForData oddball paths', () => {
