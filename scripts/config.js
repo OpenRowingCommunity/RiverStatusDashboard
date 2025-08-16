@@ -103,6 +103,23 @@ export class Condition {
 	}
 }
 
+export class LessThan extends Condition {
+	constructor(datapointId, max, unit) {
+		super(datapointId, {max, unit})
+	}
+}
+
+export class AtLeast extends Condition {
+	constructor(datapointId, min, unit) {
+		super(datapointId, {min, unit})
+	}
+}
+export class Between extends Condition {
+	constructor(datapointId, min, max, unit) {
+		super(datapointId, {min, max, unit})
+	}
+}
+
 /**
  * A safety zone has a value (intended to be displayed as a single character)
  * and a color, and also probably some notion of being ordered
