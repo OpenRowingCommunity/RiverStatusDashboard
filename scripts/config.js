@@ -199,9 +199,31 @@ let ritconfig = new RiverStatusConfig({
 	boathouseLong: -77.699065,
 	safetyMatrix: new SafetyMatrix({
 		safetyZones: [
-
+			new SafetyZone({
+				label: '1',
+				color: '#00c020',
+			}),
+			new SafetyZone({
+				label: '2',
+				color: '#40fe00',
+			}),
+			new SafetyZone({
+				label: '3',
+				color: '#ffff00',
+			}),
+			new SafetyZone({
+				label: '4',
+				color: '#ffa800',
+			}),
+			new SafetyZone({
+				label: '5',
+				color: '#ff0000',
+			})
 		],
-		unsafeZone: new SafetyZone('☠️')
+		unsafeZone: new SafetyZone({
+			label: '☠️',
+			color: '#000000',
+		})
 	}),
 	dataSources: [
 		{
