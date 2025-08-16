@@ -152,3 +152,8 @@ export function colorForAirQual(aqi) {
 
 	
 }
+
+
+export function validateNumber(value){
+	return typeof(value) !== 'undefined' && !isNaN(value);
+}

@@ -1,5 +1,5 @@
 import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
-
+import { validateNumber } from './helpers.js';
 export class RiverStatusConfig {
 	
 	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, safetyMatrix, dataSources }) {
@@ -75,9 +75,24 @@ export class Condition {
 
 	constructor(datapointId, {min, max, unit}) {
 		this.datapointId = datapointId;
-		// regardless of the order they are entered, ensure the largest number is the upperBound
-		this.lowerBound = max ? Math.min(min, max) : min ;
-		this.upperBound = max ? Math.max(min, max): undefined;
+
+		const hasMax = validateNumber(max);
+		const hasMin = validateNumber(min);  
+
+		if (!hasMax && !hasMin){
+			throw new Error("Condition with no values cannot be evaluated")
+		} else if (!hasMax || !hasMin) {
+			// one value is not valid
+			this.lowerBound = hasMin? Number(min) : undefined;
+			this.upperBound = hasMax? Number(max) : undefined;
+		} else {
+			min = Number(min);
+			max = Number(max);
+
+			// regardless of the order they are entered, ensure the largest number is the upperBound
+			this.lowerBound = Math.min(min, max);
+			this.upperBound = Math.max(min, max);
+		}
 	}
 
 	evaluate(value) {
