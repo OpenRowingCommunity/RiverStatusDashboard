@@ -140,7 +140,7 @@ export class SafetyZone {
 	 * @param {*} conditions The conditions under which this safety zone is active
 	 * @param {*} restrictions SafetyZoneRestriction objects describing limitations of this zone
 	 */
-	constructor({label, color="gray", conditions={}, restrictions=[]}) {
+	constructor({label, color="gray", conditions=[], restrictions=[]}) {
 		this.label = label;
 		this.color = color;
 
