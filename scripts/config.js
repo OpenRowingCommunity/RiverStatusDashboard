@@ -77,18 +77,18 @@ export class SafetyZoneRestriction {
 export class SafetyZone {
 
 	get UNKNOWN() {
-		return new SafetyZone({text: "?", color: 'gray'})
+		return new SafetyZone({label: "?", color: 'gray'})
 	}
 
 	/**
 	 * 
-	 * @param {*} text the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc) 
-	 * @param {*} color  the color this zone will show as (background for the text)
+	 * @param {*} label the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc) 
+	 * @param {*} color  the color this zone will show as (background for the label)
 	 * @param {*} conditions The conditions under which this safety zone is active
 	 * @param {*} restrictions SafetyZoneRestriction objects describing limitations of this zone
 	 */
-	constructor({text, color="gray", conditions={}, restrictions=[]}) {
-		this.text = text;
+	constructor({label, color="gray", conditions={}, restrictions=[]}) {
+		this.label = label;
 		this.color = color;
 
 		/**
