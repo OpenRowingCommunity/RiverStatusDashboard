@@ -78,9 +78,13 @@ class SafetyZone {
 
 	UNKNOWN = SafetyZone({text: "?", color: 'gray'})
 
-		/**
-		  * the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc)
-		 */
+	/**
+	 * 
+	 * @param {*} text the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc) 
+	 * @param {*} color  the color this zone will show as (background for the text)
+	 * @param {*} conditions The conditions under which this safety zone is active
+	 * @param {*} restrictions SafetyZoneRestriction objects describing limitations of this zone
+	 */
 	constructor({text, color="gray", conditions={}, restrictions=[]}) {
 		this.text = text;
 		this.color = color;
@@ -91,7 +95,8 @@ class SafetyZone {
 		 */
 		this.conditions = conditions
 
-		/** list of objects representing textual descriptions of limitations on rowing when in this zone applies */
+		/** list of objects representing textual descriptions of limitations on
+		 * rowing when in this zone applies */
 		this.restrictions = restrictions
 	}
 
@@ -143,7 +148,7 @@ class SafetyMatrix {
 	 * @param {*} data an object containing every possible datapoint identifier
 	 * as its keys and containing their current values
 	 * 
-	 * @returns the current DataPoint that applies to the safety zone
+	 * @returns the current SafetyZone that applies given the current data
 	 */
 	getZoneForData(data) {
 		// add the unsafezone to the end of the list when evaluating
