@@ -152,6 +152,10 @@ export class SafetyMatrix {
 	 * @returns the current SafetyZone that applies given the current data
 	 */
 	getZoneForData(data) {
+		if (!this.safetyZones) {
+			return SafetyZone.UNKNOWN;
+		}
+
 		// add the unsafezone to the end of the list when evaluating
 		let zones = Array.from(this.safetyZones);
 		if (this.unsafeZone){
