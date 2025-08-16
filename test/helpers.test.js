@@ -1,5 +1,5 @@
 import {
-  airTempFormatter, toFahrenheit, toCelsius, swapTempUnit, toMPH, airDirxnFormatter, timeFormatter, colorForAirQual
+  toFahrenheit, toCelsius, swapTempUnit, toMPH, validateNumber
 } from '../scripts/helpers.js';
 
 describe('Unit Converters', () => {
@@ -34,3 +34,16 @@ describe('Small Helpers', () => {
   });
 });
 
+
+describe("validate Number", () => {
+  it('Can correctly validate numbers', () => {
+    expect(validateNumber(1)).toBe(true);
+    expect(validateNumber("32")).toBe(true);
+    expect(validateNumber("3 56")).toBe(false);
+    expect(validateNumber("abc")).toBe(false);
+    expect(validateNumber("")).toBe(false);
+    expect(validateNumber(undefined)).toBe(false);
+
+
+  });
+})
