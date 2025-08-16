@@ -154,7 +154,9 @@ export class SafetyMatrix {
 	getZoneForData(data) {
 		// add the unsafezone to the end of the list when evaluating
 		let zones = Array.from(this.safetyZones);
-		zones.push(this.unsafeZone);
+		if (this.unsafeZone){
+			zones.push(this.unsafeZone);
+		}
 
 		var selectedZone = SafetyZone.UNKNOWN;
 
