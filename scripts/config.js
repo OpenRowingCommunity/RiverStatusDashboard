@@ -114,14 +114,13 @@ export class SafetyZone {
 	 */
 	isTriggeredBy(values){
 
-		const conditionEval = conditions.map(([datapointId, minValue]) => {
+		const conditionEval = Object.entries(this.conditions).map(([datapointId, minValue]) => {
 			if (!values.hasOwnProperty(datapointId)) {
-				return undefined;
+				return false;
 			}
 			return values[datapointId] >= minValue;
 		});
-
-		return conditionEval.some()
+		return conditionEval.some((v) => v)
 	}
 }
 
@@ -153,9 +152,15 @@ export class SafetyMatrix {
 	 * @returns the current SafetyZone that applies given the current data
 	 */
 	getZoneForData(data) {
+		if (!this.safetyZones) {
+			return SafetyZone.UNKNOWN;
+		}
+
 		// add the unsafezone to the end of the list when evaluating
 		let zones = Array.from(this.safetyZones);
-		zones.push(this.unsafeZone);
+		if (this.unsafeZone){
+			zones.push(this.unsafeZone);
+		}
 
 		var selectedZone = SafetyZone.UNKNOWN;
 
