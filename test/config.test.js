@@ -94,6 +94,71 @@ describe('SafetyMatrix', () => {
     expect(sutUndef.getZoneForData(dataAt)).toBe(SafetyZone.UNKNOWN);
   });
 
+  it('getZoneForData multiple data points', () => {
+
+	var sz1 = new SafetyZone({
+		text: "a",
+		color: "#fff",
+		conditions: {
+			[DatapointIdentifier.AIR_QUALITY]: 50,
+			[DatapointIdentifier.AIR_TEMP]: 42
+		},
+		restrictions: []
+  	})
+	var sz2 = new SafetyZone({
+		text: "a",
+		color: "#fff",
+		conditions: {
+			[DatapointIdentifier.AIR_QUALITY]: 80,
+			[DatapointIdentifier.AIR_TEMP]: 60
+		},
+		restrictions: []
+  	})
+	var sz3 = new SafetyZone({
+		text: "a",
+		color: "#fff",
+		conditions: {
+			[DatapointIdentifier.AIR_QUALITY]: 100,
+			[DatapointIdentifier.AIR_TEMP]: 80
+		},
+		restrictions: []
+  	})
+
+	var sut = new SafetyMatrix({
+		safetyZones: [
+			sz1,
+			sz2
+		],
+		unsafeZone: sz3
+	})
+
+	let dataUnder = {
+		[DatapointIdentifier.AIR_QUALITY]: 42,
+		[DatapointIdentifier.AIR_TEMP]: 30
+	}
+
+	let dataOneAt = {
+		[DatapointIdentifier.AIR_QUALITY]: 50,
+		[DatapointIdentifier.AIR_TEMP]: 42
+	}
+
+	let dataOneOver = {
+		[DatapointIdentifier.AIR_QUALITY]: 300,
+		[DatapointIdentifier.AIR_TEMP]: 60
+	}
+
+	let dataSplit = {
+		[DatapointIdentifier.AIR_QUALITY]: 60,
+		[DatapointIdentifier.AIR_TEMP]: 70
+	}
+
+    expect(sut.getZoneForData(dataUnder)).toEqual(SafetyZone.UNKNOWN);
+	expect(sut.getZoneForData(dataOneAt)).toEqual(sz1);
+	expect(sut.getZoneForData(dataOneOver)).toEqual(sz3);
+	expect(sut.getZoneForData(dataSplit)).toEqual(sz2);
+
+  });
+
 
 });
 
