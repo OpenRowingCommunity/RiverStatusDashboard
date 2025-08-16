@@ -112,8 +112,8 @@ class SafetyZone {
 	 */
 	isTriggeredBy(values){
 
-		const conditionEval = commonKeys.map(([datapointId, minValue]) => {
-			if (!Object.prototype.hasOwnProperty.call(values, datapointId)) {
+		const conditionEval = conditions.map(([datapointId, minValue]) => {
+			if (!values.hasOwnProperty(datapointId)) {
 				return undefined;
 			}
 			return values[datapointId] >= minValue;
