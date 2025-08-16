@@ -36,5 +36,45 @@ describe('SafetyZone', () => {
   it('equals', () => {
     expect(SafetyZone.UNKNOWN).toEqual(SafetyZone.UNKNOWN);
   });
-  
+
 });
+
+describe('SafetyMatrix', () => {
+  it('getZoneForData', () => {
+
+	var sz = new SafetyZone({
+		text: "a",
+		color: "#fff",
+		conditions: {
+			[DatapointIdentifier.AIR_QUALITY]: 50
+		},
+		restrictions: []
+  	})
+
+	var sut = new SafetyMatrix({
+		safetyZones: [
+			sz
+		],
+		unsafeZone: undefined
+	})
+
+	let dataUnder = {
+		[DatapointIdentifier.AIR_QUALITY]: 42
+	}
+
+	let dataAt = {
+		[DatapointIdentifier.AIR_QUALITY]: 50
+	}
+
+	let dataOver = {
+		[DatapointIdentifier.AIR_QUALITY]: 300
+	}
+
+    expect(sut.getZoneForData(dataUnder)).toBe(SafetyZone.UNKNOWN);
+	expect(sut.getZoneForData(dataAt)).toBe(sz);
+	expect(sut.getZoneForData(dataOver)).toBe(sz);
+  });
+
+});
+
+
