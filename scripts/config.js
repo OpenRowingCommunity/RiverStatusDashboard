@@ -68,10 +68,10 @@ export class SafetyZoneRestriction {
 }
 
 /**
- * Represents a datapoint and threshold for data values.
+ * Represents set of conditions based on a range of values for a specific data point.
  * Used to determine the current safety zone
  */
-export class SafetyCondition {
+export class Condition {
 
 	constructor(datapointId, {min, max, unit, higherIsWorse = true}) {
 		this.datapointId = datapointId;
