@@ -68,6 +68,28 @@ export class SafetyZoneRestriction {
 }
 
 /**
+ * Represents a datapoint and threshold for data values.
+ * Used to determine the current safety zone
+ */
+export class SafetyCondition {
+
+	constructor(datapointId, {min, max, unit, higherIsWorse = true}) {
+		this.datapointId = datapointId;
+		// regardless of the order they are entered, ensure the largest number is the upperBound
+		this.lowerBound = max ? Math.min(min, max) : min ;
+		this.upperBound = max ? Math.max(min, max): undefined;
+		this.higherIsWorse = higherIsWorse;
+	}
+
+	evaluate(value) {
+		const atLeast = value >= this.lowerBound;
+		const notBeyond = this.upperBound ? value < this.upperBound : true;
+
+		return atLeast && notBeyond;
+	}
+}
+
+/**
  * A safety zone has a value (intended to be displayed as a single character)
  * and a color, and also probably some notion of being ordered
  * 
@@ -113,14 +135,7 @@ export class SafetyZone {
 	 * @returns boolean indicating whether or not this zones criteria are met 
 	 */
 	isTriggeredBy(values){
-
-		const conditionEval = Object.entries(this.conditions).map(([datapointId, minValue]) => {
-			if (!values.hasOwnProperty(datapointId)) {
-				return false;
-			}
-			return values[datapointId] >= minValue;
-		});
-		return conditionEval.some((v) => v)
+		return this.conditions.map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v)
 	}
 }
 
