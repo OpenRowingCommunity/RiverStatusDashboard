@@ -76,7 +76,7 @@ class SafetyZoneRestriction {
  */
 class SafetyZone {
 
-	UNKNOWN = SafetyZone({text: "?", color: 'gray'})
+	UNKNOWN = new SafetyZone({text: "?", color: 'gray'})
 
 	/**
 	 * 
@@ -175,11 +175,11 @@ let ritconfig = new RiverStatusConfig({
 	clubAcronym: "RIT",
 	boathouseLat: 43.064251,
 	boathouseLong: -77.699065,
-	safetyMatrix: SafetyMatrix({
+	safetyMatrix: new SafetyMatrix({
 		safetyZones: [
 
 		],
-		unsafeZone: SafetyZone('☠️')
+		unsafeZone: new SafetyZone('☠️')
 	}),
 	dataSources: [
 		{
