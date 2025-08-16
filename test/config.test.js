@@ -156,11 +156,16 @@ describe('SafetyMatrix', () => {
 		[DatapointIdentifier.AIR_QUALITY]: 60,
 	}
 
+	let extraDataPoint = {
+		[DatapointIdentifier.AIR_SPEED]: 60,
+	}
+
     expect(sut.getZoneForData(dataUnder)).toEqual(SafetyZone.UNKNOWN);
 	expect(sut.getZoneForData(dataOneAt)).toEqual(sz1);
 	expect(sut.getZoneForData(dataOneOver)).toEqual(sz3);
 	expect(sut.getZoneForData(dataSplit)).toEqual(sz2);
 	expect(sut.getZoneForData(oneDataPoint)).toEqual(sz1);
+	expect(sut.getZoneForData(extraDataPoint)).toEqual(SafetyZone.UNKNOWN);
   });
 
 
