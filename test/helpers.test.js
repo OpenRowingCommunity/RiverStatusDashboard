@@ -1,5 +1,5 @@
 import {
-  airTempFormatter, toFahrenheit, toCelsius, swapTempUnit, airSpeedFormatter, airDirxnFormatter, timeFormatter, colorForAirQual
+  airTempFormatter, toFahrenheit, toCelsius, swapTempUnit, toMPH, airDirxnFormatter, timeFormatter, colorForAirQual
 } from '../scripts/helpers.js';
 
 describe('Unit Converters', () => {
@@ -14,4 +14,12 @@ describe('Unit Converters', () => {
     expect(toCelsius(212)).toBe(100);
     expect(toCelsius(122)).toBe(50);
   });
+
+  it('toMPH works', () => {
+    expect(toMPH(1)).toBe(2.236936);
+    expect(toMPH(1000)).toBe(2236.936);
+    expect(toMPH(5.32)).toBe(11.9005);
+  });
+
+  
 });

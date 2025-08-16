@@ -28,9 +28,13 @@ export function swapTempUnit(temp) {
 }
 
 //	1 mile = 1609.34 m; 1 h = 360 s
-export function airSpeedFormatter(speed_i) {
-	var mps = Number.parseFloat(speed_i);
+export function toMPH(meters_per_second) {
+	var mps = Number.parseFloat(meters_per_second);
 	var mph = (mps * (360/1609.34));
+	return mph
+}
+
+function airSpeedFormatter(mph){
 	var speed_f = mph.toFixed(1);
 	return ("" + speed_f /*+ " mph"*/);
 }
