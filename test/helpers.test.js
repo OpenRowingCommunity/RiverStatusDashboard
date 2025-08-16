@@ -23,3 +23,14 @@ describe('Unit Converters', () => {
 
   
 });
+
+
+describe('Small Helpers', () => {
+  it('Swapping temperature unit works', () => {
+    expect(swapTempUnit("degrees F")).toBe("degrees C");
+    expect(swapTempUnit("degrees C")).toBe("degrees F");
+    expect(swapTempUnit("˚C")).toBe("˚F");
+
+  });
+});
+
