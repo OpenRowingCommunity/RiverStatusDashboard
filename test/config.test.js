@@ -166,6 +166,7 @@ describe('SafetyMatrix', () => {
 	expect(sut.getZoneForData(dataSplit)).toEqual(sz2);
 	expect(sut.getZoneForData(oneDataPoint)).toEqual(sz1);
 	expect(sut.getZoneForData(extraDataPoint)).toEqual(SafetyZone.UNKNOWN);
+	expect(sut.getZoneForData({})).toEqual(SafetyZone.UNKNOWN);
   });
 
 
