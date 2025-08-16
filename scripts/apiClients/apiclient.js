@@ -1,4 +1,4 @@
-class APIClient {
+export class APIClient {
 
 	constructor(baseurl, id) {
 		this.baseurl = baseurl

@@ -1,6 +1,6 @@
+import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
 
-	
-class RiverStatusConfig {
+export class RiverStatusConfig {
 	
 	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, safetyMatrix, dataSources }) {
 		this.riverName = riverName;
@@ -59,7 +59,7 @@ class RiverStatusConfig {
 /**
  * Represents a textual summary of what limitations are in place when in this safety zone
  */
-class SafetyZoneRestriction {
+export class SafetyZoneRestriction {
 
 	constructor({category, description}) {
 		this.category = category;
@@ -74,7 +74,7 @@ class SafetyZoneRestriction {
  * its core data structure is a list of zones which itself contains a mapping
  * of datapoint identifiers to threshold values 
  */
-class SafetyZone {
+export class SafetyZone {
 
 	get UNKNOWN() {
 		return new SafetyZone({text: "?", color: 'gray'})
@@ -132,7 +132,7 @@ class SafetyZone {
  * This is a configuration object that should be able to represent many variations of the safety matrix concept
  * it allows values for different data fields (identified by [DatapointIdentifier] enum values) to be mapped to any number of safety zones (identified by arbitrary symbols and colors that are shown to users)
  */
-class SafetyMatrix {
+export class SafetyMatrix {
 
 	constructor({safetyZones, unsafeZone}) {
 		/**
@@ -246,7 +246,7 @@ let trraconfig = new RiverStatusConfig({
 	]
 });
 
-let config = ritconfig;
+export let config = ritconfig;
 
 //Add "shared"/common data sources that do not require site identification strings
 config.dataSources.push(...[

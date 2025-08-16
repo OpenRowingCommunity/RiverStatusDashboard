@@ -4,7 +4,10 @@
 //		gov.usgs.js created on 2017-06-26
 //		refactored 2023-09-01 by Adrian Edwards
 
-class USGS extends APIClient {
+import { APIClient } from "./apiclient.js"
+import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
+
+export class USGS extends APIClient {
 
 	constructor() {
 		super('https://waterservices.usgs.gov/nwis/iv', APIClientIdentifier.USGS)
@@ -131,5 +134,3 @@ class USGS extends APIClient {
 		return this.dataTransformers.keys()
 	}
 }
-
-var gov_usgs = new USGS();

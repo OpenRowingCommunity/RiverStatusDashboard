@@ -3,7 +3,12 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		app-2021.js created 2021-03-23
 
-var AppViewModel = function () {
+import { apiConcierge } from "./apiConcierge.js";
+import { swapTempUnit, colorForAirQual, toFahrenheit } from "./helpers.js";
+import { rit_safety } from "./safety-matrix.js";
+import { DatapointIdentifier } from "./constants.js";
+
+export var AppViewModel = function () {
 	this._initString = ' ';
 	this.referenceToAppViewModel = this;
 	this.devMode = true;
