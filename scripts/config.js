@@ -61,8 +61,8 @@ class RiverStatusConfig {
  */
 class SafetyZoneRestriction {
 
-	constructor(title, description) {
-		this.title = title;
+	constructor({category, description}) {
+		this.category = category;
 		this.description = description;
 	}
 }
@@ -76,12 +76,12 @@ class SafetyZoneRestriction {
  */
 class SafetyZone {
 
-	UNKNOWN = SafetyZone("?", 'gray')
+	UNKNOWN = SafetyZone({text: "?", color: 'gray'})
 
-	constructor(text, color="gray", conditions={}, restrictions=[]) {
 		/**
 		  * the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc)
 		 */
+	constructor({text, color="gray", conditions={}, restrictions=[]}) {
 		this.text = text;
 		this.color = color;
 
@@ -127,7 +127,7 @@ class SafetyZone {
  */
 class SafetyMatrix {
 
-	constructor(safetyZones, unsafeZone) {
+	constructor({safetyZones, unsafeZone}) {
 		/**
 		 * ordered list of SafetyZones, safest to least safe
 		 */
@@ -170,7 +170,12 @@ let ritconfig = new RiverStatusConfig({
 	clubAcronym: "RIT",
 	boathouseLat: 43.064251,
 	boathouseLong: -77.699065,
-	safetyMatrix: SafetyMatrix(),
+	safetyMatrix: SafetyMatrix({
+		safetyZones: [
+
+		],
+		unsafeZone: SafetyZone('☠️')
+	}),
 	dataSources: [
 		{
 			type: APIClientIdentifier.USGS,
