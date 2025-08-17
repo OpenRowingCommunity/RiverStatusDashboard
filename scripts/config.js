@@ -56,6 +56,23 @@ export class RiverStatusConfig {
 	}
 }
 
+class Conditional {
+
+	/**
+	 * determines whether this safety zones criteria are met by the given input data
+	 * 
+	 * a zones criteria are met if any current value is above the threshold defined in the zone
+	 * 
+	 * @param {*} values an object containing every possible datapoint identifier
+	 * (as keys of an object) and their current values
+	 * 
+	 * @returns boolean indicating whether or not this zones criteria are met 
+	 */
+	isTriggeredBy(values){
+		return Array.from(this.conditions).map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v);
+	}
+}
+
 /**
  * Represents a textual summary of what limitations are in place when in this safety zone
  */
@@ -128,7 +145,7 @@ export class Between extends Condition {
  * its core data structure is a list of zones which itself contains a mapping
  * of datapoint identifiers to threshold values 
  */
-export class SafetyZone {
+export class SafetyZone extends Conditional {
 
 	get UNKNOWN() {
 		return new SafetyZone({label: "?", color: 'gray'})
@@ -156,19 +173,6 @@ export class SafetyZone {
 		this.restrictions = restrictions
 	}
 
-	/**
-	 * determines whether this safety zones criteria are met by the given input data
-	 * 
-	 * a zones criteria are met if any current value is above the threshold defined in the zone
-	 * 
-	 * @param {*} values an object containing every possible datapoint identifier
-	 * (as keys of an object) and their current values
-	 * 
-	 * @returns boolean indicating whether or not this zones criteria are met 
-	 */
-	isTriggeredBy(values){
-		return Array.from(this.conditions).map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v)
-	}
 }
 
 
