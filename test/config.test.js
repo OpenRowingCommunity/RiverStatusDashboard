@@ -1,6 +1,6 @@
 import { test } from 'vitest';
 import {
-  SafetyMatrix, SafetyZone, SafetyZoneRestriction, RiverStatusConfig, Condition
+  SafetyMatrix, SafetyZone, SafetyZoneRestriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan
 } from '../scripts/config.js';
 import { DatapointIdentifier } from '../scripts/constants.js';
 
