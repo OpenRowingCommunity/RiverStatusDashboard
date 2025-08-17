@@ -93,7 +93,11 @@ export class Restriction extends Conditional {
 	constructor({category, description, conditions = undefined}) {
 		super(conditions)
 		this.category = category;
-		this.description = description;
+		if (typeof(description) === 'string') {
+			this.description = [description]
+		} else {
+			this.description = description;
+		}
 	}
 }
 

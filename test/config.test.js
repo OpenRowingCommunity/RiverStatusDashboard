@@ -1,5 +1,5 @@
 import {
-  SafetyMatrix, SafetyZone, SafetyZoneRestriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan
+  SafetyMatrix, SafetyZone, Restriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan
 } from '../scripts/config.js';
 import { DatapointIdentifier } from '../scripts/constants.js';
 
@@ -377,3 +377,20 @@ describe('Condition Constructor', () => {
 });
 
 
+describe("Restrictions", () => {
+
+// Test Case 6: DatapointId and Unit
+  test('correctly stores descriptions', () => {
+    const stringCase = new Restriction({
+		category: 'Crew Skill',
+		description: "<p>No Novices</p>"
+	});
+    expect(stringCase.description).toStrictEqual(["<p>No Novices</p>"]);
+
+	 const listCase = new Restriction({
+		category: 'Crew Skill',
+		description: ["<p>No Novices</p>", "<p>No Bad Vibes:tm:</p>"]
+	});
+    expect(listCase.description).toStrictEqual(["<p>No Novices</p>", "<p>No Bad Vibes:tm:</p>"]);
+  });
+})
