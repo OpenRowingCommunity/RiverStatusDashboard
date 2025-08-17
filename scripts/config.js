@@ -75,6 +75,7 @@ export class Condition {
 
 	constructor(datapointId, {min, max, unit}) {
 		this.datapointId = datapointId;
+		this.unit = unit;
 
 		const hasMax = validateNumber(max);
 		const hasMin = validateNumber(min);  
