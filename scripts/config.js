@@ -215,7 +215,7 @@ export class SafetyMatrix {
 			if (zone.isTriggeredBy(data)) {
 				selectedZone = zone;
 			} else {
-				break
+				continue
 			}
 		}
 		return selectedZone;
