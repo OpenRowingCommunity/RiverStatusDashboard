@@ -6,7 +6,11 @@
     "vitest": "^3.2.4"
   },
   "scripts": {
-    "test": "vitest"
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "deploy": "gh-pages -d dist"
   },
   "type": "module"
 }
