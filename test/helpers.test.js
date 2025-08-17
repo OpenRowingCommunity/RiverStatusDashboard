@@ -16,9 +16,9 @@ describe('Unit Converters', () => {
   });
 
   it('toMPH works', () => {
-    expect(toMPH(1)).toBe(2.236936);
-    expect(toMPH(1000)).toBe(2236.936);
-    expect(toMPH(5.32)).toBe(11.9005);
+    expect(toMPH(1)).toBeCloseTo(2.23694185194);
+    expect(toMPH(1000)).toBeCloseTo(2236.94185194);
+    expect(toMPH(5.32)).toBeCloseTo(11.9005);
   });
 
   

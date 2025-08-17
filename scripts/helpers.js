@@ -27,10 +27,10 @@ export function swapTempUnit(temp) {
 	}
 }
 
-//	1 mile = 1609.34 m; 1 h = 360 s
+//	1 mile = 1609.34 m; 1 h = 3600 s
 export function toMPH(meters_per_second) {
 	var mps = Number.parseFloat(meters_per_second);
-	var mph = (mps * (360/1609.34));
+	var mph = (mps * 3600/1609.34);
 	return mph
 }
 
