@@ -34,8 +34,8 @@ export function toMPH(meters_per_second) {
 	return mph
 }
 
-function airSpeedFormatter(mph){
-	var speed_f = mph.toFixed(1);
+function airSpeedFormatter(meters_per_second){
+	var speed_f = toMPH(meters_per_second).toFixed(1);
 	return ("" + speed_f /*+ " mph"*/);
 }
 
