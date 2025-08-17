@@ -283,7 +283,7 @@ let ritconfig = new RiverStatusConfig({
 					}),
 					
 					new Restriction({
-						category: 'PFD Requirement',
+						category: 'Safety Gear',
 						description: "<p><b>Rowers</b>: PFD not required</p>" +
 							"<p><b>Coxswains</b>: PFD not required</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
@@ -316,7 +316,7 @@ let ritconfig = new RiverStatusConfig({
 					}),
 					
 					new Restriction({
-						category: 'PFD Requirement',
+						category: 'Safety Gear',
 						description: "<p><b>Rowers</b>: PFD not required</p>" +
 							"<p><b>Coxswains</b>: PFD not required</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
@@ -359,7 +359,7 @@ let ritconfig = new RiverStatusConfig({
 					}),
 					
 					new Restriction({
-						category: 'PFD Requirement',
+						category: 'Safety Gear',
 						description: "<p><b>Rowers</b>: PFD Required unless launch to shell ratio 1:1</p>" +
 							"<p><b>Coxswains</b>: PFD Required</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
@@ -401,7 +401,7 @@ let ritconfig = new RiverStatusConfig({
 						description: "1 launch per shell"
 					}),
 					new Restriction({
-						category: 'PFD Requirement',
+						category: 'Safety Gear',
 						description: "<p><b>Rowers</b>: PFD Required</p>" +
 							"<p><b>Coxswains</b>: PFD Required</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
@@ -434,7 +434,7 @@ let ritconfig = new RiverStatusConfig({
 						description: "1 launch per shell"
 					}),
 					new Restriction({
-						category: 'PFD Requirement',
+						category: 'Safety Gear',
 						description: "<p><b>Rowers</b>: PFD Required</p>" +
 							"<p><b>Coxswains</b>: PFD Required</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
