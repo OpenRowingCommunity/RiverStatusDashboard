@@ -3,8 +3,11 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		org.openweathermap.js created on 2018-11-01
 //		refactored 2023-09-01 by Adrian Edwards
+import { APIClient } from "./apiclient.js"
+import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
+import { airDirxnFormatter } from "../helpers.js";
 
-class NOAAWeather extends APIClient {
+export class NOAAWeather extends APIClient {
 
 	NO_DATA_VALUE = 999;
 
@@ -82,7 +85,3 @@ class NOAAWeather extends APIClient {
 		return this.dataTransformers.keys()
 	}
 }
-
-
-
-var gov_weather_w1 = new NOAAWeather();

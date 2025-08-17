@@ -3,7 +3,7 @@
  */
 
 
-function airTempFormatter(temp_i) {
+export function airTempFormatter(temp_i) {
 	temp_i = Number.parseFloat(temp_i);
 	//	Kelvin to Celsius
 	var temp_f = (temp_i - 273.15);
@@ -11,15 +11,15 @@ function airTempFormatter(temp_i) {
 	return ("" + temp_f /*+ " ˚C"*/);
 }
 
-function toFahrenheit(temp) {
+export function toFahrenheit(temp) {
 	return ( (temp!=null) ? ((temp * (9/5)) + 32) : null );
 };
 
-function toCelsius(temp) {
+export function toCelsius(temp) {
 	return ( (temp!=null) ? ((temp - 32) * (5/9)) : null );
 };
 
-function swapTempUnit(temp) {
+export function swapTempUnit(temp) {
 	if (temp.includes("C")) {
 		return temp.replace("C", "F")
 	} else {
@@ -27,11 +27,15 @@ function swapTempUnit(temp) {
 	}
 }
 
-//	1 mile = 1609.34 m; 1 h = 360 s
-function airSpeedFormatter(speed_i) {
-	var mps = Number.parseFloat(speed_i);
-	var mph = (mps * (360/1609.34));
-	var speed_f = mph.toFixed(1);
+//	1 mile = 1609.34 m; 1 h = 3600 s
+export function toMPH(meters_per_second) {
+	var mps = Number.parseFloat(meters_per_second);
+	var mph = (mps * 3600/1609.34);
+	return mph
+}
+
+function airSpeedFormatter(meters_per_second){
+	var speed_f = toMPH(meters_per_second).toFixed(1);
 	return ("" + speed_f /*+ " mph"*/);
 }
 
@@ -50,7 +54,7 @@ function airSpeedFormatter(speed_i) {
  * @param {boolean} [force_shorthand=false] force the use of shortened directions (i.e. N instead of North) in all results.
  * @returns a string representing the cardinal direction
  */
-function airDirxnFormatter(dirxn_i, force_shorthand=false) {
+export function airDirxnFormatter(dirxn_i, force_shorthand=false) {
 	var theta = Number.parseInt(dirxn_i);
 	var dir;
 	if ((0 <= theta && theta <= 22) || (338 <= theta && theta <= 360)) {
@@ -75,7 +79,7 @@ function airDirxnFormatter(dirxn_i, force_shorthand=false) {
 	return dir;
 }
 
-function timeFormatter(time_i) {
+export function timeFormatter(time_i) {
 	var time_f = time_i;
 	if (moment != null) {
 		time_f = moment(time_i);
@@ -123,7 +127,7 @@ let airqualThresholds = [
 	}
 ];
 
-function colorForAirQual(aqi) {
+export function colorForAirQual(aqi) {
 
 	let failureColor = '#000000';
 	
@@ -147,4 +151,9 @@ function colorForAirQual(aqi) {
 	}
 
 	
+}
+
+
+export function validateNumber(value){
+	return typeof(value) !== 'undefined' && !isNaN(value) && value !== "" && value != null;
 }

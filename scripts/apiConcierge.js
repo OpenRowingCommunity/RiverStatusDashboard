@@ -3,6 +3,15 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		apiConcierge.js created on 2017-06-26
 
+import { AirNow } from './apiClients/gov.airnow.js';
+import { USGS } from './apiClients/gov.usgs.js';
+import { NOAAWeather } from './apiClients/gov.weather.w1.js';
+import { NOAAWeatherWater } from './apiClients/gov.weather.water.js';
+import { SunriseSunsetOrg } from './apiClients/org.sunrise-sunset.js';
+import { config } from './config.js';
+import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
+
+
 // the square brackets in the keys allow the keys value to be computed.
 // see https://stackoverflow.com/a/40720612/
 let mockData = {
@@ -19,7 +28,7 @@ let mockData = {
 
 //	Object-Based Version
 
-let apiConcierge = {
+export let apiConcierge = {
 	
 	// skip AJAX requests
 	usingMockData: false,
@@ -29,11 +38,11 @@ let apiConcierge = {
 	
 	// for an API domain, which apiClient
 	clientMap: {
-		[APIClientIdentifier.NOAA_WATER]: gov_weather_water,
-		[APIClientIdentifier.NOAA_W1]: gov_weather_w1,
-		[APIClientIdentifier.USGS]: gov_usgs,
-		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: org_sunrise_sunset,
-		[APIClientIdentifier.AIRNOW]: gov_airnow
+		[APIClientIdentifier.NOAA_WATER]: new NOAAWeatherWater(),
+		[APIClientIdentifier.NOAA_W1]: new NOAAWeather(),
+		[APIClientIdentifier.USGS]: new USGS(),
+		[APIClientIdentifier.SUNRISE_SUNSET_ORG]: new SunriseSunsetOrg(),
+		[APIClientIdentifier.AIRNOW]: new AirNow()
 	},
 	
 	// for a value, which API domain

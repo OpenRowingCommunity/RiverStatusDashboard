@@ -3,7 +3,12 @@
 //		by Maxwell B Garber <max.garber+dev@gmail.com>
 //		app-2021.js created 2021-03-23
 
-var AppViewModel = function () {
+import { apiConcierge } from "./apiConcierge.js";
+import { swapTempUnit, colorForAirQual, toFahrenheit } from "./helpers.js";
+import { DatapointIdentifier } from "./constants.js";
+import { config } from "./config.js";
+
+export var AppViewModel = function () {
 	this._initString = ' ';
 	this.referenceToAppViewModel = this;
 	this.devMode = true;
@@ -21,17 +26,19 @@ var AppViewModel = function () {
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
-	this.waterFlowColor = ko.computed(function () {
-		var color = rit_safety.rowing.zoneColorForWaterFlow(this.waterFlow());
-		return color;
-	}, this);
+	this.waterFlowColor = ko.computed(() => {
+		return config.safetyMatrix.getZoneForData({
+			[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
+		}).color;
+	});
 	this.waterLevel = ko.observable(this._initString);
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
-	this.waterTempColor = ko.computed(function () {
-		var color = rit_safety.rowing.zoneColorForWaterTemp(this.waterTemp());
-		return color;
-	}, this);
+	this.waterTempColor = ko.computed(() => {
+		return config.safetyMatrix.getZoneForData({
+			[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
+		}).color;
+	});
 	this.waterTempDisplay = ko.computed(function () {
 		let tempC = this.waterTemp();
 		var tempF = '';
@@ -130,36 +137,43 @@ var AppViewModel = function () {
 		return ready;
 	}, this);
 	
+	this.dataCache = ko.computed(() => {
+		return {
+			[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
+			[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
+			[DatapointIdentifier.WATER_LEVEL]: this.waterLevel(),
+			[DatapointIdentifier.AIR_TEMP]: this.airTemp(),
+			[DatapointIdentifier.AIR_SPEED]: this.airSpeed(),
+			[DatapointIdentifier.AIR_DIRECTION]: this.airDirxn(),
+			[DatapointIdentifier.AIR_QUALITY]: this.airQual(),
+			[DatapointIdentifier.SUNRISE]: this.sunrise(),
+			[DatapointIdentifier.SUNSET]: this.sunset(),
+		};
+	})
+
 	/// # Zone
-	this.zone = ko.computed(function () {
+	this.zone = ko.computed(() => {
 		var zone = this._initString;
 		
 		//	don't try to calculate until necessary values fetched
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
-			zone = rit_safety.rowing.zoneForConditions(
-				this.waterFlow(), this.waterTemp(), this.airQual(),
-				this.sunrise(), this.sunset()
-			);
+			zone = config.safetyMatrix.getZoneForData(this.dataCache());
 		}
 		
 		return zone;
-	}, this);
+	});
 	
-    this.zoneColor = ko.computed(function () {
-		var color = rit_safety.rowing.zoneColorForZone(this.zone());
-		return color;
-	}, this);
-	
-	this.zoneDisplay = ko.computed(function () {
-		let zone = this.zone();
-		if (zone > 6) {
-			// show prohibited
-			return '\u2715'; //'✕';
-		} else {
-			return zone;
+	this.restrictions = ko.computed(() => {
+		if (this._readyToComputeZone()) {
+			return this.zone().getRestrictionsForData(this.dataCache())
 		}
-	}, this);
+		return [];
+	});
+
+    this.zoneColor = ko.computed(() => this.zone().color);
+	
+	this.zoneDisplay = ko.computed(() => this.zone().label);
 	
 	this.daylightDisplay = ko.computed(function() {
 		return '';
@@ -205,117 +219,6 @@ var AppViewModel = function () {
 			easing: $.easing.easeInOutExpo
 		});
 	}
-	
-	/// # Safety Rules
-
-    /// ## Allowed Shell Types (2021✓)
-    this.shellTypes = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }        
-		let zone = this.zone();
-        let flow = this.waterFlow();
-        var shellTypes = "<p>";
-
-        if (zone == 1 || zone == 2) {
-            shellTypes = "All boats";
-        } else if (zone == 3) {
-			shellTypes = "8+, 4x, 4+";
-            if (0 <= flow && flow < 5.0) {
-                shellTypes += ", 2x"
-            }
-        } else if (zone == 4) {
-			shellTypes = "8+, 4x";
-			if (0 <= flow && flow < 5.0) {
-				shellTypes += ", 4+"
-			}
-        } else if (zone == 5) {
-            shellTypes = "8+, 4x";
-        }
-        shellTypes += "</p>";
-
-        if (zone == 1 || zone == 2 || zone == 3) {
-            shellTypes += "<p>Racing allowed</p>";
-        } else if (zone == 4 || zone == 5) {
-            shellTypes += "<p>No racing allowed</p>";
-        }
-
-        return shellTypes;
-	}, this);
-	
-    /// ## Launch to Shell Ratio (2021✓)
-    this.launchRatio = ko.computed(function () {
-		if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
-		var launchToShellRatio = '';
-
-        if (zone == 1) {
-			launchToShellRatio = "Shells must be accompanied by a launch";
-        } else if (zone == 2) {
-            launchToShellRatio = "1 launch per 3 shells";
-        } else if (zone == 3) {
-            launchToShellRatio = "1 launch per 2 shells";
-        } else if (zone == 4 || zone == 5) {
-            launchToShellRatio = "1 launch per shell";
-        }
-
-		return launchToShellRatio;
-	}, this);
-	
-    /// ## PFD Requirement
-    this.pfdReq = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }
-        let zone = this.zone();
-
-        var rowersReq = "";
-        var coxesReq = "";
-
-        if (zone == 1) {
-			rowersReq = "PFD Not required";
-			coxesReq = "PFD Not required";
-        } else if (zone == 2) {
-			rowersReq = "PFD Not required";
-			coxesReq = "PFD Not required";
-        } else if (zone == 3) {
-			rowersReq = "PFD Required unless launch to shell ratio 1:1";
-			coxesReq = "PFD Required";
-		} else if (zone == 4 || zone == 5) {
-			rowersReq = "PFD Required";
-			coxesReq = "PFD Required";
-        } else {
-            // problem?
-        }
-
-        let fullReqs = "<p><b>Rowers</b>: " + rowersReq + "</p>" +
-            "<p><b>Coxswains</b>: " + coxesReq + "</p>" + 
-            "<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>";
-
-		return fullReqs;
-	}, this);
-	
-    /// ## Crew Skill Level
-    this.crewSkill = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }
-		let zone = this.zone();
-
-		if (zone == 1) {
-			return "<p>No restrictions<p/>";
-		} else if (zone == 2 || zone == 3) {
-			return "<p>No Learn to Rows<p/>";
-		} else if (zone == 4) {
-			return "<p>No New Novices<p/>";
-		} else if (zone == 5) {
-			return "<p>No Novices<p/>";
-        } else {
-            // problem?
-        }
-
-		return "";
-	}, this);
-	
-    /// ## Additional Safety Information
-    this.additionalSafety = ko.computed(function () {
-        if (!this._readyToComputeZone()) { return ''; }
-        return '';
-	}, this);
 	
 	/// # Primary Operation
 	this.update = function () {

@@ -4,8 +4,10 @@
 //		gov.weather.js created on 2017-06-26
 //		refactored 2023-09-01 by Adrian Edwards
 
+import { APIClient } from "./apiclient.js"
+import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
 
-class NOAAWeatherWater extends APIClient {
+export class NOAAWeatherWater extends APIClient {
 
 	constructor() {
 		super('https://api.water.noaa.gov/nwps/v1', APIClientIdentifier.NOAA_WATER)
@@ -56,6 +58,3 @@ class NOAAWeatherWater extends APIClient {
 		return this.dataTransformers.keys()
 	}
 }
-
-
-var gov_weather_water = new NOAAWeatherWater();

@@ -48,29 +48,26 @@
 		<script src="./scripts/libs/moment-2.30.1.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@^1"></script>
 
-		<script src="./scripts/constants.js"></script>
+		<script type="module" src="./scripts/constants.js"></script>
 
-		<script src="./scripts/config.js"></script>
+		<script type="module" src="./scripts/config.js"></script>
 
-		<script src="./scripts/helpers.js"></script>
+		<script type="module" src="./scripts/helpers.js"></script>
 		
 		<!-- custom API management scheme -->
-		<script src="./scripts/apiClients/apiclient.js"></script>
-		<script src="./scripts/apiClients/gov.weather.water.js"></script>
-		<script src="./scripts/apiClients/gov.usgs.js"></script>
-		<script src="./scripts/apiClients/org.sunrise-sunset.js"></script>
-		<script src="./scripts/apiClients/gov.weather.w1.js"></script>
-		<script src="./scripts/apiClients/gov.airnow.js"></script>
+		<script type="module" src="./scripts/apiClients/apiclient.js"></script>
+		<script type="module" src="./scripts/apiClients/gov.weather.water.js"></script>
+		<script type="module" src="./scripts/apiClients/gov.usgs.js"></script>
+		<script type="module" src="./scripts/apiClients/org.sunrise-sunset.js"></script>
+		<script type="module" src="./scripts/apiClients/gov.weather.w1.js"></script>
+		<script type="module" src="./scripts/apiClients/gov.airnow.js"></script>
 
-		<script src="./scripts/apiConcierge.js"></script>
-		
-		<!-- TRRA dashbaord functions -->
-		<script src="./scripts/safety-matrix.js"></script>
-		
+		<script type="module" src="./scripts/apiConcierge.js"></script>
+
 		<!-- the app itself -->
-		<script src="./scripts/app.js"></script>
-		<script src="./scripts/graph.js"></script>
-		<script src="./scripts/main.js"></script>
+		<script type="module" src="./scripts/app.js"></script>
+		<script type="module" src="./scripts/graph.js"></script>
+		<script type="module" src="./scripts/main.js"></script>
 		
 		<!-- Custom Styles -->
 		<link rel="stylesheet" type="text/css" href="./styles/main.css">
@@ -234,42 +231,14 @@
 						<!-- BEGIN Safety Values Table -->
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
 							<h2 class="white">Safety Rules</h2>
-							<div class="container-fluid" id="rules-data-container">
+							<div class="container-fluid" id="rules-data-container"  data-bind="foreach: restrictions">
 								<!-- shell types -->
 								<div class="row rules-value-row">
 									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Shell Types</span>
+										<span class="label label-info" data-bind="text: category"></span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-shells" data-bind="html: shellTypes"></span>
-									</div>
-								</div>
-								<!-- crew skill level -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Skill Level</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-skill"  data-bind="html: crewSkill"></span>
-									</div>
-								</div>
-								<!-- coaches' launch:shell ratio -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Launches</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-launches" data-bind="html: launchRatio"></span>
-									</div>
-								</div>
-								<!-- safety gear/equipment -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Safety Gear</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-pdfReq" data-bind="html: pfdReq"></span><br />
-										<span id="dataField-safetyExtras"  data-bind="html: additionalSafety"></span>
+										<span id="dataField-shells" data-bind="html: htmlDescription"></span>
 									</div>
 								</div>
 							</div>
@@ -353,8 +322,8 @@
 					<!-- BEGIN copyright row -->
 					<div class="row" id="copyrightRow">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-							<span>&copy; 2018 by Maxwell Garber</span><br />
-							<span>This site is an RIT spin-off of a site made by Maxwell Garber for the Three Rivers Rowing Association. It is not intended to be a substitute for evaluating safety conditions using good judgement, and therefore assumes no liability if you do something stupid and/or dangerous.</span>
+							<span>&copy; 2018-2021 by Maxwell Garber, 2023-2025 Adrian Edwards</span><br />
+							<span>This site is built upon a site made by Maxwell Garber for the Three Rivers Rowing Association. It is not intended to be a substitute for evaluating safety conditions using good judgement, and therefore assumes no liability if you do something stupid and/or dangerous.</span>
 						</div>
 					</div>
 					<!-- END copyright row -->
@@ -367,7 +336,9 @@
 				</div>
 			</div>
 		</div>
-		<script>
+		<script type="module">
+			import { config } from './scripts/config.js';
+
 			document.getElementById("rivername").innerText = config.riverName
 		</script>
 	</body>
