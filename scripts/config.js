@@ -99,6 +99,14 @@ export class Restriction extends Conditional {
 			this.description = description;
 		}
 	}
+
+	get hasCategory() {
+		return typeof(this.category) !== 'undefined' && this.category !== "";
+	}
+
+	get htmlDescription() {
+		return this.description.join();
+	}
 }
 
 
