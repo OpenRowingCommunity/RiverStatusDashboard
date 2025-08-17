@@ -234,41 +234,41 @@ let ritconfig = new RiverStatusConfig({
 				label: '1',
 				color: '#00c020',
 				conditions: [
-					LessThan(DatapointIdentifier.WATER_FLOW, 3, "kcfs"),
-					AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+					new LessThan(DatapointIdentifier.WATER_FLOW, 3, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
 				]
 			}),
 			new SafetyZone({
 				label: '2',
 				color: '#40fe00',
 				conditions: [
-					Between(DatapointIdentifier.WATER_FLOW, 3, 5, "kcfs"),
-					AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+					new Between(DatapointIdentifier.WATER_FLOW, 3, 5, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
 				]
 			}),
 			new SafetyZone({
 				label: '3',
 				color: '#ffff00',
 				conditions: [
-					Between(DatapointIdentifier.WATER_FLOW, 5, 7, "kcfs"),
-					Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+					new Between(DatapointIdentifier.WATER_FLOW, 5, 7, "kcfs"),
+					new Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
 				]
 			}),
 			new SafetyZone({
 				label: '4',
 				color: '#ffa800',
 				conditions: [
-					Between(DatapointIdentifier.WATER_FLOW, 7, 10, "kcfs"),
-					Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+					new Between(DatapointIdentifier.WATER_FLOW, 7, 10, "kcfs"),
+					new Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
 				]
 			}),
 			new SafetyZone({
 				label: '5',
 				color: '#ff0000',
 				conditions: [
-					Between(DatapointIdentifier.WATER_FLOW, 10, 12, "kcfs"),
-					Between(DatapointIdentifier.WATER_TEMP, 35, 45, "F"),
-					Between(DatapointIdentifier.AIR_QUALITY, 150, 200, "AQI")
+					new Between(DatapointIdentifier.WATER_FLOW, 10, 12, "kcfs"),
+					new Between(DatapointIdentifier.WATER_TEMP, 35, 45, "F"),
+					new Between(DatapointIdentifier.AIR_QUALITY, 150, 200, "AQI")
 				]
 			})
 		],
@@ -276,9 +276,9 @@ let ritconfig = new RiverStatusConfig({
 			label: '☠️',
 			color: '#000000',
 			conditions: [
-				AtLeast(DatapointIdentifier.WATER_FLOW, 12, "kcfs"),
-				LessThan(DatapointIdentifier.WATER_TEMP, 35, "F"),
-				AtLeast(DatapointIdentifier.AIR_QUALITY, 200, "AQI")
+				new AtLeast(DatapointIdentifier.WATER_FLOW, 12, "kcfs"),
+				new LessThan(DatapointIdentifier.WATER_TEMP, 35, "F"),
+				new AtLeast(DatapointIdentifier.AIR_QUALITY, 200, "AQI")
 			]
 		})
 	}),
