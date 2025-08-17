@@ -146,6 +146,8 @@ export class AtLeast extends Condition {
 		super(datapointId, {min, unit})
 	}
 }
+export const GreaterThan = AtLeast;
+
 export class Between extends Condition {
 	constructor(datapointId, min, max, unit = undefined) {
 		super(datapointId, {min, max, unit})
