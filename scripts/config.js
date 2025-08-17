@@ -88,7 +88,7 @@ class Conditional {
 /**
  * Represents a textual summary of what limitations are in place when in this safety zone
  */
-export class SafetyZoneRestriction extends Conditional {
+export class Restriction extends Conditional {
 
 	constructor({category, description, conditions = undefined}) {
 		super(conditions)
@@ -170,7 +170,7 @@ export class SafetyZone extends Conditional {
 	 * @param {*} label the value displayed to the user when in this zone. Should be one effective character (letter, number, symbol, emoji, etc) 
 	 * @param {*} color  the color this zone will show as (background for the label)
 	 * @param {*} conditions The conditions under which this safety zone is active
-	 * @param {*} restrictions SafetyZoneRestriction objects describing limitations of this zone
+	 * @param {*} restrictions Restriction objects describing limitations of this zone
 	 */
 	constructor({label, color="gray", conditions=[], restrictions=[]}) {
 		super(conditions)
