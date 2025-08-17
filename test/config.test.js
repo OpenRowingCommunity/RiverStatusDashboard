@@ -93,6 +93,21 @@ describe('SafetyZone', () => {
     expect(SafetyZone.UNKNOWN).toEqual(SafetyZone.UNKNOWN);
   });
 
+  it('empty conditions should always be true', () => {
+	var sut = new SafetyZone({
+		label: "a",
+		color: "#fff",
+		conditions: [],
+		restrictions: []
+  	})
+	const values = {
+		[DatapointIdentifier.AIR_QUALITY]: 300
+	};
+    expect(sut.isTriggeredBy(values)).toBe(true);
+	sut.conditions = undefined;
+	expect(sut.isTriggeredBy(values)).toBe(true);
+  });
+
 });
 
 describe('SafetyMatrix', () => {

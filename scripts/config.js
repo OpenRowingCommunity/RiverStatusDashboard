@@ -78,6 +78,9 @@ class Conditional {
 	 * @returns boolean indicating whether or not this zones criteria are met 
 	 */
 	isTriggeredBy(values){
+		if (typeof(this.conditions) === 'undefined' || this.conditions.length == 0){
+			return true
+		}
 		return Array.from(this.conditions).map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v);
 	}
 }
