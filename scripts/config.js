@@ -188,6 +188,9 @@ export class SafetyZone extends Conditional {
 		this.restrictions = restrictions
 	}
 
+	getRestrictionsForData(values) {
+		return this.restrictions.filter((r) => r.isTriggeredBy(values))
+	}
 }
 
 

@@ -160,7 +160,7 @@ export var AppViewModel = function () {
 		return zone;
 	});
 	
-	this.restrictions = ko.computed(() => this.zone().restrictions)
+	this.restrictions = ko.computed(() => this.zone().getRestrictionsForData())
 
     this.zoneColor = ko.computed(() => this.zone().color);
 	
