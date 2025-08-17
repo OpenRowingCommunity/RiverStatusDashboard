@@ -167,7 +167,7 @@ export class SafetyZone {
 	 * @returns boolean indicating whether or not this zones criteria are met 
 	 */
 	isTriggeredBy(values){
-		return this.conditions.map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v)
+		return Array.from(this.conditions).map((condition) => condition.evaluate(values[condition.datapointId])).some((v) => v)
 	}
 }
 
