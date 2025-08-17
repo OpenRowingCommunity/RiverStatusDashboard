@@ -231,42 +231,14 @@
 						<!-- BEGIN Safety Values Table -->
 						<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 text-center">
 							<h2 class="white">Safety Rules</h2>
-							<div class="container-fluid" id="rules-data-container">
+							<div class="container-fluid" id="rules-data-container"  data-bind="foreach: restrictions">
 								<!-- shell types -->
 								<div class="row rules-value-row">
 									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Shell Types</span>
+										<span class="label label-info" data-bind="text: category"></span>
 									</div>
 									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-shells" data-bind="html: shellTypes"></span>
-									</div>
-								</div>
-								<!-- crew skill level -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Skill Level</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-skill"  data-bind="html: crewSkill"></span>
-									</div>
-								</div>
-								<!-- coaches' launch:shell ratio -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Launches</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-launches" data-bind="html: launchRatio"></span>
-									</div>
-								</div>
-								<!-- safety gear/equipment -->
-								<div class="row rules-value-row">
-									<div class="col-lg-4 col-md-6 col-sm-4 col-xs-2 text-right rules-value-name">
-										<span class="label label-info">Safety Gear</span>
-									</div>
-									<div class="col-lg-8 col-md-6 col-sm-8 col-xs-12 text-left rules-value-value">
-										<span id="dataField-pdfReq" data-bind="html: pfdReq"></span><br />
-										<span id="dataField-safetyExtras"  data-bind="html: additionalSafety"></span>
+										<span id="dataField-shells" data-bind="html: htmlDescription"></span>
 									</div>
 								</div>
 							</div>
