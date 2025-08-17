@@ -1,5 +1,5 @@
 import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
-import { validateNumber } from './helpers.js';
+import { toCelsius, validateNumber } from './helpers.js';
 export class RiverStatusConfig {
 	
 	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, safetyMatrix, dataSources }) {
@@ -266,7 +266,7 @@ let ritconfig = new RiverStatusConfig({
 				color: '#40fe00',
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 3, 5, "kcfs"),
-					new AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				]
 			}),
 			new SafetyZone({
@@ -274,7 +274,7 @@ let ritconfig = new RiverStatusConfig({
 				color: '#ffff00',
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 5, 7, "kcfs"),
-					new Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+					new Between(DatapointIdentifier.WATER_TEMP, toCelsius(45), toCelsius(50), "F"),
 				]
 			}),
 			new SafetyZone({
@@ -282,7 +282,7 @@ let ritconfig = new RiverStatusConfig({
 				color: '#ffa800',
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 7, 10, "kcfs"),
-					new Between(DatapointIdentifier.WATER_TEMP, 45, 50, "F"),
+					new Between(DatapointIdentifier.WATER_TEMP, toCelsius(45), toCelsius(50), "F"),
 				]
 			}),
 			new SafetyZone({
@@ -290,7 +290,7 @@ let ritconfig = new RiverStatusConfig({
 				color: '#ff0000',
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 10, 12, "kcfs"),
-					new Between(DatapointIdentifier.WATER_TEMP, 35, 45, "F"),
+					new Between(DatapointIdentifier.WATER_TEMP, toCelsius(35), toCelsius(45), "F"),
 					new Between(DatapointIdentifier.AIR_QUALITY, 150, 200, "AQI")
 				]
 			})
@@ -300,7 +300,7 @@ let ritconfig = new RiverStatusConfig({
 			color: '#000000',
 			conditions: [
 				new AtLeast(DatapointIdentifier.WATER_FLOW, 12, "kcfs"),
-				new LessThan(DatapointIdentifier.WATER_TEMP, 35, "F"),
+				new LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(35), "F"),
 				new AtLeast(DatapointIdentifier.AIR_QUALITY, 200, "AQI")
 			]
 		})
