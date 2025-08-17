@@ -64,11 +64,11 @@ describe('SafetyZone', () => {
   it('isTriggeredBy', () => {
 
 	var sut = new SafetyZone({
-		text: "a",
+		label: "a",
 		color: "#fff",
-		conditions: {
-			[DatapointIdentifier.AIR_QUALITY]: 50
-		},
+		conditions: [
+			new AtLeast(DatapointIdentifier.AIR_QUALITY, 50)
+		],
 		restrictions: []
   	})
 
@@ -99,11 +99,11 @@ describe('SafetyMatrix', () => {
   it('getZoneForData happy paths', () => {
 
 	var sz = new SafetyZone({
-		text: "a",
+		label: "a",
 		color: "#fff",
-		conditions: {
-			[DatapointIdentifier.AIR_QUALITY]: 50
-		},
+		conditions: [
+			new AtLeast(DatapointIdentifier.AIR_QUALITY, 50)
+		],
 		restrictions: []
   	})
 
@@ -153,30 +153,30 @@ describe('SafetyMatrix', () => {
   it('getZoneForData multiple data points', () => {
 
 	var sz1 = new SafetyZone({
-		text: "a",
+		label: "a",
 		color: "#fff",
-		conditions: {
-			[DatapointIdentifier.AIR_QUALITY]: 50,
-			[DatapointIdentifier.AIR_TEMP]: 42
-		},
+		conditions: [
+			new AtLeast(DatapointIdentifier.AIR_QUALITY, 50),
+			new AtLeast(DatapointIdentifier.AIR_TEMP, 42)
+		],
 		restrictions: []
   	})
 	var sz2 = new SafetyZone({
-		text: "a",
+		label: "a",
 		color: "#fff",
-		conditions: {
-			[DatapointIdentifier.AIR_QUALITY]: 80,
-			[DatapointIdentifier.AIR_TEMP]: 60
-		},
+		conditions: [
+			new AtLeast(DatapointIdentifier.AIR_QUALITY, 80),
+			new AtLeast(DatapointIdentifier.AIR_TEMP, 60)
+		],
 		restrictions: []
   	})
 	var sz3 = new SafetyZone({
-		text: "a",
+		label: "a",
 		color: "#fff",
-		conditions: {
-			[DatapointIdentifier.AIR_QUALITY]: 100,
-			[DatapointIdentifier.AIR_TEMP]: 80
-		},
+		conditions: [
+			new AtLeast(DatapointIdentifier.AIR_QUALITY, 100),
+			new AtLeast(DatapointIdentifier.AIR_TEMP, 80)
+		],
 		restrictions: []
   	})
 
