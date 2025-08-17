@@ -1,4 +1,3 @@
-import { test } from 'vitest';
 import {
   SafetyMatrix, SafetyZone, SafetyZoneRestriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan
 } from '../scripts/config.js';
