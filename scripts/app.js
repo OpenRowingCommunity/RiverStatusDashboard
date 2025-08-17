@@ -137,6 +137,20 @@ export var AppViewModel = function () {
 		return ready;
 	}, this);
 	
+	this.dataCache = ko.computed(() => {
+		return {
+			[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
+			[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
+			[DatapointIdentifier.WATER_LEVEL]: this.waterLevel(),
+			[DatapointIdentifier.AIR_TEMP]: this.airTemp(),
+			[DatapointIdentifier.AIR_SPEED]: this.airSpeed(),
+			[DatapointIdentifier.AIR_DIRECTION]: this.airDirxn(),
+			[DatapointIdentifier.AIR_QUALITY]: this.airQual(),
+			[DatapointIdentifier.SUNRISE]: this.sunrise(),
+			[DatapointIdentifier.SUNSET]: this.sunset(),
+		};
+	})
+
 	/// # Zone
 	this.zone = ko.computed(() => {
 		var zone = this._initString;
@@ -144,17 +158,7 @@ export var AppViewModel = function () {
 		//	don't try to calculate until necessary values fetched
 		if (this._readyToComputeZone()) {
 			//	Declared in trra-safety.js
-			zone = config.safetyMatrix.getZoneForData({
-				[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
-				[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
-				[DatapointIdentifier.WATER_LEVEL]: this.waterLevel(),
-				[DatapointIdentifier.AIR_TEMP]: this.airTemp(),
-				[DatapointIdentifier.AIR_SPEED]: this.airSpeed(),
-				[DatapointIdentifier.AIR_DIRECTION]: this.airDirxn(),
-				[DatapointIdentifier.AIR_QUALITY]: this.airQual(),
-				[DatapointIdentifier.SUNRISE]: this.sunrise(),
-				[DatapointIdentifier.SUNSET]: this.sunset(),
-			});
+			zone = config.safetyMatrix.getZoneForData(this.dataCache());
 		}
 		
 		return zone;
