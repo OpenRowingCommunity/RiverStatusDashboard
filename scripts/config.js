@@ -58,6 +58,15 @@ export class RiverStatusConfig {
 
 class Conditional {
 
+	constructor(conditions) {
+		/**
+		 * The conditions under which this class or any derived subclasses applies
+		 * These will be checked in order. The last one that has a match with any current conditions will be used
+		 */
+		this.conditions = conditions;
+	}
+
+
 	/**
 	 * determines whether this safety zones criteria are met by the given input data
 	 * 
@@ -76,13 +85,15 @@ class Conditional {
 /**
  * Represents a textual summary of what limitations are in place when in this safety zone
  */
-export class SafetyZoneRestriction {
+export class SafetyZoneRestriction extends Conditional {
 
-	constructor({category, description}) {
+	constructor({category, description, conditions = undefined}) {
+		super(conditions)
 		this.category = category;
 		this.description = description;
 	}
 }
+
 
 /**
  * Represents set of conditions based on a range of values for a specific data point.
@@ -159,14 +170,9 @@ export class SafetyZone extends Conditional {
 	 * @param {*} restrictions SafetyZoneRestriction objects describing limitations of this zone
 	 */
 	constructor({label, color="gray", conditions=[], restrictions=[]}) {
+		super(conditions)
 		this.label = label;
 		this.color = color;
-
-		/**
-		 * The conditions under which this safety zone is active
-		 * This is a map from datapoint identifiers to the minimum values
-		 */
-		this.conditions = conditions
 
 		/** list of objects representing textual descriptions of limitations on
 		 * rowing when in this zone applies */
