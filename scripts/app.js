@@ -164,7 +164,12 @@ export var AppViewModel = function () {
 		return zone;
 	});
 	
-	this.restrictions = ko.computed(() => this.zone().getRestrictionsForData())
+	this.restrictions = ko.computed(() => {
+		if (this._readyToComputeZone()) {
+			return this.zone().getRestrictionsForData(this.dataCache())
+		}
+		return [];
+	});
 
     this.zoneColor = ko.computed(() => this.zone().color);
 	
