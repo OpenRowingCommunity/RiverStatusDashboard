@@ -89,10 +89,10 @@
 					<!-- BEGIN Title Row -->
 					<div class="row bottom-border" id="titleRow">
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-							<h1 class="white"><span id="rivername"></span> River Conditions</h1>
+							<h1 class="white"><span data-bind="text: riverName"></span> River Conditions</h1>
 							<p>Updated: <span data-bind="text: lastUpdated"></span></p>
 							<!-- TODO: parameterize this in the config -->
-							<h5><i>Following the RIT Safety Matrix (August 14th, 2025 version)</i></h5>
+							<h5><i>Following the <span data-bind="text: clubShortName"></span> Safety Matrix (August 14th, 2025 version)</i></h5>
 						</div>
 					</div>
 					<!-- END Title Row -->
@@ -336,11 +336,6 @@
 				</div>
 			</div>
 		</div>
-		<script type="module">
-			import { config } from './scripts/config.js';
-
-			document.getElementById("rivername").innerText = config.riverName
-		</script>
 	</body>
 </html>
 <!-- EOF -->

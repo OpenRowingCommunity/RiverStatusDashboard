@@ -23,6 +23,13 @@ export var AppViewModel = function () {
 		return swapTempUnit(this.tempUnit());
 	}, this);
 
+	/// # club info
+
+	this.riverName = ko.computed(() => config.riverName)
+	this.clubName = ko.computed(() => config.clubFullName)
+	this.clubShortName = ko.computed(() => config.clubAcronym)
+
+
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
