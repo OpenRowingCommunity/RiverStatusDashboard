@@ -554,7 +554,7 @@ let trraconfig = new RiverStatusConfig({
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "All boats. For 1x, 2x and 2- without a launch, must have one year rowing experience at TRRA"
+						description: "Racing shells: All types<br>Adaptive shells: PR3 2x only"
 					}),
 					// new Restriction({
 					// 	category: 'Launch:Shell Ratio',
@@ -592,7 +592,17 @@ let trraconfig = new RiverStatusConfig({
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+, 4+, 4x and 2x, Adaptive LTA racing 2x only",
+						description: "8+, 4+, 4x, 2x",
+						conditions: [
+							Between(DatapointIdentifier.WATER_FLOW, 0, 40, "kcfs")
+						]
+					}),
+					new Restriction({
+						category: 'Shell Types',
+						description: "8+, 4+, 4x",
+						conditions: [
+							GreaterThan(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
+						]
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
@@ -630,7 +640,7 @@ let trraconfig = new RiverStatusConfig({
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+, 4+ and 4x",
+						description: "8+, 4+, 4x",
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
@@ -667,7 +677,7 @@ let trraconfig = new RiverStatusConfig({
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+ and 4x",
+						description: "8+, 4x",
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
@@ -704,7 +714,7 @@ let trraconfig = new RiverStatusConfig({
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+ and 4x",
+						description: "8+, 4x",
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
