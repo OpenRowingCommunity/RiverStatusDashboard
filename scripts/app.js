@@ -28,6 +28,7 @@ export var AppViewModel = function () {
 	this.riverName = ko.computed(() => config.riverName)
 	this.clubName = ko.computed(() => config.clubFullName)
 	this.clubShortName = ko.computed(() => config.clubAcronym)
+	this.safetyMatrix = ko.computed(() => config.safetyMatrix)
 
 
 	/// # Water
