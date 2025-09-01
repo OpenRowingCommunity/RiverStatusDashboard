@@ -210,13 +210,14 @@ export class SafetyZone extends Conditional {
  */
 export class SafetyMatrix {
 
-	constructor({safetyZones, unsafeZone, version = ""}) {
+	constructor({safetyZones, unsafeZone, version, source}) {
 		/**
 		 * ordered list of SafetyZones, safest to least safe
 		 */
 		this.safetyZones = safetyZones
 		this.unsafeZone = unsafeZone
 		this.version = version
+		this.source = source
 
 		// TODO: place to store optional link to view the clubs underlying safety matrix document
 
