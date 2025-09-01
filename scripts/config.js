@@ -513,6 +513,12 @@ let trraconfig = new RiverStatusConfig({
 					new LessThan(DatapointIdentifier.WATER_FLOW, 28, "kcfs"),
 					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "All boats"
+					}),
+				]
 			}),
 			new SafetyZone({
 				label: '2',
@@ -521,6 +527,12 @@ let trraconfig = new RiverStatusConfig({
 					new Between(DatapointIdentifier.WATER_FLOW, 28, 35, "kcfs"),
 					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "All boats. For 1x, 2x and 2- without a launch, must have one year rowing experience at TRRA"
+					}),
+				]
 			}),
 			new SafetyZone({
 				label: '3',
@@ -529,6 +541,12 @@ let trraconfig = new RiverStatusConfig({
 					new Between(DatapointIdentifier.WATER_FLOW, 35, 40, "kcfs"),
 					new Between(DatapointIdentifier.WATER_TEMP, 4.5, 10, "C"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "8+, 4+, 4x and 2x, Adaptive LTA racing 2x only",
+					}),
+				]
 			}),
 			new SafetyZone({
 				label: '4',
@@ -537,6 +555,12 @@ let trraconfig = new RiverStatusConfig({
 					new Between(DatapointIdentifier.WATER_FLOW, 40, 45, "kcfs"),
 					new Between(DatapointIdentifier.WATER_TEMP, -20, 4.5, "C"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "8+, 4+ and 4x",
+					}),
+				]
 			}),
 			new SafetyZone({
 				label: '5',
@@ -544,6 +568,12 @@ let trraconfig = new RiverStatusConfig({
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 45, 50, "kcfs"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "8+ and 4x",
+					}),
+				]
 			}),
 			new SafetyZone({
 				label: '6',
@@ -551,6 +581,12 @@ let trraconfig = new RiverStatusConfig({
 				conditions: [
 					new Between(DatapointIdentifier.WATER_FLOW, 50, 60, "kcfs"),
 				],
+				restrictions: [
+					new Restriction({
+						category: 'Shell Types',
+						description: "8+ and 4x",
+					}),
+				]
 			})
 		],
 		unsafeZone: new SafetyZone({
@@ -560,6 +596,12 @@ let trraconfig = new RiverStatusConfig({
 				new AtLeast(DatapointIdentifier.WATER_FLOW, 60, "kcfs"),
 				new LessThan(DatapointIdentifier.WATER_TEMP, -20, "C"),
 			],
+			restrictions: [
+				new Restriction({
+					category: 'Shell Types',
+					description: "No boats allowed on the water"
+				})
+			]
 		})
 	}),
 	dataSources: [
