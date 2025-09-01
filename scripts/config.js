@@ -518,6 +518,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "All boats"
 					}),
+					// new Restriction({
+					// 	category: 'Launch:Shell Ratio',
+					// 	description: "Not a requirement"
+					// }),
 				]
 			}),
 			new SafetyZone({
@@ -532,6 +536,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "All boats. For 1x, 2x and 2- without a launch, must have one year rowing experience at TRRA"
 					}),
+					// new Restriction({
+					// 	category: 'Launch:Shell Ratio',
+					// 	description: "Not a requirement"
+					// }),
 				]
 			}),
 			new SafetyZone({
@@ -545,6 +553,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Shell Types',
 						description: "8+, 4+, 4x and 2x, Adaptive LTA racing 2x only",
+					}),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "1 launch per 2 shells (of equal speed)"
 					}),
 				]
 			}),
@@ -560,6 +572,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "8+, 4+ and 4x",
 					}),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "1 launch per 2 shells (of equal speed)"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -573,6 +589,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "8+ and 4x",
 					}),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "1 launch per shell"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -585,6 +605,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Shell Types',
 						description: "8+ and 4x",
+					}),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)"
 					}),
 				]
 			})
@@ -600,6 +624,10 @@ let trraconfig = new RiverStatusConfig({
 				new Restriction({
 					category: 'Shell Types',
 					description: "No boats allowed on the water"
+				}),
+				new Restriction({
+					category: 'Launch:Shell Ratio',
+					description: "I said no boats"
 				})
 			]
 		})
