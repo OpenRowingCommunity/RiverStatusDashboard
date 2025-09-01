@@ -504,14 +504,14 @@ let trraconfig = new RiverStatusConfig({
 	boathouseLat: 40.466846,
 	boathouseLong: -79.976543,
 	safetyMatrix: new SafetyMatrix({
-		version: "2016: Revised February 2015 by TRRA Safety Committee and accepted by TRRA Board",
+		version: "2024: Revised May 2015 by TRRA Safety Committee and accepted by TRRA Board",
 		safetyZones: [
 			new SafetyZone({
 				label: '1',
 				color: '#00c020',
 				conditions: [
-					new LessThan(DatapointIdentifier.WATER_FLOW, 28, "kcfs"),
-					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
+					new LessThan(DatapointIdentifier.WATER_FLOW, 30, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
@@ -524,7 +524,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
-						description: "Not Required except for U18/HS"
+						description: "Not Required. See Appendix #5 for U18/HS"
 					}),
 					new Restriction({
 						category: 'Certification',
@@ -553,13 +553,14 @@ let trraconfig = new RiverStatusConfig({
 				label: '2',
 				color: '#40fe00',
 				conditions: [
-					new Between(DatapointIdentifier.WATER_FLOW, 28, 35, "kcfs"),
-					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
+					new Between(DatapointIdentifier.WATER_FLOW, 30, 40, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "Racing shells: All types<br>Adaptive shells: PR3 2x only"
+						description: "<p>Racing shells: All types</p>" +
+						"<p>Adaptive shells: All boats</p>"
 					}),
 					new Restriction({
 						category: 'Racing',
@@ -581,14 +582,14 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
+						description: "Protected cell phone and whistle <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
 						description: "<p>U14: restricted</p>" +
 							"<p>Novice: approved</p>" +
 							"<p>Experienced: approved</p>" +
-							"<p>Adaptive: PR3 only</p>"
+							"<p>Adaptive: approved</p>"
 					})
 				]
 			}),
@@ -596,27 +597,27 @@ let trraconfig = new RiverStatusConfig({
 				label: '3',
 				color: '#c8ff00',
 				conditions: [
-					new Between(DatapointIdentifier.WATER_FLOW, 35, 40, "kcfs"),
-					new Between(DatapointIdentifier.WATER_TEMP, 4.5, 10, "C"),
+					new Between(DatapointIdentifier.WATER_FLOW, 40, 45, "kcfs"),
+					new LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+, 4+, 4x, 2x",
+						description: "8+, 4+, 4x, 4-, 2x",
 						conditions: [
-							Between(DatapointIdentifier.WATER_FLOW, 0, 40, "kcfs")
+							LessThan(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
 						]
 					}),
 					new Restriction({
 						category: 'Shell Types',
-						description: "8+, 4+, 4x",
+						description: "8+, 4+, 4x, 4-",
 						conditions: [
-							GreaterThan(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
+							AtLeast(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
 						]
 					}),
 					new Restriction({
 						category: 'Racing',
-						description: "No racing allowed"
+						description: "No racing allowed (see appendix #6)"
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
@@ -634,14 +635,14 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
+						description: "Protected cell phone and whistle <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
 						description: "<p>U14: restricted</p>" +
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
-							"<p>Adaptive: restricted</p>"
+							"<p>Adaptive: inclusion</p>"
 					})
 				]
 			}),
@@ -649,8 +650,8 @@ let trraconfig = new RiverStatusConfig({
 				label: '4',
 				color: '#ffff00',
 				conditions: [
-					new Between(DatapointIdentifier.WATER_FLOW, 40, 45, "kcfs"),
-					new Between(DatapointIdentifier.WATER_TEMP, -20, 4.5, "C"),
+					new Between(DatapointIdentifier.WATER_FLOW, 45, 50, "kcfs"),
+					new LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
@@ -671,7 +672,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell at all times</p>" +
+						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell at all times (see appendix #7)</p>" +
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
@@ -684,19 +685,19 @@ let trraconfig = new RiverStatusConfig({
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
-							Between(DatapointIdentifier.WATER_TEMP, toCelsius(32), toCelsius(50), "F")
+							LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
 						]
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
+						description: "Protected cell phone and whistle <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
 						description: "<p>U14: restricted</p>" +
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
-							"<p>Adaptive: restricted</p>"
+							"<p>Adaptive: inclusion</p>"
 					})
 				]
 			}),
@@ -704,7 +705,8 @@ let trraconfig = new RiverStatusConfig({
 				label: '5',
 				color: '#ffa800',
 				conditions: [
-					new Between(DatapointIdentifier.WATER_FLOW, 45, 50, "kcfs"),
+					new Between(DatapointIdentifier.WATER_FLOW, 50, 60, "kcfs"),
+					new LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
@@ -752,7 +754,11 @@ let trraconfig = new RiverStatusConfig({
 						description: "<p>U14: restricted</p>" +
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
-							"<p>Adaptive: restricted</p>"
+							"<p>Adaptive: inclusion</p>"
+					}),
+					new Restriction({
+						category: 'More Requirements',
+						description: "Additional requirements apply in this zone. See the safety matrix appendix #8."
 					})
 				]
 			})
@@ -761,8 +767,7 @@ let trraconfig = new RiverStatusConfig({
 			label: '\u2715',
 			color: '#000000',
 			conditions: [
-				new AtLeast(DatapointIdentifier.WATER_FLOW, 60, "kcfs"),
-				new LessThan(DatapointIdentifier.WATER_TEMP, -20, "C"),
+				new AtLeast(DatapointIdentifier.WATER_FLOW, 60, "kcfs")
 			],
 			restrictions: [
 				new Restriction({
