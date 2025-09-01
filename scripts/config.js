@@ -508,31 +508,57 @@ let trraconfig = new RiverStatusConfig({
 			new SafetyZone({
 				label: '1',
 				color: '#00c020',
+				conditions: [
+					new LessThan(DatapointIdentifier.WATER_FLOW, 28, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
+				],
 			}),
 			new SafetyZone({
 				label: '2',
 				color: '#40fe00',
+				conditions: [
+					new Between(DatapointIdentifier.WATER_FLOW, 28, 35, "kcfs"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, 10, "C"),
+				],
 			}),
 			new SafetyZone({
 				label: '3',
 				color: '#c8ff00',
+				conditions: [
+					new Between(DatapointIdentifier.WATER_FLOW, 35, 40, "kcfs"),
+					new Between(DatapointIdentifier.WATER_TEMP, 4.5, 10, "C"),
+				],
 			}),
 			new SafetyZone({
 				label: '4',
 				color: '#ffff00',
+				conditions: [
+					new Between(DatapointIdentifier.WATER_FLOW, 40, 45, "kcfs"),
+					new Between(DatapointIdentifier.WATER_TEMP, -20, 4.5, "C"),
+				],
 			}),
 			new SafetyZone({
 				label: '5',
 				color: '#ffa800',
+				conditions: [
+					new Between(DatapointIdentifier.WATER_FLOW, 45, 50, "kcfs"),
+				],
 			}),
 			new SafetyZone({
 				label: '6',
 				color: '#ff0000',
+				conditions: [
+					new Between(DatapointIdentifier.WATER_FLOW, 50, 60, "kcfs"),
+				],
 			})
 		],
 		unsafeZone: new SafetyZone({
 			label: '☠️',
 			color: '#000000',
+			conditions: [
+				new AtLeast(DatapointIdentifier.WATER_FLOW, 60, "kcfs"),
+				new LessThan(DatapointIdentifier.WATER_TEMP, -20, "C"),
+			],
 		})
 	}),
 	dataSources: [
