@@ -538,7 +538,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone Recommended"
+						description: "A whistle is <i>required</i> and protected cell phone recommended in each launch or in each shell not accompanied by a launch"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
@@ -582,7 +582,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone Required"
+						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
@@ -636,7 +636,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone Required"
+						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
@@ -692,7 +692,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone Required"
+						description: "Protected cell phone <i>required</i> in each launch <i>and</i> recommended in each shell"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
@@ -749,7 +749,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session"
+						description: "Protected cell phone required in each launch and shell. Marine radio recommended for coaches. At least one additional person must be on shore with cell phone and car (see Appendix #8)"
 					}),
 					new Restriction({
 						category: 'Crew Skill',
