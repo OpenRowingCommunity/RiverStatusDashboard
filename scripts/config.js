@@ -266,7 +266,7 @@ let ritconfig = new RiverStatusConfig({
 				color: '#00c020',
 				conditions: [
 					new LessThan(DatapointIdentifier.WATER_FLOW, 3, "kcfs"),
-					new AtLeast(DatapointIdentifier.WATER_TEMP, 50, "F"),
+					new AtLeast(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F"),
 				],
 				restrictions: [
 					new Restriction({
