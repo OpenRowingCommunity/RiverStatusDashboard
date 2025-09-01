@@ -546,10 +546,6 @@ let trraconfig = new RiverStatusConfig({
 							"<p>Novice: approved</p>" +
 							"<p>Experienced: approved</p>" +
 							"<p>Adaptive: approved</p>"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "Optional"
 					})
 				]
 			}),
@@ -593,10 +589,6 @@ let trraconfig = new RiverStatusConfig({
 							"<p>Novice: approved</p>" +
 							"<p>Experienced: approved</p>" +
 							"<p>Adaptive: PR3 only</p>"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -650,10 +642,6 @@ let trraconfig = new RiverStatusConfig({
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
 							"<p>Adaptive: restricted</p>"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -709,10 +697,6 @@ let trraconfig = new RiverStatusConfig({
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
 							"<p>Adaptive: restricted</p>"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -769,10 +753,6 @@ let trraconfig = new RiverStatusConfig({
 							"<p>Novice: limited*</p>" +
 							"<p>Experienced: approved</p>" +
 							"<p>Adaptive: restricted</p>"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "One Space Blanket per rower in launch; one bailer/large sponge/pump in each shell"
 					})
 				]
 			})
