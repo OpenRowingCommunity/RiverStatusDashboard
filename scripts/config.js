@@ -522,6 +522,10 @@ let trraconfig = new RiverStatusConfig({
 					// 	category: 'Launch:Shell Ratio',
 					// 	description: "Not a requirement"
 					// }),
+					// new Restriction({
+					// 	category: 'Certification',
+					// 	description: "No certification level required"
+					// }),
 				]
 			}),
 			new SafetyZone({
@@ -539,6 +543,10 @@ let trraconfig = new RiverStatusConfig({
 					// new Restriction({
 					// 	category: 'Launch:Shell Ratio',
 					// 	description: "Not a requirement"
+					// }),
+					// new Restriction({
+					// 	category: 'Certification',
+					// 	description: "No certification level required"
 					// }),
 				]
 			}),
@@ -558,6 +566,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per 2 shells (of equal speed)"
 					}),
+					new Restriction({
+						category: 'Certification',
+						description: "USRA Level 2+ certification"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -576,6 +588,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per 2 shells (of equal speed)"
 					}),
+					new Restriction({
+						category: 'Certification',
+						description: "USRA Level 2+ certification"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -593,6 +609,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per shell"
 					}),
+					new Restriction({
+						category: 'Certification',
+						description: "USRA Level 2+ certification"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -609,6 +629,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Launch:Shell Ratio',
 						description: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)"
+					}),
+					new Restriction({
+						category: 'Certification',
+						description: "USRA Level 2+ certification"
 					}),
 				]
 			})
@@ -628,6 +652,10 @@ let trraconfig = new RiverStatusConfig({
 				new Restriction({
 					category: 'Launch:Shell Ratio',
 					description: "I said no boats"
+				}),
+				new Restriction({
+					category: 'Certification',
+					description: "Leave them alone, you can't go out"
 				})
 			]
 		})
