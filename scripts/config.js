@@ -537,6 +537,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "Any Level"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "Optional"
 					})
 				]
 			}),
@@ -571,6 +575,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "Any Level; blind boats as specified above"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -605,6 +613,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "Any Level. Adaptive, LTA racers only"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -639,6 +651,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -672,6 +688,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "One Space Blanket per rower in launch"
 					})
 				]
 			}),
@@ -705,6 +725,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Crew Skill',
 						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					}),
+					new Restriction({
+						category: 'Extra Items',
+						description: "One Space Blanket per rower in launch; one bailer/large sponge/pump in each shell"
 					})
 				]
 			})
