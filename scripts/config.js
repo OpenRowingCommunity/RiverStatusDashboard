@@ -715,43 +715,6 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Comms',
-						description: "Protected Cell Phone Required"
-					}),
-					new Restriction({
-						category: 'Crew Skill',
-						description: "No Novices or adaptive rowers or equipment allowed on the water"
-					}),
-					new Restriction({
-						category: 'Extra Items',
-						description: "One Space Blanket per rower in launch"
-					})
-				]
-			}),
-			new SafetyZone({
-				label: '6',
-				color: '#ff0000',
-				conditions: [
-					new Between(DatapointIdentifier.WATER_FLOW, 50, 60, "kcfs"),
-				],
-				restrictions: [
-					new Restriction({
-						category: 'Shell Types',
-						description: "8+, 4x",
-					}),
-					new Restriction({
-						category: 'Launch:Shell Ratio',
-						description: "Sufficient launches to (a) carry all rowers and coxes participating in session, and (b) have at least 2 engines as between all launches on the water (towing line required)"
-					}),
-					new Restriction({
-						category: 'Certification',
-						description: "USRA Level 2+ certification"
-					}),
-					new Restriction({
-						category: 'PFDs',
-						description: "PFDs on all rowers & coxswains"
-					}),
-					new Restriction({
-						category: 'Comms',
 						description: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session"
 					}),
 					new Restriction({
