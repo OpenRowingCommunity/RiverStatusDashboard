@@ -518,6 +518,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "All boats"
 					}),
+					new Restriction({
+						category: 'Racing',
+						description: "Racing allowed"
+					}),
 					// new Restriction({
 					// 	category: 'Launch:Shell Ratio',
 					// 	description: "Not a requirement"
@@ -555,6 +559,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Shell Types',
 						description: "Racing shells: All types<br>Adaptive shells: PR3 2x only"
+					}),
+					new Restriction({
+						category: 'Racing',
+						description: "Racing allowed"
 					}),
 					// new Restriction({
 					// 	category: 'Launch:Shell Ratio',
@@ -605,6 +613,10 @@ let trraconfig = new RiverStatusConfig({
 						]
 					}),
 					new Restriction({
+						category: 'Racing',
+						description: "No racing allowed"
+					}),
+					new Restriction({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per 2 shells (of equal speed)"
 					}),
@@ -643,6 +655,10 @@ let trraconfig = new RiverStatusConfig({
 						description: "8+, 4+, 4x",
 					}),
 					new Restriction({
+						category: 'Racing',
+						description: "No racing allowed"
+					}),
+					new Restriction({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per 2 shells (of equal speed)"
 					}),
@@ -678,6 +694,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Shell Types',
 						description: "8+, 4x",
+					}),
+					new Restriction({
+						category: 'Racing',
+						description: "No racing allowed"
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
