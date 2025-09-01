@@ -261,6 +261,7 @@ let ritconfig = new RiverStatusConfig({
 	boathouseLat: 43.064251,
 	boathouseLong: -77.699065,
 	safetyMatrix: new SafetyMatrix({
+		version: "RIT Safety Matrix (August 14th, 2025 version)",
 		safetyZones: [
 			new SafetyZone({
 				label: '1',
