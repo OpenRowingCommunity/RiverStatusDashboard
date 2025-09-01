@@ -522,10 +522,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Racing',
 						description: "Racing allowed"
 					}),
-					// new Restriction({
-					// 	category: 'Launch:Shell Ratio',
-					// 	description: "Not a requirement"
-					// }),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "Not Required except for U18/HS"
+					}),
 					// new Restriction({
 					// 	category: 'Certification',
 					// 	description: "No certification level required"
@@ -564,10 +564,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Racing',
 						description: "Racing allowed"
 					}),
-					// new Restriction({
-					// 	category: 'Launch:Shell Ratio',
-					// 	description: "Not a requirement"
-					// }),
+					new Restriction({
+						category: 'Launch:Shell Ratio',
+						description: "1 launch per 3 shells"
+					}),
 					// new Restriction({
 					// 	category: 'Certification',
 					// 	description: "No certification level required"
@@ -618,7 +618,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
-						description: "1 launch per 2 shells (of equal speed)"
+						description: "1 launch per 2 shells"
 					}),
 					new Restriction({
 						category: 'Certification',
@@ -660,7 +660,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
-						description: "1 launch per 2 shells (of equal speed)"
+						description: "1 launch per shell"
 					}),
 					new Restriction({
 						category: 'Certification',
@@ -701,7 +701,9 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Launch:Shell Ratio',
-						description: "1 launch per shell"
+						description: "1 launch per shell and sufficient launches to:<br>" + 
+						"(a) carry all rowers and coxes participating in the session<br>" +
+						"(b) have at least 2 engines between all launches on the water (towing line required)"
 					}),
 					new Restriction({
 						category: 'Certification',
