@@ -505,6 +505,7 @@ let trraconfig = new RiverStatusConfig({
 	boathouseLong: -79.976543,
 	safetyMatrix: new SafetyMatrix({
 		version: "2024: Revised May 2024 by TRRA Safety Committee and accepted by TRRA Board",
+		source: "https://www.threeriversrowing.org/_files/ugd/e46300_61356ec9d051465e9e9bd249ff77e3b4.pdf",
 		safetyZones: [
 			new SafetyZone({
 				label: '1',
