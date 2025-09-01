@@ -526,6 +526,10 @@ let trraconfig = new RiverStatusConfig({
 					// 	category: 'Certification',
 					// 	description: "No certification level required"
 					// }),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs Optional"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -548,6 +552,10 @@ let trraconfig = new RiverStatusConfig({
 					// 	category: 'Certification',
 					// 	description: "No certification level required"
 					// }),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs Optional"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -569,6 +577,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Certification',
 						description: "USRA Level 2+ certification"
+					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs Optional"
 					}),
 				]
 			}),
@@ -592,6 +604,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Certification',
 						description: "USRA Level 2+ certification"
 					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs on all rowers & coxswains"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -613,6 +629,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Certification',
 						description: "USRA Level 2+ certification"
 					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs on all rowers & coxswains"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -633,6 +653,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'Certification',
 						description: "USRA Level 2+ certification"
+					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "PFDs on all rowers & coxswains"
 					}),
 				]
 			})
@@ -656,6 +680,10 @@ let trraconfig = new RiverStatusConfig({
 				new Restriction({
 					category: 'Certification',
 					description: "Leave them alone, you can't go out"
+				}),
+				new Restriction({
+					category: 'PFDs',
+					description: "Don't need any to stay on land"
 				})
 			]
 		})
