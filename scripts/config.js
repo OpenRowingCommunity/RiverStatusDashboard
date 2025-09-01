@@ -542,7 +542,10 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Crew Skill',
-						description: "Any Level"
+						description: "<p>U14: approved</p>" +
+							"<p>Novice: approved</p>" +
+							"<p>Experienced: approved</p>" +
+							"<p>Adaptive: approved</p>"
 					}),
 					new Restriction({
 						category: 'Extra Items',
@@ -586,7 +589,10 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Crew Skill',
-						description: "Any Level; blind boats as specified above"
+						description: "<p>U14: restricted</p>" +
+							"<p>Novice: approved</p>" +
+							"<p>Experienced: approved</p>" +
+							"<p>Adaptive: PR3 only</p>"
 					}),
 					new Restriction({
 						category: 'Extra Items',
@@ -640,7 +646,10 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Crew Skill',
-						description: "Any Level. Adaptive, LTA racers only"
+						description: "<p>U14: restricted</p>" +
+							"<p>Novice: limited*</p>" +
+							"<p>Experienced: approved</p>" +
+							"<p>Adaptive: restricted</p>"
 					}),
 					new Restriction({
 						category: 'Extra Items',
@@ -696,7 +705,10 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Crew Skill',
-						description: "No Novices or adaptive rowers or equipment allowed on the water"
+						description: "<p>U14: restricted</p>" +
+							"<p>Novice: limited*</p>" +
+							"<p>Experienced: approved</p>" +
+							"<p>Adaptive: restricted</p>"
 					}),
 					new Restriction({
 						category: 'Extra Items',
@@ -753,7 +765,10 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Crew Skill',
-						description: "No Novices or adaptive rowers or equipment allowed on the water"
+						description: "<p>U14: restricted</p>" +
+							"<p>Novice: limited*</p>" +
+							"<p>Experienced: approved</p>" +
+							"<p>Adaptive: restricted</p>"
 					}),
 					new Restriction({
 						category: 'Extra Items',
