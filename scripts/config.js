@@ -526,10 +526,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Launch:Shell Ratio',
 						description: "Not Required except for U18/HS"
 					}),
-					// new Restriction({
-					// 	category: 'Certification',
-					// 	description: "No certification level required"
-					// }),
+					new Restriction({
+						category: 'Certification',
+						description: "TRRA-Equivalent Certification"
+					}),
 					new Restriction({
 						category: 'PFDs',
 						description: "PFDs Optional"
@@ -568,10 +568,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Launch:Shell Ratio',
 						description: "1 launch per 3 shells"
 					}),
-					// new Restriction({
-					// 	category: 'Certification',
-					// 	description: "No certification level required"
-					// }),
+					new Restriction({
+						category: 'Certification',
+						description: "TRRA-Equivalent Certification"
+					}),
 					new Restriction({
 						category: 'PFDs',
 						description: "PFDs Optional"
@@ -622,7 +622,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Certification',
-						description: "USRA Level 2+ certification"
+						description: "TRRA-Equivalent Certification"
 					}),
 					new Restriction({
 						category: 'PFDs',
@@ -664,7 +664,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Certification',
-						description: "USRA Level 2+ certification"
+						description: "TRRA-Equivalent Certification"
 					}),
 					new Restriction({
 						category: 'PFDs',
@@ -707,7 +707,7 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'Certification',
-						description: "USRA Level 2+ certification"
+						description: "TRRA-Equivalent Certification"
 					}),
 					new Restriction({
 						category: 'PFDs',
@@ -746,7 +746,7 @@ let trraconfig = new RiverStatusConfig({
 				}),
 				new Restriction({
 					category: 'Certification',
-					description: "Leave them alone, you can't go out"
+					description: "TRRA-Equivalent Certification"
 				}),
 				new Restriction({
 					category: 'PFDs',
