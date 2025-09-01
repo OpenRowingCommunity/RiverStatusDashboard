@@ -4,7 +4,7 @@
 //		app-2021.js created 2021-03-23
 
 import { apiConcierge } from "./apiConcierge.js";
-import { swapTempUnit, colorForAirQual, toFahrenheit } from "./helpers.js";
+import { swapTempUnit, colorForAirQual, toFahrenheit, toCelsius } from "./helpers.js";
 import { DatapointIdentifier } from "./constants.js";
 import { config } from "./config.js";
 
@@ -198,7 +198,7 @@ export var AppViewModel = function () {
 	
 	/// # Experimental	
 	this.waterTempNote = ko.computed(function () {
-		if (toFahrenheit(this.waterTemp()) < -10) {
+		if (toFahrenheit(this.waterTemp()) < toCelsius(-10)) {
 			document.querySelector('#dataField-temp').parentElement.hidden = true;
 			document.querySelector('#dataField-tempF').parentElement.hidden = true;
 			return '<a href="https://www.usgs.gov/news/usgs-working-restore-streamgages">USGS equipment malfunction</a>';
