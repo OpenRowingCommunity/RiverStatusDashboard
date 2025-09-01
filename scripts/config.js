@@ -815,7 +815,14 @@ let trraconfig = new RiverStatusConfig({
 			id: "shrp1",
 			purposeHints: [DatapointIdentifier.WATER_LEVEL, DatapointIdentifier.WATER_FLOW],
 			comment: "Allegheny River at Sharpsburg Lock and Dam"
-		}
+		},
+		{
+			type: APIClientIdentifier.AIRNOW,
+			id: "Pittsburgh_PA",
+			purposeHints: [DatapointIdentifier.AIR_QUALITY],
+			friendlyPage: "https://www.airnow.gov/?city=Pittsburgh&state=PA&country=USA",
+			comment: "Pittsburgh, PA Reporting area"
+		},
 	]
 });
 
