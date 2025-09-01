@@ -609,14 +609,14 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Shell Types',
 						description: "8+, 4+, 4x, 4-, 2x",
 						conditions: [
-							LessThan(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
+							new LessThan(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
 						]
 					}),
 					new Restriction({
 						category: 'Shell Types',
 						description: "8+, 4+, 4x, 4-",
 						conditions: [
-							AtLeast(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
+							new AtLeast(DatapointIdentifier.WATER_FLOW, 40, "kcfs")
 						]
 					}),
 					new Restriction({
@@ -680,7 +680,7 @@ let trraconfig = new RiverStatusConfig({
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
-							GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
+							new GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
 						]
 					}),
 					new Restriction({
@@ -689,7 +689,7 @@ let trraconfig = new RiverStatusConfig({
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
-							LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
+							new LessThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
 						]
 					}),
 					new Restriction({
@@ -737,7 +737,7 @@ let trraconfig = new RiverStatusConfig({
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
-							GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
+							new GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
 						]
 					}),
 					new Restriction({
@@ -746,7 +746,7 @@ let trraconfig = new RiverStatusConfig({
 							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
 							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
 						conditions: [
-							Between(DatapointIdentifier.WATER_TEMP, toCelsius(32), toCelsius(50), "F")
+							new Between(DatapointIdentifier.WATER_TEMP, toCelsius(32), toCelsius(50), "F")
 						]
 					}),
 					new Restriction({
