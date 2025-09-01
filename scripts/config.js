@@ -527,7 +527,7 @@ let trraconfig = new RiverStatusConfig({
 						description: "Racing allowed"
 					}),
 					new Restriction({
-						category: 'Launch:Shell Ratio',
+						category: 'Launches',
 						description: "Not Required. See Appendix #5 for U18/HS"
 					}),
 					new Restriction({
@@ -571,7 +571,7 @@ let trraconfig = new RiverStatusConfig({
 						description: "Racing allowed"
 					}),
 					new Restriction({
-						category: 'Launch:Shell Ratio',
+						category: 'Launches',
 						description: "1 launch per 3 shells"
 					}),
 					new Restriction({
@@ -624,7 +624,7 @@ let trraconfig = new RiverStatusConfig({
 						description: "No racing allowed (see appendix #6)"
 					}),
 					new Restriction({
-						category: 'Launch:Shell Ratio',
+						category: 'Launches',
 						description: "1 launch per 2 shells"
 					}),
 					new Restriction({
@@ -667,7 +667,7 @@ let trraconfig = new RiverStatusConfig({
 						description: "No racing allowed"
 					}),
 					new Restriction({
-						category: 'Launch:Shell Ratio',
+						category: 'Launches',
 						description: "1 launch per shell"
 					}),
 					new Restriction({
@@ -722,7 +722,7 @@ let trraconfig = new RiverStatusConfig({
 						description: "No racing allowed"
 					}),
 					new Restriction({
-						category: 'Launch:Shell Ratio',
+						category: 'Launches',
 						description: "1 launch per shell and sufficient launches to:<br>" + 
 						"(a) carry all rowers and coxes participating in the session<br>" +
 						"(b) have at least 2 engines between all launches on the water (towing line required)"
@@ -779,7 +779,7 @@ let trraconfig = new RiverStatusConfig({
 					description: "No boats allowed on the water"
 				}),
 				new Restriction({
-					category: 'Launch:Shell Ratio',
+					category: 'Launches',
 					description: "I said no boats"
 				}),
 				new Restriction({
