@@ -532,7 +532,9 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "PFDs Optional"
+						description: "<p><b>Rowers</b>: PFD not required</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
 					}),
 					new Restriction({
 						category: 'Comms',
@@ -574,7 +576,9 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "PFDs Optional"
+						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell for 1x, 2x, 2-</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
 					}),
 					new Restriction({
 						category: 'Comms',
@@ -626,7 +630,9 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "PFDs Optional"
+						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell for all rowers</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>"
 					}),
 					new Restriction({
 						category: 'Comms',
@@ -668,7 +674,21 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "PFDs on all rowers & coxswains"
+						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell at all times</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
+						conditions: [
+							GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
+						]
+					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "<p><b>Rowers</b>: PFD Required to be worn by all rowers</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
+						conditions: [
+							Between(DatapointIdentifier.WATER_TEMP, toCelsius(32), toCelsius(50), "F")
+						]
 					}),
 					new Restriction({
 						category: 'Comms',
@@ -711,7 +731,21 @@ let trraconfig = new RiverStatusConfig({
 					}),
 					new Restriction({
 						category: 'PFDs',
-						description: "PFDs on all rowers & coxswains"
+						description: "<p><b>Rowers</b>: PFD Recommended to be worn or in shell at all times</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
+						conditions: [
+							GreaterThan(DatapointIdentifier.WATER_TEMP, toCelsius(50), "F")
+						]
+					}),
+					new Restriction({
+						category: 'PFDs',
+						description: "<p><b>Rowers</b>: PFD Required to be worn by all rowers</p>" +
+							"<p><b>Coxswains</b>: PFD Required to be worn from November 1st through April 30th</p>" + 
+							"<p><b>Coaches & Launch Occupants</b>: PFD to be worn at all times</p>",
+						conditions: [
+							Between(DatapointIdentifier.WATER_TEMP, toCelsius(32), toCelsius(50), "F")
+						]
 					}),
 					new Restriction({
 						category: 'Comms',
