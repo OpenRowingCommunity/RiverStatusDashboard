@@ -734,7 +734,7 @@ let trraconfig = new RiverStatusConfig({
 			})
 		],
 		unsafeZone: new SafetyZone({
-			label: '☠️',
+			label: '\u2715',
 			color: '#000000',
 			conditions: [
 				new AtLeast(DatapointIdentifier.WATER_FLOW, 60, "kcfs"),
