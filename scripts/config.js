@@ -503,6 +503,38 @@ let trraconfig = new RiverStatusConfig({
 	clubAcronym: "TRRA",
 	boathouseLat: 40.466846,
 	boathouseLong: -79.976543,
+	safetyMatrix: new SafetyMatrix({
+		safetyZones: [
+			new SafetyZone({
+				label: '1',
+				color: '#00c020',
+			}),
+			new SafetyZone({
+				label: '2',
+				color: '#40fe00',
+			}),
+			new SafetyZone({
+				label: '3',
+				color: '#c8ff00',
+			}),
+			new SafetyZone({
+				label: '4',
+				color: '#ffff00',
+			}),
+			new SafetyZone({
+				label: '5',
+				color: '#ffa800',
+			}),
+			new SafetyZone({
+				label: '6',
+				color: '#ff0000',
+			})
+		],
+		unsafeZone: new SafetyZone({
+			label: '☠️',
+			color: '#000000',
+		})
+	}),
 	dataSources: [
 		{
 			type: APIClientIdentifier.USGS,
