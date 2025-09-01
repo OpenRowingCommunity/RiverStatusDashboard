@@ -109,4 +109,10 @@ window.onload = async function () {
 	window.vm.toggleAttribution();
 }
 
+window.addEventListener('hashchange', () => {
+	// force a full page reload when the hash changes because we are selecting a new club.
+	// using a SPA with path based routing may be better in the future, but that may be complicated to "just work" with GH pages.
+    window.location.reload();
+});
+
 // EOF
