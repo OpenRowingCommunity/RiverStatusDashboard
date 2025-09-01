@@ -819,7 +819,24 @@ let trraconfig = new RiverStatusConfig({
 	]
 });
 
-export let config = ritconfig;
+
+let allClubs = {
+	"RIT": ritconfig,
+	"TRRA": trraconfig
+}
+
+
+const getConfig = () => {
+	const fragment = window.location.hash.substring(1);
+	console.log(fragment);
+	if (Object.keys(allClubs).includes(fragment)){
+		return allClubs[fragment]
+	}
+	return trraconfig
+}
+
+// determine config
+export let config = getConfig();
 
 //Add "shared"/common data sources that do not require site identification strings
 config.dataSources.push(...[
