@@ -534,6 +534,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone Recommended"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "Any Level"
+					})
 				]
 			}),
 			new SafetyZone({
@@ -564,6 +568,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone Required"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "Any Level; blind boats as specified above"
+					})
 				]
 			}),
 			new SafetyZone({
@@ -594,6 +602,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone Required"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "Any Level. Adaptive, LTA racers only"
+					})
 				]
 			}),
 			new SafetyZone({
@@ -624,6 +636,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone Required"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					})
 				]
 			}),
 			new SafetyZone({
@@ -653,6 +669,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone Required"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					})
 				]
 			}),
 			new SafetyZone({
@@ -682,6 +702,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'Comms',
 						description: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session"
 					}),
+					new Restriction({
+						category: 'Crew Skill',
+						description: "No Novices or adaptive rowers or equipment allowed on the water"
+					})
 				]
 			})
 		],
@@ -708,6 +732,10 @@ let trraconfig = new RiverStatusConfig({
 				new Restriction({
 					category: 'PFDs',
 					description: "Don't need any to stay on land"
+				}),
+				new Restriction({
+					category: 'Crew Skill',
+					description: "None required for staying on land"
 				})
 			]
 		})
