@@ -530,6 +530,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'PFDs',
 						description: "PFDs Optional"
 					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone Recommended"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -555,6 +559,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'PFDs',
 						description: "PFDs Optional"
+					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone Required"
 					}),
 				]
 			}),
@@ -582,6 +590,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'PFDs',
 						description: "PFDs Optional"
 					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone Required"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -608,6 +620,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'PFDs',
 						description: "PFDs on all rowers & coxswains"
 					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone Required"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -633,6 +649,10 @@ let trraconfig = new RiverStatusConfig({
 						category: 'PFDs',
 						description: "PFDs on all rowers & coxswains"
 					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone Required"
+					}),
 				]
 			}),
 			new SafetyZone({
@@ -657,6 +677,10 @@ let trraconfig = new RiverStatusConfig({
 					new Restriction({
 						category: 'PFDs',
 						description: "PFDs on all rowers & coxswains"
+					}),
+					new Restriction({
+						category: 'Comms',
+						description: "Protected Cell Phone and Marine Radio Required for all coaches; at least one additional person at the boathouse with cell phone, marine radio and car during entire session"
 					}),
 				]
 			})
