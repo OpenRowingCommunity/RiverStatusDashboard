@@ -1,4 +1,4 @@
-name: New Club Setup Request
+name: New Club/Team Setup Request
 about: Request to add a new rowing club's safety matrix to the system.
 title: "[NEW] <Club Name Here>"
 labels: new club
@@ -7,7 +7,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for your interest in using the River Status Dashboard as part of your clubs safety practices! Filling out this form means you are ready to start using the app for your club and requires a completed Safety Matrix Template. Once you submit the template, you will have your own dedicated space to **publicly** discuss the addition of your club with the developers (who may have additional questions or may discover errors with your safety matrix). 
+        # Thanks for your interest in using the River Status Dashboard!
+        
+        Filling out this form means you are ready to start using the app for your club and requires a completed Safety Matrix Template (which you can get from the [project website](https://openrowing.com/projects/riverstatus)).
+        
+        Once you submit the template, you will have your own dedicated space to **publicly** discuss the addition of your club with the developers (who may have additional questions or may discover errors with your safety matrix). 
 
   - type: textarea
     attributes:
