@@ -10,19 +10,19 @@ body:
         Thanks for your interest in using the River Status Dashboard as part of your clubs safety practices! Filling out this form means you are ready to start using the app for your club and requires a completed Safety Matrix Template. Once you submit the template, you will have your own dedicated space to **publicly** discuss the addition of your club with the developers (who may have additional questions or may discover errors with your safety matrix). 
 
   - type: textarea
-  attributes:
-    label: Share your completed safety matrix template
+    attributes:
+      label: Share your completed safety matrix template
+      description: |
+        Need a copy of the template? You can get it from [our website](https://openrowing.com/projects/riverstatus).
+
+        You may modify the template as much as you like (i.e. to add or remove zones, specify your own additional information, etc). Please make sure you specify what data sources you are using for each of the metrics you want to use.
+
+        To submit your matrix, please paste a (publicly accessible) link here or upload it as a file. 
+
+        Tip: You can attach files by clicking this area to highlight it and then dragging or pasting files in.
     validations:
       required: true
-    description: |
-      Need a copy of the template? You can get it from [our website](https://openrowing.com/projects/riverstatus).
-
-      You may modify the template as much as you like (i.e. to add or remove zones, specify your own additional information, etc). Please make sure you specify what data sources you are using for each of the metrics you want to use.
-
-      To submit your matrix, please paste a (publicly accessible) link here or upload it as a file. 
-
-      Tip: You can attach files by clicking this area to highlight it and then dragging or pasting files in.
-
+      
   - type: textarea
     id: additional-notes
     attributes:
