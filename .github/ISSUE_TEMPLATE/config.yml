@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Join the Community
+    url: https://openrowing.com
+    about: Learn more about the community and come chat with us!
+  - name: Visit the project website
+    url: https://openrowing.com/projects/riverstatus
+    about: Find project related links (such as safety templates and interest forms) on the project page!
