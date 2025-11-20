@@ -23,3 +23,7 @@ There are unit tests included in this site for some of the underlying data logic
 ## Credits
 
 RiverStatusBoad was [created in 2017/2018 by Max Garber](https://github.com/maxgarber/RiverStatusBoard) for the [Three Rivers Rowing Association](https://www.threeriversrowing.org/safety). It was then substantially built upon from 2023-2025 by Adrian Edwards, primarily to modularize the code such that it can scale beyond just usage for a single rowing club.
+
+## License
+
+The original versions of the project, written by Max, were published to GitHub with no license and only an informal, secondhand understanding that the code was free to build upon and adapt. Changes to the app since that original fork point are published under the terms of the AGPL
