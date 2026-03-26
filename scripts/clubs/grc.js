@@ -1,8 +1,8 @@
-import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, Between } from "~/safetyTypes";
+import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, Between } from "../safetyTypes";
 
-import { DatapointIdentifier } from "~/constants";
-import { toCelsius } from "~/helpers";
-import { APIClientIdentifier } from "~/constants";
+import { DatapointIdentifier } from "../constants";
+import { toCelsius } from "../helpers";
+import { APIClientIdentifier } from "../constants";
 
 export let grcconfig = new RiverStatusConfig({
 	riverName: "Genesee",
