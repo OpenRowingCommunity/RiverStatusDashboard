@@ -2,11 +2,13 @@ import { APIClientIdentifier, DatapointIdentifier } from './constants.js';
 
 import { ritconfig } from './clubs/rit.js';
 import { trraconfig } from './clubs/trra.js';
+import { grcconfig } from './clubs/grc.js';
 
 
 let allClubs = {
 	"RIT": ritconfig,
-	"TRRA": trraconfig
+	"TRRA": trraconfig,
+	"GRC": grcconfig
 }
 
 const getConfig = () => {
