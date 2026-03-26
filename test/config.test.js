@@ -1,6 +1,5 @@
 import {
-  SafetyMatrix, SafetyZone, Restriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan
-} from '../scripts/config.js';
+  SafetyMatrix, SafetyZone, Restriction, RiverStatusConfig, Condition, Between, AtLeast, LessThan } from '../scripts/safetyTypes.js';
 import { DatapointIdentifier } from '../scripts/constants.js';
 
 const zones = {
