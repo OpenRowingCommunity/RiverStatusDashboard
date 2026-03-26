@@ -1,8 +1,7 @@
-import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, GreaterThan, Between } from "../safetyTypes";
+import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, GreaterThan, Between } from "../safetyTypes.js";
 
-import { DatapointIdentifier } from "../constants";
-import { toCelsius } from "../helpers";
-import { APIClientIdentifier } from "../constants";
+import { DatapointIdentifier, APIClientIdentifier } from "../constants.js";
+import { toCelsius } from "../helpers.js";
 
 export let trraconfig = new RiverStatusConfig({
 	riverName: "Allegheny",
