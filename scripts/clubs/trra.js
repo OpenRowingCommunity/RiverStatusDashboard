@@ -1,3 +1,4 @@
+import { RiverStatusConfig, Restriction, SafetyMatrix } from "~/safetyTypes";
 
 export let trraconfig = new RiverStatusConfig({
 	riverName: "Allegheny",

@@ -1,4 +1,4 @@
-
+import { RiverStatusConfig, Restriction, SafetyMatrix } from "~/safetyTypes";
 
 export let ritconfig = new RiverStatusConfig({
 	riverName: "Genesee",
