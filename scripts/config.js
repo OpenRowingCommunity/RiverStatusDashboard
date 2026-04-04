@@ -5,7 +5,7 @@ import { trraconfig } from './clubs/trra.js';
 import { grcconfig } from './clubs/grc.js';
 
 
-let allClubs = {
+export const allClubs = {
 	"RIT": ritconfig,
 	"TRRA": trraconfig,
 	"GRC": grcconfig

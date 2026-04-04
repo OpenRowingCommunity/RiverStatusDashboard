@@ -6,7 +6,7 @@
 import { apiConcierge } from "./apiConcierge.js";
 import { swapTempUnit, colorForAirQual, toFahrenheit, toCelsius } from "./helpers.js";
 import { DatapointIdentifier } from "./constants.js";
-import { config } from "./config.js";
+import { config, allClubs } from "./config.js";
 
 export var AppViewModel = function () {
 	this._initString = ' ';
@@ -14,7 +14,17 @@ export var AppViewModel = function () {
 	this.devMode = true;
 
 	this.__persist = ['tempUnit'];
-	
+
+	// # Club Selection
+    this.isClubSelected = ko.observable(!!config);
+	this.availableClubs = Object.keys(allClubs).map(key => {
+        return {
+            id: key,
+            name: allClubs[key].clubFullName,
+            river: allClubs[key].riverName
+        };
+    });
+
 	/// # UI Toggles
     this.graphEnabled = ko.observable(true);
 	this.lastUpdated = ko.observable('');
