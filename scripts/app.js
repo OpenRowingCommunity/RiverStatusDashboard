@@ -125,7 +125,7 @@ export var AppViewModel = function () {
 	}
 
 	this.configSelect = () => {
-		window.location = "/landing.html"
+		window.location.replace('landing.html');
 	}
 	
 	/// # Internal-Private
