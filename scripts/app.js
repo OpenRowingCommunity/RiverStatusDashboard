@@ -121,6 +121,10 @@ export var AppViewModel = function () {
 	this.toggleUnit = () => {
 		this.tempUnit(swapTempUnit(this.tempUnit()))
 	}
+
+	this.configSelect = () => {
+		window.location = "/landing.html"
+	}
 	
 	/// # Internal-Private
 	this._updated = ko.computed(function () {
