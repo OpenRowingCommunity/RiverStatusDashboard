@@ -81,22 +81,34 @@ body {
 	margin-bottom: 1.5em;
 }
 
-button#tempToggle {
+button.floating-action-button {
 	font-weight: bold;
 	color: #343a40 !important;
 	font-size: 2em
 }
 
-button.floating-action-button#tempToggle {
+button.topRight {
 	/* position: relative;
 	top: 100px;
 	margin-right: 50px; */
 	position: absolute;
 	/* display: inline-block; */
 	right: 0;
-	top:0;
+	top: 0;
 	border-radius: 0;
 	border-bottom-left-radius: 10px;
+}
+
+button.topLeft {
+	/* position: relative;
+	top: 100px;
+	margin-right: 50px; */
+	position: absolute;
+	/* display: inline-block; */
+	left: 0;
+	top: 0;
+	border-radius: 0;
+	border-bottom-right-radius: 10px;
 }
 
 #conditionsRow {}
