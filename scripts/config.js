@@ -17,7 +17,7 @@ const getConfig = () => {
 	if (Object.keys(allClubs).includes(fragment)){
 		return allClubs[fragment]
 	}
-	return trraconfig
+	return undefined
 }
 
 // determine config
