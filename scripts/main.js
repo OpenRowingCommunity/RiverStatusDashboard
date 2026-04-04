@@ -105,8 +105,13 @@ let main = async function () {
 //	call main once page has loaded
 window.onload = async function () {
 	await main();
-	window.vm.update();
-	window.vm.toggleAttribution();
+
+	if (!window.vm.isClubSelected()) {
+		window.vm.configSelect()
+	} else {
+		window.vm.update();
+		window.vm.toggleAttribution();
+	}
 }
 
 window.addEventListener('hashchange', () => {
