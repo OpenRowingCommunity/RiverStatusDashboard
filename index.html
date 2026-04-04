@@ -12,7 +12,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
-		<title>River Status Board</title>
+		<title>River Status Dashboard</title>
 		<!-- [fav]icons -->
 		<link rel="icon" type="image/png" href="./favicon_32.png" sizes="32x32">
 		<link rel="apple-touch-icon" type="image/png" href="./favicon_512.png"
@@ -91,12 +91,14 @@
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 							<h1 class="white"><span data-bind="text: riverName"></span> River Conditions</h1>
 							<p>Weather Data Updated: <span data-bind="text: lastUpdated"></span></p>
-							<h5><i data-bind="text: safetyMatrix().version"></i></h5>
+							<h5><i data-bind="text: safetyMatrix()?.version || ''"></i></h5>
 						</div>
 					</div>
 					<!-- END Title Row -->
 					
-					<button data-bind="click: toggleUnit" class="btn btn-info floating-action-button" id="tempToggle"><span data-bind="text: oppositeTempUnit"></span></button>
+					<button data-bind="click: toggleUnit" class="btn btn-info floating-action-button topRight" id="tempToggle"><span data-bind="text: oppositeTempUnit"></span></button>
+
+					<button data-bind="click: configSelect" class="btn btn-info floating-action-button topLeft"><span>&#8592;</span></button>
 					<!--  BEGIN Current Conditions, Zone, & Rules Row -->
 					<div class="row" id="conditionsRow">
 						

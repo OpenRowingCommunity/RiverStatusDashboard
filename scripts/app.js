@@ -14,7 +14,9 @@ export var AppViewModel = function () {
 	this.devMode = true;
 
 	this.__persist = ['tempUnit'];
-	
+
+	// # Club Selection
+    this.isClubSelected = ko.observable(!!config);
 	/// # UI Toggles
     this.graphEnabled = ko.observable(true);
 	this.lastUpdated = ko.observable('');
@@ -25,16 +27,17 @@ export var AppViewModel = function () {
 
 	/// # club info
 
-	this.riverName = ko.computed(() => config.riverName)
-	this.clubName = ko.computed(() => config.clubFullName)
-	this.clubShortName = ko.computed(() => config.clubAcronym)
-	this.safetyMatrix = ko.computed(() => config.safetyMatrix)
+	this.riverName = ko.computed(() => config?.riverName || "Select a Club");
+    this.clubName = ko.computed(() => config?.clubFullName || "");
+	this.clubShortName = ko.computed(() => config?.clubAcronym || "")
+    this.safetyMatrix = ko.computed(() => config?.safetyMatrix || null);
 
 
 	/// # Water
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
 	this.waterFlowColor = ko.computed(() => {
+		if (!config) return null;
 		return config.safetyMatrix.getZoneForData({
 			[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
 		}).color;
@@ -43,6 +46,7 @@ export var AppViewModel = function () {
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempColor = ko.computed(() => {
+		if (!config) return null;
 		return config.safetyMatrix.getZoneForData({
 			[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
 		}).color;
@@ -118,6 +122,10 @@ export var AppViewModel = function () {
 
 	this.toggleUnit = () => {
 		this.tempUnit(swapTempUnit(this.tempUnit()))
+	}
+
+	this.configSelect = () => {
+		window.location.replace('landing.html');
 	}
 	
 	/// # Internal-Private
@@ -219,7 +227,9 @@ export var AppViewModel = function () {
 	};
 	
 	this.manualRefresh = function () {
-		this.update();
+		if (this.isClubSelected()) {
+			this.update();
+		}
 		$("#refresh-button").rotate({
 			angle:0,
 			animateTo: 720,
@@ -230,6 +240,7 @@ export var AppViewModel = function () {
 	
 	/// # Primary Operation
 	this.update = function () {
+		if (!this.isClubSelected()) return;
 		//	Pattern: for given variable, invoke corresponding function declared in apiConceierge
 		//	  …pass in the setter method (in this case the observable itself) so it can update it
 		//	  …asynchronously when the API call returns

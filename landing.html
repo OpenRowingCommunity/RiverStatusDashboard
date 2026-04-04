@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Select Location | River Status Dashboard</title>
+	<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./scripts/libs/knockout-3.4.2.js"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/main.css">
+</head>
+
+<body id="landing-context">
+	<div id="container-outer">
+		<div id="container-inner">
+			<div class="row text-center portal-header white">
+				<h1>River Status Dashboard</h1>
+				<p class="lead">Select a location to continue</p>
+
+				<p><a href="https://openrowing.com/projects/riverstatus.html">Learn more</a> about getting a dashboard for your club or <a href="https://github.com/OpenRowingCommunity/RiverStatusDashboard">view the code</a></p>
+			</div>
+			
+			<hr>
+			<div class="row"  style="margin: 1em" data-bind="foreach: availableClubs">
+				<div class="col-sm-4">
+					<a data-bind="attr: { href: '/#' + id }">
+						<!-- <div class="panel panel-info text-center" style="cursor:pointer; padding: 20px;"> -->
+						<div class="panel panel-default text-center" style="background: #333; border: 1px solid #444; padding: 20px; margin-bottom: 20px;">
+							<h3 style="color: #5bc0de;" data-bind="text: acronym"></h3>
+							<p style="color: #ccc;" data-bind="text: name"></p>
+							<small style="color: #888;" data-bind="text: river"></small>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="module" src="./scripts/landing-main.js"></script>
+</body>
+</html>

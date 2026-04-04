@@ -94,7 +94,7 @@ let main = async function () {
 		window.vm.update();
 	}, 1000*60*15);
 	
-	if (viewModel.graphEnabled()) {
+	if (viewModel.graphEnabled() && viewModel.isClubSelected()) {
 		setupGraphStructures();
 		await populateDataSets();
 		// await populateDataSets();
@@ -105,8 +105,13 @@ let main = async function () {
 //	call main once page has loaded
 window.onload = async function () {
 	await main();
-	window.vm.update();
-	window.vm.toggleAttribution();
+
+	if (!window.vm.isClubSelected()) {
+		window.vm.configSelect()
+	} else {
+		window.vm.update();
+		window.vm.toggleAttribution();
+	}
 }
 
 window.addEventListener('hashchange', () => {
