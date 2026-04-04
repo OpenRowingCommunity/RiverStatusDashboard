@@ -37,6 +37,7 @@ export var AppViewModel = function () {
 	this.waterFlow = ko.observable(this._initString);
 	this.waterFlowUnits = ko.observable("kcfs");
 	this.waterFlowColor = ko.computed(() => {
+		if (!config) return null;
 		return config.safetyMatrix.getZoneForData({
 			[DatapointIdentifier.WATER_FLOW]: this.waterFlow(),
 		}).color;
@@ -45,6 +46,7 @@ export var AppViewModel = function () {
 	this.waterLevelUnits = ko.observable("ft");
 	this.waterTemp = ko.observable(this._initString);
 	this.waterTempColor = ko.computed(() => {
+		if (!config) return null;
 		return config.safetyMatrix.getZoneForData({
 			[DatapointIdentifier.WATER_TEMP]: this.waterTemp(),
 		}).color;

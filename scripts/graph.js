@@ -28,15 +28,12 @@ let selectors = {
 
 var tempReqFormat = "YYYY-MM-DDTHH:mm-0000";
 
-
-
-let floodSourceURI = "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id;
 let floodParameters = {};
 
 let temperatureSourceURI = "https://waterservices.usgs.gov/nwis/iv/";
 let temperatureParameters = {
 	format: 'json',
-	sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id,
+	sites: '', //populated later
 	startDT: '',		// literal example '2017-04-12T15:00-0000'	@NOTE these get overwritten in flow/flood callback
 	endDT: '',			// literal example '2017-04-14T01:30-0000'
 	parameterCd: '00010',
@@ -288,10 +285,13 @@ export var populateDataSets = async function () {
 	// get a date range for the last 7 days
 	let timeWindowParameters = {
 		startDT: moment().subtract(7, 'days').format(tempReqFormat),
-		endDT: moment().format(tempReqFormat)
+		endDT: moment().format(tempReqFormat),
+		// sites being here is a bit of a hack
+		sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id
 	}
 	$.ajax({
-		url: floodSourceURI,
+		// floodSourceURI
+		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id,
 		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: async function (data) {
