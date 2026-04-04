@@ -94,7 +94,7 @@ let main = async function () {
 		window.vm.update();
 	}, 1000*60*15);
 	
-	if (viewModel.graphEnabled()) {
+	if (viewModel.graphEnabled() && viewModel.isClubSelected()) {
 		setupGraphStructures();
 		await populateDataSets();
 		// await populateDataSets();
