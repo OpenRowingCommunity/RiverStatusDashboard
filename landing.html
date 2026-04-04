@@ -5,44 +5,34 @@
 	<meta charset="utf-8">
 	<title>Select Location | River Status Board</title>
 	<link href="./lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="./scripts/libs/knockout-3.4.2.js"></script>
 	<link rel="stylesheet" type="text/css" href="./styles/main.css">
 </head>
 
-<body style="background-color: #222; color: white; padding-top: 50px;">
-
-	<div class="container">
-		<div class="row text-center">
-			<h1>River Status Dashboard</h1>
-			<p class="lead">Select a location</p>
-			<hr style="border-color: #444;">
+<body id="landing-context">
+	<div id="container-outer">
+		<div id="container-inner">
+			<div class="row text-center portal-header white">
+				<h1>River Status Dashboard</h1>
+				<p class="lead">Select a location to continue</p>
+			</div>
+			
+			<hr>
+			<div class="row"  style="margin: 1em" data-bind="foreach: availableClubs">
+				<div class="col-sm-4">
+					<a data-bind="attr: { href: '/#' + id }">
+						<!-- <div class="panel panel-info text-center" style="cursor:pointer; padding: 20px;"> -->
+						<div class="panel panel-default text-center" style="background: #333; border: 1px solid #444; padding: 20px; margin-bottom: 20px;">
+							<h3 style="color: #5bc0de;" data-bind="text: acronym"></h3>
+							<p style="color: #ccc;" data-bind="text: name"></p>
+							<small style="color: #888;" data-bind="text: river"></small>
+						</div>
+					</a>
+				</div>
+			</div>
 		</div>
-
-		<div class="row" id="club-grid"></div>
 	</div>
 
-	<script type="module">
-		import { allClubs } from './scripts/config.js';
-
-		const grid = document.getElementById('club-grid');
-
-		// Loop through your data to build the UI
-		Object.keys(allClubs).forEach(key => {
-			const club = allClubs[key];
-			const col = document.createElement('div');
-			col.className = 'col-md-4 col-sm-6';
-
-			col.innerHTML = `
-                <a href="index.html#${key}" style="text-decoration: none;">
-                    <div class="panel panel-default text-center" style="background: #333; border: 1px solid #444; padding: 20px; margin-bottom: 20px;">
-                        <h3 style="color: #5bc0de;">${club.clubAcronym || key}</h3>
-                        <p style="color: #ccc;">${club.riverName} River</p>
-                        <small style="color: #888;">${club.clubFullName}</small>
-                    </div>
-                </a>
-            `;
-			grid.appendChild(col);
-		});
-	</script>
+	<script type="module" src="./scripts/landing-main.js"></script>
 </body>
-
 </html>
