@@ -25,10 +25,10 @@ export var AppViewModel = function () {
 
 	/// # club info
 
-	this.riverName = ko.computed(() => config.riverName)
-	this.clubName = ko.computed(() => config.clubFullName)
-	this.clubShortName = ko.computed(() => config.clubAcronym)
-	this.safetyMatrix = ko.computed(() => config.safetyMatrix)
+	this.riverName = ko.computed(() => config?.riverName || "Select a Club");
+    this.clubName = ko.computed(() => config?.clubFullName || "");
+	this.clubShortName = ko.computed(() => config?.clubAcronym || "")
+    this.safetyMatrix = ko.computed(() => config?.safetyMatrix || null);
 
 
 	/// # Water
@@ -219,7 +219,9 @@ export var AppViewModel = function () {
 	};
 	
 	this.manualRefresh = function () {
-		this.update();
+		if (this.isClubSelected()) {
+			this.update();
+		}
 		$("#refresh-button").rotate({
 			angle:0,
 			animateTo: 720,
@@ -230,6 +232,7 @@ export var AppViewModel = function () {
 	
 	/// # Primary Operation
 	this.update = function () {
+		if (!this.isClubSelected()) return;
 		//	Pattern: for given variable, invoke corresponding function declared in apiConceierge
 		//	  …pass in the setter method (in this case the observable itself) so it can update it
 		//	  …asynchronously when the API call returns

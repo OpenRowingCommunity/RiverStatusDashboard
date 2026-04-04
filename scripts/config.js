@@ -24,19 +24,21 @@ const getConfig = () => {
 export let config = getConfig();
 
 //Add "shared"/common data sources that do not require site identification strings
-config.dataSources.push(...[
-	{
-		type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
-		purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
-		comment: ""
-	}
-])
+if (config) {
+	config.dataSources.push(...[
+		{
+			type: APIClientIdentifier.SUNRISE_SUNSET_ORG,
+			purposeHints: [DatapointIdentifier.SUNRISE, DatapointIdentifier.SUNSET],
+			comment: ""
+		}
+	])
 
-if (!config.plotColors) {
-	config.plotColors = {
-		flow: '#0088ff',
-		flood: '#00ff00',
-		temperature: '#ff0000'
+	if (!config.plotColors) {
+		config.plotColors = {
+			flow: '#0088ff',
+			flood: '#00ff00',
+			temperature: '#ff0000'
+		}
 	}
 }
 
