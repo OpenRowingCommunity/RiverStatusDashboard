@@ -221,7 +221,7 @@ export var AppViewModel = function () {
 	};
 	
 	this.manualRefresh = function () {
-		if (this.isClubSelected()) {
+		if (this.isClubSelected) {
 			this.update();
 		}
 		$("#refresh-button").rotate({
@@ -234,7 +234,7 @@ export var AppViewModel = function () {
 	
 	/// # Primary Operation
 	this.update = function () {
-		if (!this.isClubSelected()) return;
+		if (!this.isClubSelected) return;
 		//	Pattern: for given variable, invoke corresponding function declared in apiConceierge
 		//	  …pass in the setter method (in this case the observable itself) so it can update it
 		//	  …asynchronously when the API call returns
