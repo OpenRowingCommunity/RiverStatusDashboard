@@ -262,20 +262,21 @@ var parseFlowData = function (data) {
 };
 
 var parseTemperatureData = function (data) {
-	var tempC = $(data.documentElement).children().find('wml2\\:value:first').text();
+	// extract timeseries data
+	var observedData = data.value.timeSeries[0].values[0].value
+	var observedDataN = observedData.length;
+
+	var tempC = observedData[observedDataN-1].value
 	var tempF = toFahrenheit(tempC);
 	var latestObserved = {
 		celsius: tempC,
 		fahrenheit: tempF
 	}
 
-	// extract timeseries data
-	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
-	var observedDataN = observedData.length;
 	for(var i = 0; i < observedDataN; i++) {
-		var datum = $(observedData).get(i);
-		var datetime = $(datum).find('wml2\\:time').text();
-		var temp = $(datum).find('wml2\\:value').text();
+		var datum = observedData[i];
+		// var datetime = datum.dateTime.text();
+		var temp = datum.value;
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
 };
