@@ -251,11 +251,11 @@ var parseFlowData = function (data) {
 		var datum = observedData[i];
 		var datetime = datum['dateTime'];
 		//datetime = datetime.substr(0,16);
-		var flow = Number.parseInt(datum['value'])/1000;
+		var flow = Number.parseFloat(datum['value']);
 		var aMoment = moment(datetime);
 		moments.observed[i] = aMoment;
 		abscissa.observed[i] = aMoment;
-		ordinates.observed.flow[i] = Number.parseFloat(flow);
+		ordinates.observed.flow[i] = flow;
 	}
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
