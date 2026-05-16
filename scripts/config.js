@@ -17,6 +17,9 @@ const getConfig = () => {
 	if (Object.keys(allClubs).includes(fragment)){
 		return allClubs[fragment]
 	}
+	if (Object.keys(allClubs).includes(fragment.toUpperCase())){
+		return allClubs[fragment.toUpperCase()]
+	}
 	return undefined
 }
 
