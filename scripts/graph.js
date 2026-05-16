@@ -295,7 +295,14 @@ export var populateDataSets = async function () {
 		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: async function (data) {
-			parseFloodData(data);
+			let filtered_data = {
+				forecast: { data: []},
+				observed: { data: []}
+			}
+			// this data source does not obey the date and time filtering parameters that the other APIs do, so we have to remove unnecessary data manually.
+			filtered_data.observed.data = data.observed.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT))
+			// filtered_data.forecast.data = data.forecast.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT)) 
+			parseFloodData(filtered_data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,
