@@ -199,27 +199,27 @@ var renderGraph = function () {
 
 // Data Parsing Functions
 var parseFloodData = function (data) {
+	var observedData = data.observed.data;
+	var observedDataN = observedData.length;
+
 	// parse and extract most recent data first
-	var latestObservedDatum = $(data).find('observed > datum:first');
+	var latestObservedDatum = observedData[observedDataN-1];
+	var firstObservedDatum = observedData[0];
 	var latestObserved = {
 		floodStageMeasurement: $(latestObservedDatum).find('primary').text(),
 		floodStageUnits: $(latestObservedDatum).find('primary').attr('units'),
 	};
-	// get time-series and forecasted data
-	var observedData = $(data).find('site > observed > datum');
-	var observedDataN = observedData.length;
-	var forecastData = $(data).find('site > forecast > datum');
-	var forecastDataN = forecastData.length;
 	for(var i = 0; i < observedDataN; i++) {
-		var datum = $(observedData).get(i);
-		var datetime = $(datum).children('valid').text();
-		//datetime = datetime.substr(0,16);
-		var flood = $(datum).children('primary').text();
-		var aMoment = moment(datetime);
+		var datum = observedData[i];
+		var flood = datum.primary;
+		var aMoment = moment(datum.validTime);
 		moments.observed[i] = aMoment;
 		abscissa.observed[i] = aMoment;
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
 	}
+
+	var forecastData = data.forecast.data;
+	var forecastDataN = forecastData.length;
 	moments.forecast = [];
 	abscissa.forecast = [];
 	for(var i = 0; i < forecastDataN; i++) {
@@ -275,7 +275,6 @@ var parseTemperatureData = function (data) {
 
 	for(var i = 0; i < observedDataN; i++) {
 		var datum = observedData[i];
-		// var datetime = datum.dateTime.text();
 		var temp = datum.value;
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
@@ -292,7 +291,7 @@ export var populateDataSets = async function () {
 	}
 	$.ajax({
 		// floodSourceURI
-		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id,
+		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id + "/stageflow",
 		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: async function (data) {
