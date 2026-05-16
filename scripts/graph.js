@@ -199,27 +199,27 @@ var renderGraph = function () {
 
 // Data Parsing Functions
 var parseFloodData = function (data) {
+	var observedData = data.observed.data;
+	var observedDataN = observedData.length;
+
 	// parse and extract most recent data first
-	var latestObservedDatum = $(data).find('observed > datum:first');
+	var latestObservedDatum = observedData[observedDataN-1];
+	var firstObservedDatum = observedData[0];
 	var latestObserved = {
 		floodStageMeasurement: $(latestObservedDatum).find('primary').text(),
 		floodStageUnits: $(latestObservedDatum).find('primary').attr('units'),
 	};
-	// get time-series and forecasted data
-	var observedData = $(data).find('site > observed > datum');
-	var observedDataN = observedData.length;
-	var forecastData = $(data).find('site > forecast > datum');
-	var forecastDataN = forecastData.length;
 	for(var i = 0; i < observedDataN; i++) {
-		var datum = $(observedData).get(i);
-		var datetime = $(datum).children('valid').text();
-		//datetime = datetime.substr(0,16);
-		var flood = $(datum).children('primary').text();
-		var aMoment = moment(datetime);
+		var datum = observedData[i];
+		var flood = datum.primary;
+		var aMoment = moment(datum.validTime);
 		moments.observed[i] = aMoment;
 		abscissa.observed[i] = aMoment;
 		ordinates.observed.flood[i] = Number.parseFloat(flood);
 	}
+
+	var forecastData = data.forecast.data;
+	var forecastDataN = forecastData.length;
 	moments.forecast = [];
 	abscissa.forecast = [];
 	for(var i = 0; i < forecastDataN; i++) {
@@ -251,31 +251,31 @@ var parseFlowData = function (data) {
 		var datum = observedData[i];
 		var datetime = datum['dateTime'];
 		//datetime = datetime.substr(0,16);
-		var flow = Number.parseInt(datum['value'])/1000;
+		var flow = Number.parseFloat(datum['value']);
 		var aMoment = moment(datetime);
 		moments.observed[i] = aMoment;
 		abscissa.observed[i] = aMoment;
-		ordinates.observed.flow[i] = Number.parseFloat(flow);
+		ordinates.observed.flow[i] = flow;
 	}
 	var obsmin = moment.min(moments.observed);
 	var obsmax = moment.max(moments.observed);
 };
 
 var parseTemperatureData = function (data) {
-	var tempC = $(data.documentElement).children().find('wml2\\:value:first').text();
+	// extract timeseries data
+	var observedData = data.value.timeSeries[0].values[0].value
+	var observedDataN = observedData.length;
+
+	var tempC = observedData[observedDataN-1].value
 	var tempF = toFahrenheit(tempC);
 	var latestObserved = {
 		celsius: tempC,
 		fahrenheit: tempF
 	}
 
-	// extract timeseries data
-	var observedData = $(data.documentElement).children('wml2\\:observationMember').find('wml2\\:point')
-	var observedDataN = observedData.length;
 	for(var i = 0; i < observedDataN; i++) {
-		var datum = $(observedData).get(i);
-		var datetime = $(datum).find('wml2\\:time').text();
-		var temp = $(datum).find('wml2\\:value').text();
+		var datum = observedData[i];
+		var temp = datum.value;
 		ordinates.observed.temp[i] = Number.parseFloat(temp);
 	}
 };
@@ -291,11 +291,18 @@ export var populateDataSets = async function () {
 	}
 	$.ajax({
 		// floodSourceURI
-		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id,
+		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id + "/stageflow",
 		data: Object.assign({}, floodParameters, timeWindowParameters),
 		datatype: 'xml',
 		success: async function (data) {
-			parseFloodData(data);
+			let filtered_data = {
+				forecast: { data: []},
+				observed: { data: []}
+			}
+			// this data source does not obey the date and time filtering parameters that the other APIs do, so we have to remove unnecessary data manually.
+			filtered_data.observed.data = data.observed.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT))
+			// filtered_data.forecast.data = data.forecast.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT)) 
+			parseFloodData(filtered_data);
 			// hard-chain start
 			$.ajax({
 				url: temperatureSourceURI,

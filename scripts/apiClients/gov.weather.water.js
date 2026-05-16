@@ -8,7 +8,7 @@ import { APIClient } from "./apiclient.js"
 import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
 
 export class NOAAWeatherWater extends APIClient {
-
+	// https://api.water.noaa.gov/nwps/v1/docs/#/
 	constructor() {
 		super('https://api.water.noaa.gov/nwps/v1', APIClientIdentifier.NOAA_WATER)
 	}
