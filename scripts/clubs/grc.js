@@ -1,4 +1,4 @@
-import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, Between } from "../safetyTypes.js";
+import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, Between, GraphConfig } from "../safetyTypes.js";
 
 import { DatapointIdentifier, APIClientIdentifier } from "../constants.js";
 import { toCelsius } from "../helpers.js";
@@ -9,6 +9,12 @@ export let grcconfig = new RiverStatusConfig({
 	clubAcronym: "GRC",
 	boathouseLat: 43.122698,
 	boathouseLong: -77.637342,
+	graphConfig: new GraphConfig({
+		flowMin: 0,
+		flowMax: 10,
+		floodMin: 8,
+		floodMax: 16
+	}),
 	safetyMatrix: new SafetyMatrix({
 		version: "GRC Safety Matrix (updated March 17th, 2026)",
 		safetyZones: [

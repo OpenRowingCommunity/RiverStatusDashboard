@@ -4,7 +4,7 @@
 //		gov.weather.js created on 2017-06-26
 //		refactored 2023-09-01 by Adrian Edwards
 
-import { APIClient } from "./apiclient.js"
+import { APIClient, DataPoint } from "./apiclient.js"
 import { APIClientIdentifier, DatapointIdentifier } from '../constants.js';
 
 export class NOAAWeatherWater extends APIClient {
@@ -49,6 +49,61 @@ export class NOAAWeatherWater extends APIClient {
 				console.log("datapoint " + datapointId + " not supported by client " + this.id);
 		}
 	}
+
+	/**
+	 * Fetch many (historical) values for a particular datapoint
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @returns an array of DataPoint objects
+	 */
+	async getDatapoints(datapointId, apiId, parameters = {} ) {
+		return this._queryData(apiId, parameters, '/gauges/' + apiId + "/stageflow").then((raw_data) => {
+			// we ignore forecast data for now. we dont have a use for it
+
+			// this data source does not obey the date and time filtering parameters that the other APIs do, so we have to remove unnecessary data manually.
+			let data = raw_data.observed.data.filter((v) => moment(v.validTime) >= moment(parameters.startDT));
+			// filtered_data.forecast.data = data.forecast.data.filter((v) => moment(v.validTime) >= moment(parameters.startDT)) 
+
+			// convert from the "primary/secondary flood/flow combined data into a single "value" and "units"
+			switch (datapointId) {
+				case DatapointIdentifier.WATER_FLOW:
+					data.map((dataitem) => {
+						dataitem.value = dataitem.secondary
+						dataitem.units = this.dataUnits[datapointId]
+						delete dataitem.primary
+						delete dataitem.secondary
+					})
+					break;
+				case DatapointIdentifier.WATER_LEVEL:
+					data.map((dataitem) => {
+						dataitem.value = dataitem.primary
+						dataitem.units = this.dataUnits[datapointId]
+						delete dataitem.primary
+						delete dataitem.secondary
+					})
+					break;
+				default:
+					console.error("datapoint " + datapointId + " not supported by client " + this.id);
+			}
+			
+			//run all the values through the transformer
+			// map the datestamps and qualifiers and stuff on them
+			data.map((dataitem) => {
+				
+				return new DataPoint(
+					this.dataTransformers[datapointId](dataitem.value),
+					moment(dataitem.validTime).toDate(),
+					this.dataUnits[datapointId],
+					this.id,
+					null, // no qualifiers
+					moment(dataitem.generatedTime).toDate()
+				)
+			});
+			return data
+		});
+	}
+
 
 	getUnits(datapointId) {
 		return dataUnits[datapointId]

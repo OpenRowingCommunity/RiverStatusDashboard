@@ -58,7 +58,7 @@ var tickFormatter = function (value, index, values, type) {
 }
 
 //	Graph Functions
-export var setupGraphStructures = function () {
+export var setupGraphStructures = function (conf = config) {
 	// axes & scales
 	
 	// dataset wrapping
@@ -72,24 +72,24 @@ export var setupGraphStructures = function () {
 			datasets: [
 				{
 					label: "Flow (kcfs)",
-					borderColor: config.plotColors.flow,
-					backgroundColor: config.plotColors.flow,
+					borderColor: conf.plotColors.flow,
+					backgroundColor: conf.plotColors.flow,
 					fill: false,
 					yAxisID: "yAxis_flow",
 					data: ordinates.observed.flow
 				},
 				{
 					label: "Flood Stage (ft)",
-					borderColor: config.plotColors.flood,
-					backgroundColor: config.plotColors.flood,
+					borderColor: conf.plotColors.flood,
+					backgroundColor: conf.plotColors.flood,
 					fill: false,
 					yAxisID: "yAxis_flood",
 					data: ordinates.observed.flood
 				},
 				{
 					label: "Water Temperature (˚C)",
-					borderColor: config.plotColors.temperature,
-					backgroundColor: config.plotColors.temperature,
+					borderColor: conf.plotColors.temperature,
+					backgroundColor: conf.plotColors.temperature,
 					fill: false,
 					yAxisID: "yAxis_temp",
 					data: ordinates.observed.temp
@@ -127,12 +127,12 @@ export var setupGraphStructures = function () {
 					position: "right",
 					display: true,
 					grid: { display: false },
-					min: 0,
-					max: 10,
+					min: conf.graphConfig.flowMin,
+					max: conf.graphConfig.flowMax,
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
-						color: config.plotColors.flow,
+						color: conf.plotColors.flow,
 						// fontSize: 14
 					},
 				},
@@ -151,21 +151,21 @@ export var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Water Temperature (˚C)",
-						color: config.plotColors.temperature,
+						color: conf.plotColors.temperature,
 						// fontSize: 14
 					},
-					color: config.plotColors.temp
+					color: conf.plotColors.temp
 				}, 
 				yAxis_flood: {
 					type: "linear",
 					position: "left",
 					grid: { display: false },
-					min: 8,
-					max: 16,
+					min: conf.graphConfig.floodMin,
+					max: conf.graphConfig.floodMax,
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
-						color: config.plotColors.flood,
+						color: conf.plotColors.flood,
 						// fontSize: 14
 					}
 				}
@@ -261,6 +261,24 @@ var parseFlowData = function (data) {
 	var obsmax = moment.max(moments.observed);
 };
 
+
+var loadFlowData = (data/*:DataPoint*/) => {
+	let observedData = data;
+	
+	// get time-series and forecasted data
+	let observedDataN = observedData.length;
+	for(var i = 0; i < observedDataN; i++) {
+		var datum = observedData[i];
+		var datetime = moment(datum.time);
+		
+		// var aMoment = moment(datetime);
+		// moments.observed[i] = datetime;
+		// abscissa.observed[i] = datetime;
+		ordinates.observed.flow[i] = datum.value;
+	}
+	console.log(ordinates.observed)
+}
+
 var parseTemperatureData = function (data) {
 	// extract timeseries data
 	var observedData = data.value.timeSeries[0].values[0].value
@@ -289,11 +307,14 @@ export var populateDataSets = async function () {
 		// sites being here is a bit of a hack
 		sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id
 	}
+
+
+
 	$.ajax({
 		// floodSourceURI
 		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id + "/stageflow",
 		data: Object.assign({}, floodParameters, timeWindowParameters),
-		datatype: 'xml',
+		datatype: 'json',
 		success: async function (data) {
 			let filtered_data = {
 				forecast: { data: []},
@@ -307,14 +328,14 @@ export var populateDataSets = async function () {
 			$.ajax({
 				url: temperatureSourceURI,
 				data: Object.assign({}, temperatureParameters, timeWindowParameters),
-				datatype: 'xml',
+				datatype: 'json',
 				success: async function (data) {
 					parseTemperatureData(data);
 				
 					// hard-chain start
 					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW, timeWindowParameters).then(
 						(data) => {
-							parseFlowData(data);
+							loadFlowData(data);
 							renderGraph();
 						}
 					)
