@@ -307,6 +307,9 @@ export var populateDataSets = async function () {
 		// sites being here is a bit of a hack
 		sites: config.getDataSourceDetails(APIClientIdentifier.USGS, DatapointIdentifier.WATER_TEMP)[0].id
 	}
+
+
+
 	$.ajax({
 		// floodSourceURI
 		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id + "/stageflow",
