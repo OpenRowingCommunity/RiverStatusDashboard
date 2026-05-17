@@ -50,6 +50,35 @@ export class NOAAWeatherWater extends APIClient {
 		}
 	}
 
+	/**
+	 * Fetch many (historical) values for a particular datapoint
+	 * 
+	 * @param {*} datapointId the identifier of the datapoint to fetch
+	 * @param {*} apiId the identifier as needed
+	 * @returns 
+	 */
+	async getDatapoints(datapointId, apiId, parameters = {} ) {
+		return this._queryData(datapointId, apiId, parameters).then((data) => {
+
+			let filtered_data = {
+				forecast: { data: []},
+				observed: { data: []}
+			}
+			// this data source does not obey the date and time filtering parameters that the other APIs do, so we have to remove unnecessary data manually.
+			filtered_data.observed.data = data.observed.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT))
+			// filtered_data.forecast.data = data.forecast.data.filter((v) => moment(v.validTime) >= moment(timeWindowParameters.startDT)) 
+
+
+
+			//convert all the values (strings) into actual values using the transformer, but preserve the datestamps and qualifiers and stuff on them
+			return data.map((dataitem) => {
+				dataitem.value = this.dataTransformers[datapointId](dataitem.value)
+				return dataitem
+			});
+		});
+	}
+
+
 	getUnits(datapointId) {
 		return dataUnits[datapointId]
 	}
