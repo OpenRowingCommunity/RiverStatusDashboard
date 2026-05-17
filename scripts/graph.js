@@ -58,7 +58,7 @@ var tickFormatter = function (value, index, values, type) {
 }
 
 //	Graph Functions
-export var setupGraphStructures = function () {
+export var setupGraphStructures = function (conf = config) {
 	// axes & scales
 	
 	// dataset wrapping
@@ -72,24 +72,24 @@ export var setupGraphStructures = function () {
 			datasets: [
 				{
 					label: "Flow (kcfs)",
-					borderColor: config.plotColors.flow,
-					backgroundColor: config.plotColors.flow,
+					borderColor: conf.plotColors.flow,
+					backgroundColor: conf.plotColors.flow,
 					fill: false,
 					yAxisID: "yAxis_flow",
 					data: ordinates.observed.flow
 				},
 				{
 					label: "Flood Stage (ft)",
-					borderColor: config.plotColors.flood,
-					backgroundColor: config.plotColors.flood,
+					borderColor: conf.plotColors.flood,
+					backgroundColor: conf.plotColors.flood,
 					fill: false,
 					yAxisID: "yAxis_flood",
 					data: ordinates.observed.flood
 				},
 				{
 					label: "Water Temperature (˚C)",
-					borderColor: config.plotColors.temperature,
-					backgroundColor: config.plotColors.temperature,
+					borderColor: conf.plotColors.temperature,
+					backgroundColor: conf.plotColors.temperature,
 					fill: false,
 					yAxisID: "yAxis_temp",
 					data: ordinates.observed.temp
@@ -132,7 +132,7 @@ export var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
-						color: config.plotColors.flow,
+						color: conf.plotColors.flow,
 						// fontSize: 14
 					},
 				},
@@ -151,10 +151,10 @@ export var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Water Temperature (˚C)",
-						color: config.plotColors.temperature,
+						color: conf.plotColors.temperature,
 						// fontSize: 14
 					},
-					color: config.plotColors.temp
+					color: conf.plotColors.temp
 				}, 
 				yAxis_flood: {
 					type: "linear",
@@ -165,7 +165,7 @@ export var setupGraphStructures = function () {
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",
-						color: config.plotColors.flood,
+						color: conf.plotColors.flood,
 						// fontSize: 14
 					}
 				}
