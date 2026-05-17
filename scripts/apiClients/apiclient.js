@@ -20,3 +20,20 @@ export class APIClient {
 	//TODO: supported datapoints list
 
 }
+
+/**
+ * Represents a singular data point
+ */
+export class DataPoint {
+
+	constructor(value, time, unit, sourceTypeId, notes="", generatedAt=undefined) {
+		this.value = value
+		this.time = time
+		this.unit = unit
+		this.sourceTypeId = sourceTypeId
+		this.notes = notes
+		this.generatedAt = generatedAt
+
+	}
+
+}
