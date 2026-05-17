@@ -261,6 +261,24 @@ var parseFlowData = function (data) {
 	var obsmax = moment.max(moments.observed);
 };
 
+
+var loadFlowData = (data/*:DataPoint*/) => {
+	let observedData = data;
+	
+	// get time-series and forecasted data
+	let observedDataN = observedData.length;
+	for(var i = 0; i < observedDataN; i++) {
+		var datum = observedData[i];
+		var datetime = moment(datum.time);
+		
+		// var aMoment = moment(datetime);
+		// moments.observed[i] = datetime;
+		// abscissa.observed[i] = datetime;
+		ordinates.observed.flow[i] = datum.value;
+	}
+	console.log(ordinates.observed)
+}
+
 var parseTemperatureData = function (data) {
 	// extract timeseries data
 	var observedData = data.value.timeSeries[0].values[0].value
@@ -314,7 +332,7 @@ export var populateDataSets = async function () {
 					// hard-chain start
 					apiConcierge.getValuesAsync(DatapointIdentifier.WATER_FLOW, timeWindowParameters).then(
 						(data) => {
-							parseFlowData(data);
+							loadFlowData(data);
 							renderGraph();
 						}
 					)
