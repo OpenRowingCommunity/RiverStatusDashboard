@@ -127,8 +127,8 @@ export var setupGraphStructures = function (conf = config) {
 					position: "right",
 					display: true,
 					grid: { display: false },
-					min: 0,
-					max: 10,
+					min: conf.graphConfig.flowMin,
+					max: conf.graphConfig.flowMax,
 					title: {
 						display: true,
 						text: "Flow Rate (kcfs)",
@@ -160,8 +160,8 @@ export var setupGraphStructures = function (conf = config) {
 					type: "linear",
 					position: "left",
 					grid: { display: false },
-					min: 8,
-					max: 16,
+					min: conf.graphConfig.floodMin,
+					max: conf.graphConfig.floodMax,
 					title: {
 						display: true,
 						text: "Flood Stage (ft)",

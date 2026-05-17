@@ -1,4 +1,4 @@
-import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, GreaterThan, Between } from "../safetyTypes.js";
+import { RiverStatusConfig, Restriction, SafetyMatrix, SafetyZone, LessThan, AtLeast, GreaterThan, Between, GraphConfig } from "../safetyTypes.js";
 
 import { DatapointIdentifier, APIClientIdentifier } from "../constants.js";
 import { toCelsius } from "../helpers.js";
@@ -9,6 +9,12 @@ export let trraconfig = new RiverStatusConfig({
 	clubAcronym: "TRRA",
 	boathouseLat: 40.466846,
 	boathouseLong: -79.976543,
+	graphConfig: new GraphConfig({
+		flowMin: 0,
+		flowMax: 50,
+		floodMin: 8,
+		floodMax: 16
+	}),
 	safetyMatrix: new SafetyMatrix({
 		version: "2024 Rowing Matrix: Revised May 2024 by TRRA Safety Committee and accepted by TRRA Board",
 		source: "https://www.threeriversrowing.org/_files/ugd/e46300_61356ec9d051465e9e9bd249ff77e3b4.pdf",
