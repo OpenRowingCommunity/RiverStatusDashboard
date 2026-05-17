@@ -311,7 +311,7 @@ export var populateDataSets = async function () {
 		// floodSourceURI
 		url: "https://api.water.noaa.gov/nwps/v1/gauges/"+config.getDataSourceDetailsByType(APIClientIdentifier.NOAA_WATER)[0].id + "/stageflow",
 		data: Object.assign({}, floodParameters, timeWindowParameters),
-		datatype: 'xml',
+		datatype: 'json',
 		success: async function (data) {
 			let filtered_data = {
 				forecast: { data: []},
@@ -325,7 +325,7 @@ export var populateDataSets = async function () {
 			$.ajax({
 				url: temperatureSourceURI,
 				data: Object.assign({}, temperatureParameters, timeWindowParameters),
-				datatype: 'xml',
+				datatype: 'json',
 				success: async function (data) {
 					parseTemperatureData(data);
 				
