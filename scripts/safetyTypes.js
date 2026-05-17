@@ -3,12 +3,13 @@ import { toCelsius, validateNumber } from './helpers.js';
 
 export class RiverStatusConfig {
 	
-	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, safetyMatrix, dataSources }) {
+	constructor({riverName, clubFullName, clubAcronym, boathouseLat, boathouseLong, graphConfig, safetyMatrix, dataSources }) {
 		this.riverName = riverName;
 		this.clubFullName = clubFullName;
 		this.clubAcronym = clubAcronym;
 		this.boathouseLat = boathouseLat;
 		this.boathouseLong = boathouseLong;
+		this.graphConfig = graphConfig;
 		this.dataSources = dataSources;
 		this.safetyMatrix = safetyMatrix; //TODO: make optional
 	}
@@ -56,6 +57,17 @@ export class RiverStatusConfig {
 		}
 	}
 }
+
+export class GraphConfig {
+	constructor({flowMin, flowMax, floodMin, floodMax }) {
+		this.flowMin = flowMin;
+		this.flowMax = flowMax;
+		this.floodMin = floodMin;
+		this.floodMax = floodMax;
+	}
+
+}
+
 
 class Conditional {
 
